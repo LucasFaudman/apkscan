@@ -1,9 +1,9 @@
 from subprocess import run, CompletedProcess, SubprocessError
 from pathlib import Path
 from shutil import which, rmtree
-from typing import Optional, Generator, Literal
+from typing import Optional, Iterator, Literal
 
-from concurrent_executor import execute_concurrently, ConcurrentExecutor
+from concurrent_executor import ConcurrentExecutor
 
 
 class JavaDecompiler:
@@ -14,11 +14,9 @@ class JavaDecompiler:
                  deobfuscation_arg: str = "--deobf",
                  output_dir_arg: str = "--output-dir",
                  output_dir_suffix: str = "-decompiled",
-                 parent_output_dir: Path = Path('/Users/lucasfaudman/Documents/SANS/SEC575/testoutput'),#Path("/tmp/apk-secret-scanner")
-                 concurrency_type: Optional[Literal["thread", "process", "main", False]] = "thread",
-                 results_order: Literal["completed", "submitted"] = "completed",
-                 max_workers: Optional[int] = None,
-                 remove_failed_output_dirs: bool = True
+                 working_directory: Path = Path('/Users/lucasfaudman/Documents/SANS/SEC575/testoutput'),#Path("/tmp/apk-secret-scanner")
+                 remove_failed_output_dirs: bool = True,
+                 **concurrent_executor_kwargs
                  ):
         
         self.decompiler_binary = decompiler_binary
@@ -27,20 +25,17 @@ class JavaDecompiler:
         self.deobfuscation_arg = deobfuscation_arg
         self.output_dir_arg = output_dir_arg
         self.output_dir_suffix = output_dir_suffix
-        self.parent_output_dir = parent_output_dir
-        self.concurrent_executor = ConcurrentExecutor(
-            concurrency_type=concurrency_type,
-            results_order=results_order,
-            max_workers=max_workers
-        )
+        self.working_directory = working_directory
         self.remove_failed_output_dirs = remove_failed_output_dirs
         self.output_dirs = {}
-
+        self.concurrent_executor = ConcurrentExecutor(
+            **{'concurrency_type': 'thread', **concurrent_executor_kwargs}
+        )
 
 
     def decompile(self, file_path: Path) -> tuple[Path, Path, bool]:
         file_name = file_path.name
-        output_dir = self.parent_output_dir / (file_name + self.output_dir_suffix)
+        output_dir = self.working_directory / (file_name + self.output_dir_suffix)
         self.output_dirs[file_path] = output_dir
         if not output_dir.exists():
             print(f"Creating output directory: {output_dir}")
@@ -66,13 +61,13 @@ class JavaDecompiler:
 
         return file_path, output_dir, success
 
-    def concurrent_decompile(self, file_paths: list[Path]) -> Generator[tuple[Path, Path, bool], None, None]:
+    def decompile_concurrently(self, file_paths: list[Path]) -> Iterator[tuple[Path, Path, bool]]:
         # for file_path in file_paths:
-            # yield file_path, self.parent_output_dir / (file_path.name + self.output_dir_suffix), True
+            # yield file_path, self.working_directory / (file_path.name + self.output_dir_suffix), True
         yield from self.concurrent_executor.map(self.decompile, file_paths)
 
-    def iter_decompiled_files(self, file_paths: list[Path]) -> Generator[Path, None, None]:
-        for file_path, output_dir, success in self.concurrent_decompile(file_paths):
+    def iter_decompiled_files(self, file_paths: list[Path]) -> Iterator[Path]:
+        for file_path, output_dir, success in self.decompile_concurrently(file_paths):
             if success:
                 yield from filter(Path.is_file, output_dir.rglob("*"))
 
@@ -94,5 +89,5 @@ class JavaDecompiler:
 if __name__ == "__main__":
     decompiler = JavaDecompiler()
     file_paths = list(Path("/Users/lucasfaudman/Documents/SANS/SEC575/earn/apks").glob("*.apk"))[:2]
-    for file_path, output_dir, success in decompiler.concurrent_decompile(file_paths):
+    for file_path, output_dir, success in decompiler.decompile_concurrently(file_paths):
         print('SUCCESS' if success else 'FAILURE', output_dir)

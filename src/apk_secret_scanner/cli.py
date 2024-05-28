@@ -11,56 +11,79 @@ class JavaSecretScanner:
     def __init__(self, 
                  decompiler: JavaDecompiler, 
                  secret_scanner: SecretScanner,
-                 keep_decompiled: bool = False,
-                 keep_failed_decompiled: bool = False,                 
+                 keep_decompiled_output_dirs: bool = False,
                  ):
         self.decompiler = decompiler
         self.secret_scanner = secret_scanner
-        self.keep_decompiled = keep_decompiled
-        self.keep_failed_decompiled = keep_failed_decompiled
-
-    def decompile(self, file_paths: list[Path]) -> Generator[Path, None, None]:
-        
-        for file_path, decompiled_dir, success in self.decompiler.iterdecompile(file_paths):
-            if success:
-                print(f"Decompilation of {file_path} completed successfully.")
-                yield from filter(Path.is_file, decompiled_dir.rglob("*"))
-            else:
-                print(f"Decompilation of {file_paths} failed.")
+        self.keep_decompiled_output_dirs = keep_decompiled_output_dirs
 
     def decompile_and_scan(self, file_paths: list[Path]) -> Generator[SecretResult, None, None]:
-        print(f'BEGIN YIELD FROM')
-        yield from self.secret_scanner.iterscan_files(self.decompile(file_paths))
-        print(f'END YIELD FROM')
-        if not self.keep_decompiled:
-            self.decompiler.remove_decompiled_dirs()
+        yield from self.secret_scanner.iterscan_files(
+            file_paths=self.decompiler.iter_decompiled_files(file_paths)
+        )
+        if not self.keep_decompiled_output_dirs:
+            self.decompiler.remove_output_dirs()
             
 
             
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Decompile APK files and scan for secrets.")
-    parser.add_argument("-f", "--files", type=str, nargs="+", metavar="FILES_TO_SCAN", help="Path to APK file to decompile and scan.", required=False)
-    parser.add_argument("-p", "--pattern", type=Path, metavar="SECRET_PATTERNS_FILE", help="Path to custom secrets patterns JSON.")
-    parser.add_argument("-o", "--output-dir", type=Path, metavar="OUTPUT_DIR", default=Path.cwd(), help="Output directory for decompiled APK files.")    
-    parser.add_argument("--format", type=str, choices=["json", "text"], default="json", help="Output format for results.")
-    parser.add_argument("--keep-decompiled", action="store_true", help="Keep decompiled APK files after scanning.")
-    parser.add_argument("--decompiler", type=Path, default=Path(which("jadx") or "/usr/local/bin/jadx"), help="Path to JADX decompiler binary.")    
-    parser.add_argument("--decompiler-args", type=str, nargs="+", help="Additional arguments to pass to JADX.")
-    parser.add_argument("--deobfuscate", action="store_true", help="Deobfuscate APK file.")
-    parser.add_argument("--deobfuscation-arg", type=str, default="--deobf", help="Argument to pass to JADX for deobfuscation.")
-    parser.add_argument("--output-dir-arg", type=str, default="--output-dir", help="Argument to pass to JADX for output directory.")
-    parser.add_argument("--output-dir-prefix", type=str, default="decompiled-", help="Prefix for output directory.")
+    parser = argparse.ArgumentParser(description="Scan APK, JAR and other Java files for secrets after decompiling.")
+    
+    input_options = parser.add_argument_group("Input Options")
+    input_options.add_argument(dest='files', type=Path, nargs="*", metavar="FILES_TO_SCAN", 
+                               help="Path to Java files to decompile and scan.")
+    input_options.add_argument("-r", "--rules", type=Path, nargs="*", metavar="SECRET_RULES_FILES", 
+                               help="Path to secret locator rules/patterns files. Rule files can in Gitleak TOML, secret-patterns-db YAML, or SecretLocator JSON formats.")
+    
+    output_options = parser.add_argument_group("Output Options")
+    output_options.add_argument("-o", "--output", type=Path, metavar="OUTPUT_FILE", help="Output file for secrets found.")    
+    output_options.add_argument("-f", "--format", type=str, choices=["text", "json", "yaml", "toml"], default="json", help="Output format for secrets found.")
+
+    decompiler_options = parser.add_argument_group("Decompiler Options", description="Options for Java decompiler.")
+    decompiler_options.add_argument("-d", "--deobfuscate", action=argparse.BooleanOptionalAction, default=False, help="Deobfuscate file before scanning.")
+    decompiler_options.add_argument("-c", "--cleanup", action=argparse.BooleanOptionalAction, default=True, help="Remove decompiled output directories after scanning.")  
+    decompiler_options.add_argument("-w", "--decompiler-working-dir", type=Path, default=Path.cwd(), help="Working directory where files will be decompiled.")       
+    decompiler_options.add_argument("-x", "--decompiler-binary", type=Path, default=Path(which("jadx") or "/usr/local/bin/jadx"), help="Path to JADX or other decompiler binary.")
+    decompiler_options.add_argument("--decompiler-suffix", type=str, default="-decompiled", help="Suffix for decompiled output directory names. Default is '-decompiled'.")
+    decompiler_options.add_argument("--decompiler-args", type=str, nargs="+", help="Additional arguments to pass to JADX or other decompiler.")
+    decompiler_options.add_argument("--decompiler-deobf-arg", type=str, default="--deobf", help="Argument to use to enable deobfuscation. Default is '--deobf'.")
+    decompiler_options.add_argument("--decompiler-output-dir-arg", type=str, default="--output-dir", help="Argument to use to set output directory. Default is '--output-dir'.")
+    decompiler_options.add_argument("-dct", "--decompiler-concurrency-type", type=str, choices=["thread", "process", "main"], default="thread", help="Type of concurrency to use for decompilation. Default is 'thread'.")
+    decompiler_options.add_argument("-dro", "--decompiler-results-order", type=str, choices=["completed", "submitted"], default="completed", help="Order to process results from decompiler. Default is 'completed'.")
+    decompiler_options.add_argument("-dmw", "--decompiler-max-workers", type=int, help="Maximum number of workers to use for decompilation.")
+    decompiler_options.add_argument("-dcs", "--decompiler-chunksize", type=int, default=1, help="Number of files to decompile per thread/process.")
+    decompiler_options.add_argument("-dto", "--decompiler-timeout", type=int, help="Timeout for decompilation in seconds.")
+
+    scanner_options = parser.add_argument_group("Secret Scanner Options", description="Options for secret scanner.")
+    scanner_options.add_argument("-sct", "--scanner-concurrency-type", type=str, choices=["thread", "process", "main"], default="process", help="Type of concurrency to use for scanning. Default is 'process'.")
+    scanner_options.add_argument("-sro", "--scanner-results-order", type=str, choices=["completed", "submitted"], default="completed", help="Order to process results from scanner. Default is 'completed'.")
+    scanner_options.add_argument("-smw", "--scanner-max-workers", type=int, help="Maximum number of workers to use for scanning.")
+    scanner_options.add_argument("-scs", "--scanner-chunksize", type=int, default=1, help="Number of files to scan per thread/process.")
+    scanner_options.add_argument("-sto", "--scanner-timeout", type=int, help="Timeout for scanning in seconds.")
+
+    # concurrency_options = parser.add_argument_group("Concurrency Options")
+    # concurrency_options.add_argument("-dct", "--decompiler-concurrency-type", type=str, choices=["thread", "process", "main"], default="thread", help="Type of concurrency to use for decompilation. Default is 'thread'.")
+    # concurrency_options.add_argument("-dro", "--decompiler-results-order", type=str, choices=["completed", "submitted"], default="completed", help="Order to process results from decompiler. Default is 'completed'.")
+    # concurrency_options.add_argument("-dmw", "--decompiler-max-workers", type=int, help="Maximum number of workers to use for decompilation.")
+    # concurrency_options.add_argument("-dcs", "--decompiler-chunksize", type=int, default=1, help="Number of files to decompile per thread/process.")
+    # concurrency_options.add_argument("-dto", "--decompiler-timeout", type=int, help="Timeout for decompilation in seconds.")
+    # concurrency_options.add_argument("-sct", "--scanner-concurrency-type", type=str, choices=["thread", "process", "main"], default="process", help="Type of concurrency to use for scanning. Default is 'process'.")
+    # concurrency_options.add_argument("-sro", "--scanner-results-order", type=str, choices=["completed", "submitted"], default="completed", help="Order to process results from scanner. Default is 'completed'.")
+    # concurrency_options.add_argument("-smw", "--scanner-max-workers", type=int, help="Maximum number of workers to use for scanning.")
+    # concurrency_options.add_argument("-scs", "--scanner-chunksize", type=int, default=1, help="Number of files to scan per thread/process.")
+    # concurrency_options.add_argument("-sto", "--scanner-timeout", type=int, help="Timeout for scanning in seconds.")
+    
     args = parser.parse_args()
 
     decompiler = JavaDecompiler()
-    secret_scanner = SecretScanner([Path(__file__).parent.parent.parent / 'secret-patterns/test.yaml'])
+    secret_scanner = SecretScanner([Path(__file__).parent.parent.parent / 'secret-patterns/high-confidence.yml'])
     apk_scanner = JavaSecretScanner(decompiler, secret_scanner)
-    args.files = list(Path("/Users/lucasfaudman/Documents/SANS/SEC575/earn/apks").glob("*.apk"))[:2]
+    args.files = list(Path("/Users/lucasfaudman/Documents/SANS/SEC575/earn/apks").glob("*.apk"))[:3]
     results = []
     for secret_result in apk_scanner.decompile_and_scan(args.files):
-        print(f"Found {secret_result.locator.name}: {secret_result.secret} in {secret_result.file.name} (line {secret_result.line_number})")
+        print(f"\n\033[92mFound {secret_result.locator.name}: {secret_result.secret[:100]} \033[0min {secret_result.file_path.name} (line {secret_result.line_number})")
         results.append(secret_result)
 
     pprint(results)
