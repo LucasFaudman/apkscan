@@ -9,7 +9,7 @@
     - "Google"
     - "OAuth"
     - "Access Token"
-    
+
 - name: "AWS API Key"
   patterns:
     - "AKIA[0-9A-Z]{16}"
