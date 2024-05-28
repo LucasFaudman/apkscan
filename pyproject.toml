@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["version"]
-name = "apk-secret-scanner"
+name = "apk_secret_scanner"
 requires-python = ">=3.8"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
@@ -22,7 +22,7 @@ Repository = "https://github.com/LucasFaudman/apk-secret-scanner.git"
 [tool.setuptools]
 
 [tool.setuptools_scm]
-version_file = "src/souperscraper/_version.py"
+version_file = "src/apk_secret_scanner/_version.py"
 
 [tool.black]
 line-length = 120

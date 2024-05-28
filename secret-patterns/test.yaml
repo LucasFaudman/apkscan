@@ -1,0 +1,21 @@
+- name: "Google OAuth Access Token"
+  patterns:
+    - "AIza[0-9A-Za-z\\-_]{35}"
+    - "ya29\\.[0-9A-Za-z\\-_]{68}"
+  description: "Google OAuth Access Token"
+  confidence: High
+  severity: High
+  tags:
+    - "Google"
+    - "OAuth"
+    - "Access Token"
+    
+- name: "AWS API Key"
+  patterns:
+    - "AKIA[0-9A-Z]{16}"
+  description: "AWS API Key"
+  confidence: High
+  severity: High
+  tags:
+    - "AWS"
+    - "API Key"
