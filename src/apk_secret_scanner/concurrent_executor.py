@@ -27,7 +27,7 @@ def execute_concurrently(
     shutdown: bool = True,
     wait: bool = True,
     cancel_pending: bool = False,
-    executor_instance: Optional[ThreadPoolExecutor | ProcessPoolExecutor] = None,
+    executor: Optional[ThreadPoolExecutor | ProcessPoolExecutor] = None,
     **executor_init_kwargs,
 ) -> Generator[T, None, Optional[ThreadPoolExecutor | ProcessPoolExecutor]]:
     """Execute function concurrently with arguments from iterables.
@@ -43,7 +43,7 @@ def execute_concurrently(
         shutdown: Whether to shutdown executor after completion or to return it for reuse. Defaults to True. If False, returns executor instance on StopIteration.
         wait: Whether to wait for executor to shutdown. Defaults to True.
         cancel_pending: Whether to cancel pending futures on shutdown. Defaults to False.
-        executor_instance: Reuse an existing ThreadPoolExecutor or ProcessPoolExecutor instance. Defaults to None.
+        executor: Reuse an existing ThreadPoolExecutor or ProcessPoolExecutor instance. Defaults to None.
         executor_init_kwargs: Additional keyword arguments to pass to ThreadPoolExecutor or ProcessPoolExecutor constructor. Defaults to None.
 
     Yields:
@@ -57,9 +57,7 @@ def execute_concurrently(
         return
 
     # Multi-threaded or multi-process execution (concurrency_type = "thread"|"process")
-    if executor_instance:
-        executor = executor_instance
-    else:
+    if not executor:
         executor_cls = ProcessPoolExecutor if "proc" in concurrency_type else ThreadPoolExecutor
         executor = executor_cls(max_workers=max_workers, **executor_init_kwargs)
 
@@ -71,14 +69,9 @@ def execute_concurrently(
         futures_generator = (
             executor.submit(func, *args) for chunk in iterchunks(zip(*iterables), chunksize) for args in chunk
         )
+        # futures_generator = (executor.submit(func, *args) for args in zip(*iterables))
         for future in as_completed(futures_generator, timeout=timeout):
             yield future.result()
-        # yield from map(Future.result, as_completed(
-        #     (executor.submit(func, *args)
-        #      for chunk in iterchunks(zip(*iterables), chunksize) for args in chunk
-        #      ), timeout=timeout)
-        # )
-        # yield from map(Future.result, as_completed(futures_generator, timeout=timeout))
 
     # Shutdown executor or return it on StopIteration to be reused
     if shutdown:
@@ -98,7 +91,7 @@ class ConcurrentExecutor:
         shutdown: bool = True,
         wait: bool = True,
         cancel_pending: bool = False,
-        executor_instance: Optional[ThreadPoolExecutor | ProcessPoolExecutor] = None,
+        executor: Optional[ThreadPoolExecutor | ProcessPoolExecutor] = None,
         **executor_init_kwargs,
     ) -> None:
         self.concurrency_type = concurrency_type
@@ -109,7 +102,7 @@ class ConcurrentExecutor:
         self._shutdown = shutdown
         self.wait = wait
         self.cancel_pending = cancel_pending
-        self.executor = executor_instance
+        self.executor = executor
         self.executor_init_kwargs = executor_init_kwargs
 
     def map(self, func: Callable[..., T], *iterables: Iterable, **kwargs) -> Iterator[T]:
@@ -125,7 +118,7 @@ class ConcurrentExecutor:
                 "timeout": self.timeout,
                 "wait": self.wait,
                 "cancel_pending": self.cancel_pending,
-                "executor_instance": self.executor,
+                "executor": self.executor,
                 **self.executor_init_kwargs,
                 **kwargs,
             },
@@ -133,7 +126,7 @@ class ConcurrentExecutor:
 
     def shutdown(self) -> None:
         if self.executor:
-            self.executor.shutdown(wait=True)
+            self.executor.shutdown(wait=self.wait, cancel_futures=self.cancel_pending)
             self.executor = None
 
     def __enter__(self):
@@ -144,3 +137,6 @@ class ConcurrentExecutor:
 
     def __del__(self):
         self.shutdown()
+
+    def __repr__(self) -> str:
+        return f"CuncurrentExecutor(concurrency_type={self.concurrency_type}, results_order={self.results_order}, max_workers={self.max_workers}, chunksize={self.chunksize}, timeout={self.timeout}, shutdown={self._shutdown}, wait={self.wait}, cancel_pending={self.cancel_pending}, executor={self.executor}, executor_init_kwargs={self.executor_init_kwargs})"

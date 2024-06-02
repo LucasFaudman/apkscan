@@ -4,14 +4,24 @@ from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
 from typing import Optional, Iterator, Literal, Generator
 from pathlib import Path
-from re import compile as re_compile, Pattern, Match
-import time
-from pprint import pprint
-from concurrent_executor import ConcurrentExecutor
+from pydantic import BaseModel
+from re import (
+    compile as re_compile,
+    Pattern,
+    IGNORECASE,
+    MULTILINE,
+    DOTALL,
+    ASCII,
+    LOCALE,
+    UNICODE,
+    VERBOSE,
+    TEMPLATE,
+)
 
+from .concurrent_executor import ConcurrentExecutor
 
-@dataclass
-class SecretLocator:
+class SecretLocator(BaseModel):
+    id: str
     name: str
     description: str = "No description provided."
     confidence: str = "Unknown"
@@ -20,13 +30,12 @@ class SecretLocator:
     secret_group: int | str = 0
     tags: list[str] = field(default_factory=list)
     keywords: list[str] = field(default_factory=list)
+    allowlist: list[str] = field(default_factory=list)
 
     def __hash__(self) -> int:
         return hash(self.name)
 
-
-@dataclass
-class SecretResult:
+class SecretResult(BaseModel):
     secret: bytes
     file_path: Path
     line_number: int
@@ -37,126 +46,153 @@ class SecretResult:
         return hash(self.secret)
 
 
+def try_load_json_toml_yaml(file_path: Path) -> Optional[dict]:
+    if not file_path.exists():
+        print(f"File not found: {file_path}. Skipping.")
+        return
+
+    with file_path.open("r") as f:
+        contents = f.read()
+
+    try:
+        return json_loads(contents)
+    except JSONDecodeError:
+        print(f"Error loading {file_path} as JSON. Trying TOML.")
+
+    try:
+        return toml_loads(contents)
+    except TOMLDecodeError:
+        print(f"Error loading {file_path} as TOML. Trying YAML.")
+
+    try:
+        return yaml_safe_load(contents)
+    except YAMLError:
+        print(f"Error loading {file_path} as YAML. Skipping.")
+
+def compile_str_to_bytes_pattern(pattern_str: str) -> Pattern:
+    flag_notation = {
+        "i": IGNORECASE,
+        "m": MULTILINE,
+        "s": DOTALL,
+        "a": ASCII,
+        "l": LOCALE,
+        "u": UNICODE,
+        "x": VERBOSE,
+        "t": TEMPLATE,
+    }
+
+    flags = 0
+    for flag_char, flag in flag_notation.items():
+        if f"(?{flag_char})" in pattern_str or f"(?-{flag_char})" in pattern_str:
+            flags |= flag
+            pattern_str = pattern_str.replace(
+                f"(?{flag_char})",
+                "",
+            ).replace(f"(?-{flag_char})", "")
+    return re_compile(pattern_str.encode(), flags)
+
+def load_secrets_patterns_db_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
+    secret_locators = {}
+    for locator_dict in locator_dicts:
+        locator_dict = locator_dict["pattern"]
+        locator_dict["patterns"] = set((compile_str_to_bytes_pattern(locator_dict.pop("regex")),))
+        locator_dict["id"] = locator_dict["name"].replace(" ", "-").lower()
+        secret_locators[locator_dict["id"]] = SecretLocator(**locator_dict)
+
+    secret_locators.pop("domain", None)
+    return secret_locators
+
+def load_gitleaks_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
+    secret_locators = {}
+    for locator_dict in locator_dicts:
+        locator_dict["patterns"] = set((compile_str_to_bytes_pattern(locator_dict.pop("regex")),))
+        locator_dict["name"] = locator_dict["id"].replace("-", " ").title()
+        locator_dict["secret_group"] = locator_dict.pop("secretGroup", 0)
+        locator_dict.pop("entropy", None)
+        locator_dict.pop("allowlist", None)
+        secret_locators[locator_dict["id"]] = SecretLocator(**locator_dict)
+
+    secret_locators.pop("generic-api-key", None)
+    return secret_locators
+
+def load_secret_locators_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
+    secret_locators = {}
+    for locator_dict in locator_dicts:
+        locator_dict["patterns"] = set((compile_str_to_bytes_pattern(locator_dict.pop("regex")),))
+        secret_locators[locator_dict["id"]] = SecretLocator(**locator_dict)
+    return secret_locators
+
+def load_simple_key_value_format(simple_locator_dict: dict) -> dict[str, SecretLocator]:
+    secret_locators = {}
+    for name, patterns in simple_locator_dict.items():
+        locator_dict = {
+            "id": name.replace(" ", "-").lower(),
+            "name": name
+        }
+        if isinstance(patterns, str):
+            locator_dict["patterns"] = set((compile_str_to_bytes_pattern(patterns),))
+        else:
+            locator_dict["patterns"] = set((*map(compile_str_to_bytes_pattern, patterns),))
+        secret_locators[locator_dict["id"]] = SecretLocator(**locator_dict)
+    return secret_locators
+
+def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
+    secret_locators: dict[str, SecretLocator] = {}
+    for secret_locator_file in secret_locator_files:
+        if not (secret_locator_file_data := try_load_json_toml_yaml(secret_locator_file)):
+            continue
+        if locator_dicts := secret_locator_file_data.get("patterns"):
+            secret_locators.update(load_secrets_patterns_db_format(locator_dicts))
+        elif locator_dicts := secret_locator_file_data.get("rules"):
+            secret_locators.update(load_gitleaks_format(locator_dicts))
+        elif locator_dicts := secret_locator_file_data.get("secrets"):
+            secret_locators.update(load_secret_locators_format(locator_dicts))
+        else:
+            secret_locators.update(load_simple_key_value_format(secret_locator_file_data))
+
+    print(f"\nLoaded {len(secret_locators)} secret locators.")
+    return secret_locators
+
+
 class SecretScanner:
     def __init__(
         self,
         secret_locator_files: list[Path],
         load_locators_on_init: bool = True,
-        save_results: bool = False,
         **concurrent_executor_kwargs,
     ):
         self.secret_locators: dict[str, SecretLocator] = {}
         self.load_locators_on_init = load_locators_on_init
-        self.save_results = save_results
         self.results: dict[SecretLocator, list[SecretResult]] = {}
-
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "process", **concurrent_executor_kwargs})
 
+        self.secret_locator_files = []
         if load_locators_on_init:
             self.load_secret_locators(secret_locator_files)
 
-    def try_load_yaml_toml_or_json(self, file_path: Path) -> Optional[dict]:
-        if not file_path.exists():
-            print(f"File not found: {file_path}. Skipping.")
-            return
-
-        with file_path.open("r") as f:
-            contents = f.read()
-
-        try:
-            return yaml_safe_load(contents)
-        except (YAMLError, KeyError):
-            print(f"Error loading {file_path} as YAML. Trying TOML.")
-
-        try:
-            return toml_loads(contents)
-        except (TOMLDecodeError, KeyError):
-            print(f"Error loading {file_path} as TOML. Trying JSON.")
-
-        try:
-            return json_loads(contents)
-        except (JSONDecodeError, KeyError):
-            print(f"Error loading {file_path} as JSON. Skipping.")
-
-    def make_secret_locator(self, locator_dict: dict) -> SecretLocator:
-        pattern_strs = locator_dict.get("patterns") or (locator_dict.pop("regex"),)
-        pattern_bytes = [pattern_str.encode() for pattern_str in pattern_strs]
-        locator_dict["patterns"] = set(map(re_compile, pattern_bytes))
-        if locator_id := locator_dict.pop("id", None):
-            locator_dict["name"] = locator_id
-        return SecretLocator(**locator_dict)
-
-    def load_secrets_patterns_db_format(self, secret_locator_file_data: dict) -> dict[str, SecretLocator]:
-        return {
-            locator_dict["pattern"]["name"]: self.make_secret_locator(locator_dict["pattern"])
-            for locator_dict in secret_locator_file_data["patterns"]
-        }
-
-    def load_gitleaks_format(self, secret_locator_file_data: dict) -> dict[str, SecretLocator]:
-        return {
-            locator_dict["id"]: self.make_secret_locator(locator_dict)
-            for locator_dict in secret_locator_file_data["rules"]
-        }
-
     def load_secret_locators(self, secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
-        for secret_locator_file in secret_locator_files:
-            if not (secret_locator_file_data := self.try_load_yaml_toml_or_json(secret_locator_file)):
-                continue
-            if secret_locators := self.load_secrets_patterns_db_format(secret_locator_file_data):
-                self.secret_locators.update(secret_locators)
-            elif secret_locators := self.load_gitleaks_format(secret_locator_file_data):
-                self.secret_locators.update(secret_locators)
-
-        print(f"\nLoaded {len(self.secret_locators)} secret locators.")
+        self.secret_locators.update(load_secret_locators(secret_locator_files))
         return self.secret_locators
 
     def iterscan_file(self, file_path: Path) -> Iterator[SecretResult]:
-        print(f"Scanning: {file_path.name} ", end="\r")
         with file_path.open("rb") as f:
             for line_number, line in enumerate(f, start=1):
                 for locator in self.secret_locators.values():
                     for pattern in locator.patterns:
                         if match := pattern.search(line):
-                            secret_result = SecretResult(
-                                match.group(locator.secret_group), file_path, line_number, pattern, locator
-                            )
-                            yield secret_result
-                            if self.save_results:
-                                self.results.setdefault(locator, []).append(secret_result)
+                            yield SecretResult(
+                                secret=match.group(locator.secret_group),
+                                file_path=file_path,
+                                line_number=line_number,
+                                matched_pattern=pattern,
+                                locator=locator)
 
-    def scan_file(self, file_path: Path) -> list[SecretResult]:
-        return list(self.iterscan_file(file_path))
+    def scan_file(self, file_path: Path) -> tuple[Path, list[SecretResult]]:
+        # print(f"Scanning: {file_path.name} ", end="\r")
+        return file_path, list(self.iterscan_file(file_path))
 
-    def iterscan_files(self, file_paths: Iterator[Path]) -> Iterator[SecretResult]:
-        for file_secret_results in self.concurrent_executor.map(self.scan_file, file_paths):
-            yield from file_secret_results
+    def scan_concurrently(self, file_paths: Iterator[Path]) -> Iterator[tuple[Path, list[SecretResult]]]:
+        yield from self.concurrent_executor.map(self.scan_file, file_paths)
 
-    def scan_files(self, file_paths: Iterator[Path]) -> list[SecretResult]:
-        return list(self.iterscan_files(file_paths))
-
-    def iterscan_directory(self, directory_path: Path) -> Iterator[SecretResult]:
-        yield from self.iterscan_files(filter(Path.is_file, directory_path.rglob("*")))
-
-    def scan_directory(self, directory_path: Path) -> list[SecretResult]:
-        return list(self.iterscan_directory(directory_path))
-
-
-if __name__ == "__main__":
-    start = time.time()
-    scanner = SecretScanner(
-        [Path(__file__).parent.parent.parent / "secret-patterns/high-confidence.yml"],
-        concurrency_type="process",
-        # max_workers=20,
-        chunksize=1,
-    )
-    results = set()
-    for secret_result in scanner.iterscan_directory(Path("testoutput/")):
-        print(
-            f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]}\033[0m in {secret_result.file_path.name} (line {secret_result.line_number})"
-        )
-        results.add(secret_result)
-
-    elapsed = time.time() - start
-    time.sleep(3)
-    pprint(f"Found {len(results)} secrets:")
-    print(f"Scanning took {elapsed} seconds.")
+    def __repr__(self) -> str:
+        return f"SecretScanner(secret_locators={len(self.secret_locators)}, concurrent_executor={self.concurrent_executor}))"
