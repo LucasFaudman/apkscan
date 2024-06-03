@@ -85,20 +85,21 @@ class APKScanner:
             if not self.decompile_start_time:
                 self.decompile_start_time = datetime.now()
                 print(f"\nDecompiling started at {self.decompile_start_time.strftime('%H:%M:%S:%SS')}\n")
-                self.print_status('\n')
 
             self.print_status()
             yield file_path
 
     def decompiled_files_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path, output_dir, decompiled_files, success in self.decompiler.decompile_concurrently(file_paths):
+            self.decompile_results[file_path] = (output_dir, decompiled_files, success)
+
             if success and decompiled_files:
+                self.num_decompile_success += 1
+
                 if not self.scan_start_time:
                     self.scan_start_time = datetime.now()
-                    print(f"\nScanning started at {self.scan_start_time.strftime('%H:%M:%S:%f')}\n")
+                    print(f"\nScanning started at {self.scan_start_time.strftime('%H:%M:%S:%SS')}\n")
 
-                self.num_decompile_success += 1
-                self.decompile_results[file_path] = (output_dir, decompiled_files, success)
                 for decompiled_file in decompiled_files:
                     self.num_scanning += 1
                     self.scanning.add(decompiled_file)
