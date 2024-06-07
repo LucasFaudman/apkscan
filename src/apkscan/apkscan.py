@@ -70,7 +70,6 @@ class APKScanner:
             status_message += f"Decompiled: {self.num_decompiled}/{self.num_files} ({self.num_decompiled/self.num_files*100:3f}%) | "
         if self.num_scanning:
             status_message += f"Scanned: {self.num_scanned}/{self.num_scanning} ({self.num_scanned/self.num_scanning*100:3f}%) | "
-            # status_message += f"Last: {self.last_scanned.name if self.last_scanned else ''}"
         if self.num_secrets:
             status_message += f"Secrets: {self.num_secrets} ({self.num_unique_secrets} unique) | "
         print(status_message, end=end, flush=True)
