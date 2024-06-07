@@ -9,8 +9,8 @@ from .secret_scanner import SecretScanner, SecretResult
 
 class APKScanner:
     def __init__(self,
-                 decompiler_kwargs: dict = {},
-                 scanner_kwargs: dict = {},
+                 decompiler_kwargs: dict,
+                 scanner_kwargs: dict,
                  output_file: Optional[Path] = None,
                  output_format: str = "json",
                  groupby: Literal["file", "locator", "both"] = "both",
