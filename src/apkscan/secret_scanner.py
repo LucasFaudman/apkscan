@@ -2,7 +2,7 @@ from yaml import safe_load as yaml_safe_load, YAMLError
 from json import loads as json_loads, JSONDecodeError
 from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
-from typing import Optional, Iterator, Literal, Generator
+from typing import Optional, Iterator
 from pathlib import Path
 from re import (
     compile as re_compile,

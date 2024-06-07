@@ -4,15 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
-dynamic = ["version"]
+dynamic = ["classifiers"]
 name = "apkscan"
+version = "0.1.0"
 requires-python = ">=3.8"
 readme = "README.md"
-license = { file = "LICENSE.txt" }
+license = { file = "LICENSE" }
 description = "Decompile and scan for secrets in .apk, .xapk, .jar, .dex, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts files"
 keywords = ["secret", "scanner", "jadx", "decompile", "apk", "dex", "jar", "class", "smali", "zip", "aar", "arsc", "aab", "xapk", "jadx.kts"]
 dependencies = [
-    "pyyaml"
+    "enjarify",
+    "pyyaml",
 ]
 
 [project.urls]

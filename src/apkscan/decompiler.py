@@ -188,12 +188,13 @@ class Decompiler:
             success = self.try_run_binary(binary_name, file_path, output_dir)
 
         if success:
-            print(f"Successfully decompiled {file_path.name} with {binary_name}\nIndexing decompiled files in {output_dir}...")
+            print(f"Successfully decompiled {file_path.name} with {binary_name}")
         elif self.remove_failed_output_dirs:
             print(f"Erorr decompiling {file_path.name} with {binary_name}.")
             self.remove_output_dir(output_dir)
 
         if success or not self.remove_failed_output_dirs:
+            print(f"\nIndexing decompiled files in {output_dir}...")
             decompiled_files = set((*filter(Path.is_file, output_dir.rglob("*")),))
             print(f"Found {len(decompiled_files)} decompiled files for {file_path.name}")
         else:

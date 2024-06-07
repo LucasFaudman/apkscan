@@ -8,8 +8,8 @@ if __name__ == "__main__":
     decompiler_kwargs = {
         "binaries": [
             "jadx",
-            "procyon",
-            "cfr",
+            # "procyon",
+            # "cfr",
             "apktool",
             ],
         "working_dir": tmpdir,
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     test_apks =  [Path(__file__).parent / "test_apks" / test_apk
                   for test_apk in [
                     "test-apk-1.apk",
-                    # "test-xapk-1.xapk",
+                    "test-xapk-1.xapk",
                   ]
     ]
     apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, cleanup=True)
