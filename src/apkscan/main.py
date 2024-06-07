@@ -40,7 +40,7 @@ def main():
     decompiler_options.add_argument("-c", "--cleanup", action=BooleanOptionalAction, default=False, help="Remove decompiled output directories after scanning.")
     decompiler_options.add_argument("-w", "--decompiler-working-dir", type=Path, default=Path.cwd(), help="Working directory where files will be decompiled.")
     decompiler_options.add_argument("--decompiler-output-suffix", type=str, default="-decompiled", help="Suffix for decompiled output directory names. Default is '-decompiled'.")
-    decompiler_options.add_argument("--decompiler-extra-args", type=str, nargs="+", help="Additional arguments to pass to decompilers in form quoted whitespace separated '<DECOMPILER_NAME> <EXTRA_ARGS>...'. For example: --decompiler-extra-args jadx '--no-debug-info,--no-inline'.")
+    decompiler_options.add_argument("--decompiler-extra-args", type=str, nargs="+", help="Additional arguments to pass to decompilers in form quoted whitespace separated '<DECOMPILER_NAME> <EXTRA_ARGS>...'. For example: --decompiler-extra-args 'jadx --no-debug-info,--no-inline'.")
     decompiler_options.add_argument("-dct", "--decompiler-concurrency-type", type=str, choices=["thread", "process", "main"], default="thread", help="Type of concurrency to use for decompilation. Default is 'thread'.")
     decompiler_options.add_argument("-dro", "--decompiler-results-order", type=str, choices=["completed", "submitted"], default="completed", help="Order to process results from decompiler. Default is 'completed'.")
     decompiler_options.add_argument("-dmw", "--decompiler-max-workers", type=int, default=6, help="Maximum number of workers to use for decompilation.")
