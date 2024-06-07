@@ -225,7 +225,7 @@ class APKScanner:
     def do_cleanup(self, **cleanup_concurrency_kwargs):
         if self.cleanup and not self.cleaned_up:
             self.decompiler.cleanup(**cleanup_concurrency_kwargs)
-            self.decompiler.concurrent_executor.shutdown(wait=True, cancel_pending=True)
+            self.decompiler.concurrent_executor.shutdown(wait=False, cancel_pending=True)
             self.secret_scanner.concurrent_executor.shutdown(wait=False, cancel_pending=True)
         self.cleaned_up = True
 
