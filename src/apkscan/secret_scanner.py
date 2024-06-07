@@ -138,6 +138,7 @@ def load_simple_key_value_format(simple_locator_dict: dict) -> dict[str, SecretL
     return secret_locators
 
 def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
+    print(f"\nLoading secret locators from {len(secret_locator_files)} files.")
     secret_locators: dict[str, SecretLocator] = {}
     for secret_locator_file in secret_locator_files:
         if not (secret_locator_file_data := try_load_json_toml_yaml(secret_locator_file)):

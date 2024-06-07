@@ -1,19 +1,10 @@
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed, Future
 from typing import Callable, Iterable, Iterator, Generator, Literal, Optional, TypeAlias, TypeVar
-from itertools import islice
 
 ConcurrencyType: TypeAlias = Literal["thread", "process", "main", False]
 ResultsOrder: TypeAlias = Literal["completed", "submitted"]
 OptionalExecutor: TypeAlias = Optional[ThreadPoolExecutor | ProcessPoolExecutor]
 T = TypeVar("T")
-
-
-def iterchunks(iterable: Iterable[T], chunksize: int) -> Iterator[tuple[T, ...]]:
-    """Yield successive n-sized chunks from iterable."""
-    iterable = iter(iterable)
-    while chunk := tuple(islice(iterable, chunksize)):
-        yield chunk
-
 
 # Defined outside of class to allow for standalone use
 def execute_concurrently(
@@ -66,12 +57,8 @@ def execute_concurrently(
         yield from executor.map(func, *iterables, timeout=timeout, chunksize=chunksize)
     else:
         # Yield results in order of completion
-        futures_generator = (
-            executor.submit(func, *args) for chunk in iterchunks(zip(*iterables), chunksize) for args in chunk
-        )
-        # futures_generator = (executor.submit(func, *args) for args in zip(*iterables))
-        for future in as_completed(futures_generator, timeout=timeout):
-            yield future.result()
+        futures_generator = (executor.submit(func, *args) for args in zip(*iterables))
+        yield from map(Future.result, as_completed(futures_generator, timeout=timeout))
 
     # Shutdown executor or return it on StopIteration to be reused
     if shutdown:

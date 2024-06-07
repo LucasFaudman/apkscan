@@ -27,7 +27,8 @@ class APKScanner:
         self.output_written = False
         self.cleaned_up = False
         # state tracking
-        self.decompiling = set()
+        self.decompiling = {}
+        self.decompilers_count_by_ext = {}
         self.decompile_start_time = None
         self.decompile_elapsed_time = None
         self.scanning = set()
@@ -49,11 +50,11 @@ class APKScanner:
         self.secrets_results = []
         self.unique_secrets = set()
 
-        print(f"\nInitialized Decompiler: {self.decompiler}")
-        print(f"\nInitialized Secret Scanner: {self.secret_scanner}")
-        print(f"\nDecompiler Binary: {self.decompiler.binary}")
-        print(f"\nSecret Locator Files: {self.secret_scanner.secret_locator_files}")
-        print(f"\nOutput File: {self.output_file}")
+        print(f"\nInitialized Decompiler:\n- {self.decompiler}")
+        print(f"\nInitialized Secret Scanner:\n- {self.secret_scanner}")
+        print(f"\nDecompiler Binaries:\n- " + "\n- ".join(map(str, self.decompiler.binary_paths.values())))
+        print(f"\nSecret Locator Files:\n- " + "\n- ".join(map(str, self.secret_scanner.secret_locator_files)))
+        print(f"\nOutput File:\n- {self.output_file.absolute()}\n")
 
     def print_status(self, end='\r'):
         if self.decompiling and not self.scanning:
@@ -80,7 +81,11 @@ class APKScanner:
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path in file_paths:
             self.num_files += 1
-            self.decompiling.add(file_path)
+            ext = file_path.suffix
+            if not (num_decompilers := self.decompilers_count_by_ext.get(ext)):
+                num_decompilers = self.decompiler.num_binaries_to_run_on_ext(ext)
+                self.decompilers_count_by_ext[ext] = num_decompilers
+            self.decompiling[file_path.stem] = num_decompilers
 
             if not self.decompile_start_time:
                 self.decompile_start_time = datetime.now()
@@ -91,7 +96,8 @@ class APKScanner:
 
     def decompiled_files_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path, output_dir, decompiled_files, success in self.decompiler.decompile_concurrently(file_paths):
-            self.decompile_results[file_path] = (output_dir, decompiled_files, success)
+            self.decompile_results[output_dir] = (file_path, decompiled_files, success)
+            self.decompiling[file_path.stem] -= 1
 
             if success and decompiled_files:
                 self.num_decompile_success += 1
@@ -109,9 +115,10 @@ class APKScanner:
             else:
                 self.num_decompile_errors += 1
 
-            self.num_decompiled += 1
-            self.decompiling.remove(file_path)
-            self.print_status('\n')
+            if self.decompiling[file_path.stem] == 0:
+                self.num_decompiled += 1
+                del self.decompiling[file_path.stem]
+                self.print_status('\n')
 
         self.decompiler.concurrent_executor.shutdown()
         if self.decompile_start_time:
@@ -183,7 +190,8 @@ class APKScanner:
     def group_results_by_input_file(self) -> dict[str, list[SecretResult]]:
         results_by_input_file = {}
         for secret_result in self.secrets_results:
-            for file_path, (output_dir, decompiled_files, success) in self.decompile_results.items():
+            for output_dir, (file_path, decompiled_files, success) in self.decompile_results.items():
+                # TODO maybe group by output_dir (decompilier) ?
                 if secret_result.file_path in decompiled_files:
                     serializable_secret_result = self.make_secret_result_serializable(secret_result)
                     results_by_input_file.setdefault(str(file_path), []).append(serializable_secret_result)

@@ -9,7 +9,7 @@ name = "apkscan"
 requires-python = ">=3.8"
 readme = "README.md"
 license = { file = "LICENSE.txt" }
-description = "Decompile and scan for secrets in .apk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .xapk, .jadx.kts files"
+description = "Decompile and scan for secrets in .apk, .xapk, .jar, .dex, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts files"
 keywords = ["secret", "scanner", "jadx", "decompile", "apk", "dex", "jar", "class", "smali", "zip", "aar", "arsc", "aab", "xapk", "jadx.kts"]
 dependencies = [
     "pyyaml"
@@ -18,6 +18,9 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/LucasFaudman/apk-secret-scanner.git"
 Repository = "https://github.com/LucasFaudman/apk-secret-scanner.git"
+
+[project.scripts]
+apkscan = "apkscan.main:main"
 
 [tool.setuptools]
 

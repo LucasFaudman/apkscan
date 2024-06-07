@@ -6,7 +6,14 @@ from pathlib import Path
 if __name__ == "__main__":
     tmpdir = Path("./testoutput")
     decompiler_kwargs = {
+        "binaries": [
+            "jadx",
+            "procyon",
+            "cfr",
+            "apktool",
+            ],
         "working_dir": tmpdir,
+        "overwrite": True,
     }
     scanner_kwargs = {
         "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/secret-patterns/high-confidence.yml')],
@@ -19,7 +26,7 @@ if __name__ == "__main__":
                     # "test-xapk-1.xapk",
                   ]
     ]
-    apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, )
+    apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, cleanup=True)
 
     try:
         apk_scanner.decompile_and_scan(test_apks)
