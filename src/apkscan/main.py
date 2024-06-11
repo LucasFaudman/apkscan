@@ -23,6 +23,8 @@ def main():
     output_options.add_argument("-o", "--output", type=Path, metavar="SECRETS_OUTPUT_FILE", default="secrets_output.json", help="Output file for secrets found.")
     output_options.add_argument("-f", "--format", type=str, choices=["text", "json", "yaml"], default="json", help="Output format for secrets found.")
     output_options.add_argument("-g", "--groupby", type=str, choices=["file", "locator", "both"], default="both", help="Group secrets by input file or locator. Default is 'both'.")
+    output_options.add_argument("-c", "--cleanup", action=BooleanOptionalAction, default=False, help="Remove decompiled output directories after scanning.")
+    output_options.add_argument("-q", "--quiet", action="store_true", help="Suppress output from subprocesses.")
 
     decompiler_choices = parser.add_argument_group("Decompiler Choices",
         description="Choose which decompiler(s) to use. Optionally specify path to decompiler binary. Default is JADX.")
@@ -37,7 +39,6 @@ def main():
 
     decompiler_options = parser.add_argument_group("Decompiler Advanced Options", description="Options for Java decompiler.")
     decompiler_options.add_argument("-d", "--deobfuscate", action=BooleanOptionalAction, default=True, help="Deobfuscate file before scanning.")
-    decompiler_options.add_argument("-c", "--cleanup", action=BooleanOptionalAction, default=False, help="Remove decompiled output directories after scanning.")
     decompiler_options.add_argument("-w", "--decompiler-working-dir", type=Path, default=Path.cwd(), help="Working directory where files will be decompiled.")
     decompiler_options.add_argument("--decompiler-output-suffix", type=str, default="-decompiled", help="Suffix for decompiled output directory names. Default is '-decompiled'.")
     decompiler_options.add_argument("--decompiler-extra-args", type=str, nargs="+", help="Additional arguments to pass to decompilers in form quoted whitespace separated '<DECOMPILER_NAME> <EXTRA_ARGS>...'. For example: --decompiler-extra-args 'jadx --no-debug-info,--no-inline'.")
@@ -57,24 +58,22 @@ def main():
     args = parser.parse_args()
 
     decompiler_kwargs = {
+        "binaries": {},
+        "enjarify_choice": args.enjarify_choice,
         "deobfuscate": args.deobfuscate,
         "remove_failed_output_dirs": args.cleanup,
+        "suppress_output": args.quiet,
     }
     scanner_kwargs = {
         "secret_locator_files": args.rules,
     }
-    binaries = {}
-    args_dict = vars(args)
-    for k, v in args_dict.items():
-        if k.startswith("decompiler_"):
-            decompiler_kwargs[k[11:]] = v
-        elif k.startswith("scanner_"):
+    for k, v in vars(args).items():
+        if k.startswith("scanner_"):
             scanner_kwargs[k[8:]] = v
+        elif k.startswith("decompiler_"):
+            decompiler_kwargs[k[11:]] = v
         elif k in Decompiler.CONFIG and v is not False:
-            binaries[k] = v
-
-    decompiler_kwargs['binaries'] = binaries
-    decompiler_kwargs["enjarify_choice"] = args.enjarify_choice
+            decompiler_kwargs['binaries'][k] = v
 
     apk_scanner = APKScanner(
         decompiler_kwargs=decompiler_kwargs,

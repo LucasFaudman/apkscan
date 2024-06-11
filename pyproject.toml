@@ -7,13 +7,13 @@ authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["classifiers"]
 name = "apkscan"
 version = "0.1.0"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 readme = "README.md"
 license = { file = "LICENSE" }
 description = "Decompile and scan for secrets in .apk, .xapk, .jar, .dex, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts files"
 keywords = ["secret", "scanner", "jadx", "decompile", "apk", "dex", "jar", "class", "smali", "zip", "aar", "arsc", "aab", "xapk", "jadx.kts"]
 dependencies = [
-    "enjarify",
+    "enjarify-adapter",
     "pyyaml",
 ]
 

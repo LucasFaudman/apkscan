@@ -1,7 +1,7 @@
-from subprocess import run, SubprocessError
+from subprocess import run, DEVNULL, SubprocessError
 from pathlib import Path
 from shutil import which, rmtree
-from os import access, X_OK, devnull
+from os import access, X_OK
 from shlex import split as shlex_split
 from typing import Optional, Iterator, Iterable, Literal
 
@@ -22,7 +22,7 @@ class Decompiler:
             "output_arg": "--output",
             "deobf_arg": "--force-manifest",
             "extra_args": ["d", "--force", "--keep-broken-res"],
-            "file_exts": {".apk"}
+            "file_exts": {".apk", ".xapk"}
         },
         "procyon": {
             "binary": which("procyon-decompiler") or "/usr/local/bin/procyon-decompiler",
@@ -64,6 +64,7 @@ class Decompiler:
         working_dir: Path = Path("/tmp/apk-secret-scanner"),
         overwrite: bool = False,
         remove_failed_output_dirs: bool = True,
+        suppress_output: bool = False,
         **concurrent_executor_kwargs,
     ):
         self.binary_paths = self.validate_binary_paths(binaries)
@@ -74,6 +75,7 @@ class Decompiler:
         self.working_dir = working_dir
         self.overwrite = overwrite
         self.remove_failed_output_dirs = remove_failed_output_dirs
+        self.suppress_output = suppress_output
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "thread", **concurrent_executor_kwargs})
         self.output_dirs = {}
 
@@ -146,9 +148,11 @@ class Decompiler:
 
     def try_run_binary(self, binary_name: str, file_path: Path, output_path: Path) -> bool:
         args = self.make_args(binary_name, file_path, output_path)
+        kwargs = {"stdout": DEVNULL, "stderr": DEVNULL} if self.suppress_output else {}
+        kwargs["check"] = False
         try:
             print(f"Running {binary_name} on {file_path.name}")
-            result = run(args, capture_output=False, check=True)
+            result = run(args, **kwargs) # type: ignore
             return True
         except SubprocessError as e:
             print(f"Error Running {binary_name} on {file_path.name}: {e}")
@@ -164,13 +168,17 @@ class Decompiler:
         return output_dir
 
     def enjarify_file(self, file_path: Path) -> Path:
+        if file_path.suffix not in {".apk", ".dex"}:
+            print(f"Skipping {file_path.name}. Enjarify only works on .apk and .dex files.")
+            return file_path
+
         jar_file = (self.get_output_dir(file_path) / file_path.stem).with_suffix(".jar")
         if jar_file.exists() and not self.overwrite:
             return jar_file
 
         try:
             print(f"\nEnjarifying {file_path.name} to {jar_file.name}")
-            enjarify(file_path, jar_file, force=True, quiet=False)
+            enjarify(file_path, jar_file, overwrite=True, quiet=self.suppress_output)
             print(f"Successfully enjarified {file_path.name} to {jar_file}")
         except Exception as e:
             print(f"Error enjarifying {file_path.name}: {e}")
@@ -228,6 +236,10 @@ class Decompiler:
             self.remove_output_dir, output_dirs, **concurrency_kwargs):
             print(f"Removed: {output_dir}")
         print(f"Done removing {len(output_dirs)} decompiled output directories.")
+
+    # def unpack_xapk(self, file_path: Path) -> Iterator[Path]:
+        # TODO: Implement unpacking xapk files and place in front of decompilation when file is xapk
+        # pass
 
     def __repr__(self) -> str:
         return f"Decompiler:(binary_paths={self.binary_paths}, extra_args={self.extra_args}, deobfuscate={self.deobfuscate}, output_suffix={self.output_suffix}, working_dir={self.working_dir}, remove_failed_output_dirs={self.remove_failed_output_dirs}, concurrent_executor={self.concurrent_executor})"

@@ -10,10 +10,11 @@ if __name__ == "__main__":
             "jadx",
             # "procyon",
             # "cfr",
-            "apktool",
+            # "apktool",
             ],
         "working_dir": tmpdir,
         "overwrite": True,
+        "suppress_output": True,
     }
     scanner_kwargs = {
         "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/secret-patterns/high-confidence.yml')],
@@ -23,10 +24,10 @@ if __name__ == "__main__":
     test_apks =  [Path(__file__).parent / "test_apks" / test_apk
                   for test_apk in [
                     "test-apk-1.apk",
-                    "test-xapk-1.xapk",
+                    # "test-xapk-1.xapk",
                   ]
     ]
-    apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, cleanup=True)
+    apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, cleanup=False)
 
     try:
         apk_scanner.decompile_and_scan(test_apks)

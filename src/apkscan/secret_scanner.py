@@ -67,6 +67,7 @@ def try_load_json_toml_yaml(file_path: Path) -> Optional[dict]:
     except YAMLError:
         print(f"Error loading {file_path} as YAML. Skipping.")
 
+
 def compile_str_to_bytes_pattern(pattern_str: str) -> Pattern:
     flag_notation = {
         "i": IGNORECASE,
@@ -189,7 +190,6 @@ class SecretScanner:
                             locator=locator)
 
     def scan_file(self, file_path: Path) -> tuple[Path, list[SecretResult]]:
-        # print(f"Scanning: {file_path.name} ", end="\r")
         return file_path, list(self.iterscan_file(file_path))
 
     def scan_concurrently(self, file_paths: Iterator[Path]) -> Iterator[tuple[Path, list[SecretResult]]]:
