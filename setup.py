@@ -15,7 +15,7 @@ setup(
     author='Lucas Faudman',
     author_email='lucasfaudman@gmail.com',
     url='https://github.com/LucasFaudman/apk-secret-scanner.git',
-    packages=find_packages(where='src'),
+    packages=find_packages(where='src', exclude=['tests']),
     package_dir={'': 'src'},
     package_data={
         '': ['LICENSE', 'secret-patterns/*'],
