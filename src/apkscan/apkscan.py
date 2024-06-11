@@ -75,7 +75,7 @@ class APKScanner:
         print(status_message, end=end, flush=True)
 
     def print_secret_found(self, secret_result: SecretResult) -> None:
-        print(f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]}\033[0m in {secret_result.file_path} (line {secret_result.line_number})\n")
+        print(f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]}\033[0m in {secret_result.file_path}:{secret_result.line_number} (line {secret_result.line_number})\n")
 
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path in file_paths:

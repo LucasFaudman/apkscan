@@ -13,11 +13,11 @@ if __name__ == "__main__":
             # "apktool",
             ],
         "working_dir": tmpdir,
-        "overwrite": True,
-        "suppress_output": True,
+        "overwrite": False,
+        "suppress_output": False,
     }
     scanner_kwargs = {
-        "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/secret-patterns/high-confidence.yml')],
+        "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/secret-patterns/default.json')],
     }
 
     test_output = Path("test_output.json")
