@@ -14,11 +14,19 @@ setup(
     url='https://github.com/LucasFaudman/apk-secret-scanner.git',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
+    package_data={
+        '': ['secret-patterns/*'],
+    },
     include_package_data=True,
     install_requires=[
         'enjarify-adapter',
         'pyyaml',
     ],
+    entry_points={
+        'console_scripts': [
+            'apkscan = apkscan.main:main',
+        ],
+    },
     python_requires='>=3.11',
     license='LICENSE',
     classifiers=[
@@ -38,10 +46,5 @@ setup(
     project_urls={
         'Homepage': 'https://github.com/LucasFaudman/apk-secret-scanner.git',
         'Repository': 'https://github.com/LucasFaudman/apk-secret-scanner.git',
-    },
-    entry_points={
-        'console_scripts': [
-            'apkscan = apkscan.main:main',
-        ],
     },
 )
