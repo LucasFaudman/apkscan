@@ -1,12 +1,12 @@
 [build-system]
-requires = ["setuptools", "setuptools_scm>=8"]
+requires = ["setuptools>=42", "setuptools_scm>=8", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["classifiers"]
 name = "apkscan"
-version = "0.1.0"
+version = "0.1.1"
 requires-python = ">=3.11"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -25,6 +25,14 @@ Repository = "https://github.com/LucasFaudman/apk-secret-scanner.git"
 apkscan = "apkscan.main:main"
 
 [tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"*" = ["LICENSE"]
+"apkscan.secret_locators" = ["*.json", "*.yaml", "*.yml", "*.toml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools_scm]
 version_file = "src/apkscan/_version.py"

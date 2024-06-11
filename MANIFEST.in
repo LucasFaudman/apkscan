@@ -1,6 +1,7 @@
 include LICENSE
 include README.md
-recursive-include secret-patterns *.json *.yml *.toml
-exclude .*
-exclude tests/*
-exclude tests/test_apks/*
+graft src
+prune tests
+exclude .gitignore
+exclude .pre-commit-config.yaml
+global-exclude *~ *.py[cod] *.so

@@ -1,12 +1,12 @@
 # © 2023 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 import setuptools_scm
 
 setup(
     name='apkscan',
-    version='0.1.0',
+    version='0.1.1',
     use_scm_version=True,
     setup_requires=['setuptools_scm>=8'],
     description='Decompile and scan for secrets in .apk, .xapk, .jar, .dex, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts files',
@@ -15,12 +15,14 @@ setup(
     author='Lucas Faudman',
     author_email='lucasfaudman@gmail.com',
     url='https://github.com/LucasFaudman/apk-secret-scanner.git',
-    packages=find_packages(where='src', exclude=['tests']),
+    packages=find_namespace_packages(where='src', exclude=['tests*']),
     package_dir={'': 'src'},
     package_data={
-        '': ['LICENSE', 'secret-patterns/*'],
+        '': ['LICENSE'],
+        'apkscan.secret_locators': ['*.json', '*.yaml', '*.yml', '*.toml'],
     },
     include_package_data=True,
+    exclude_package_data={'': ['.gitignore', '.pre-commit-config.yaml']},
     install_requires=[
         'enjarify-adapter',
         'pyyaml',

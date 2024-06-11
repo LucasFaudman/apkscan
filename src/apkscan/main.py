@@ -7,7 +7,7 @@ from pathlib import Path
 from .apkscan import APKScanner, Decompiler
 
 def default_rule_path(rule_filename):
-    return Path(__file__).parent.parent.parent / f"secret-patterns/{rule_filename}"
+    return Path(__file__).parent / f"secret_locators/{rule_filename}"
 
 DEFAULT_RULES = [
     default_rule_path("default.json"),
