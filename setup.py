@@ -1,3 +1,6 @@
+# © 2023 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 from setuptools import setup, find_packages
 import setuptools_scm
 

@@ -1,3 +1,6 @@
+# © 2023 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 from yaml import safe_load as yaml_safe_load, YAMLError
 from json import loads as json_loads, JSONDecodeError
 from tomllib import loads as toml_loads, TOMLDecodeError

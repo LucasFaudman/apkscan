@@ -1,3 +1,6 @@
+# © 2023 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 from pathlib import Path
 from typing import Optional, Generator, Iterable, Literal
 from datetime import datetime

@@ -1,3 +1,6 @@
+# © 2023 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 from subprocess import run, DEVNULL, SubprocessError
 from pathlib import Path
 from shutil import which, rmtree

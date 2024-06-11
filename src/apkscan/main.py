@@ -1,3 +1,6 @@
+# © 2023 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 
@@ -7,7 +10,7 @@ def default_rule_path(rule_filename):
     return Path(__file__).parent.parent.parent / f"secret-patterns/{rule_filename}"
 
 DEFAULT_RULES = [
-    default_rule_path("high-confidence.yml"),
+    default_rule_path("default.json"),
 ]
 
 def main():
