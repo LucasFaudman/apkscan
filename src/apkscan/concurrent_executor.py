@@ -2,11 +2,8 @@
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed, Future
-from typing import Callable, Iterable, Iterator, Generator, Literal, Optional, TypeAlias, TypeVar
+from typing import Callable, Iterable, Iterator, Generator, Literal, Optional, TypeVar
 
-ConcurrencyType: TypeAlias = Literal["thread", "process", "main", False]
-ResultsOrder: TypeAlias = Literal["completed", "submitted"]
-OptionalExecutor: TypeAlias = Optional[ThreadPoolExecutor | ProcessPoolExecutor]
 T = TypeVar("T")
 
 # Defined outside of class to allow for standalone use
