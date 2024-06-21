@@ -17,7 +17,7 @@ if __name__ == "__main__":
         "suppress_output": False,
     }
     scanner_kwargs = {
-        "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/secret-patterns/default.json')],
+        "secret_locator_files": [Path('/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/src/apkscan/secret_locators/default.json')],
     }
 
     test_output = Path("test_output.json")
