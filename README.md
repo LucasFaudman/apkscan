@@ -137,7 +137,7 @@ usage: apkscan [-h] [-r [SECRET_LOCATOR_FILES ...]] [-o SECRETS_OUTPUT_FILE]
                [-scs SCANNER_CHUNKSIZE] [-sto SCANNER_TIMEOUT]
                [FILES_TO_SCAN ...]
 
-APKscan v0.1.2 - Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts) (c) Lucas Faudman, 2024. License information in LICENSE file. Credits to the original authors of all dependencies used in this project.
+APKscan v0.2.2 - Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts) (c) Lucas Faudman, 2024. License information in LICENSE file. Credits to the original authors of all dependencies used in this project.
 
 options:
   -h, --help            show this help message and exit
