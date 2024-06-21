@@ -21,7 +21,7 @@ BANNER_ART = """\033[1;32m   ('-.      _ (`-. .-. .-')   .-')             ('-.  
   `--' `--'`--'     `--' '--' `-----'  `-----' `--' `--'`--'  `--'   """
 
 BANNER_TEXT = """
-  \033[1;92mAPKscan v0.1.2 - \033[3mScan for secrets, endpoints, and other sensitive data
+  \033[1;92mAPKscan v0.2.2 - \033[3mScan for secrets, endpoints, and other sensitive data
   after decompiling and deobfuscating Android files.\033[0m\033[0;92m
   (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
 
@@ -80,6 +80,9 @@ def main():
     if not args.quiet:
         print(BANNER_ART + BANNER_TEXT)
         print('\033[1mStarting APKscan...\033[0m\n')
+
+    if not args.files:
+        parser.error("No files to scan provided. Please provide at least one file to scan.")
 
     decompiler_kwargs = {
         "binaries": {},
