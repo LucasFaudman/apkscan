@@ -37,7 +37,15 @@ files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.
 ---
 
 ## Why use APKscan?
-APKs (Android Package Kits) often leak secrets due over-reliance on security through obscurity. Developers sometimes leave sensitive information such as API keys, tokens, and credentials hidden within the code, assuming that they won't be found easily since the code has been compiled and obfuscated. However, this approach is fundamentally flawed, and such secrets can be exposed, leading to potential security vulnerabilities.
+
+### Find Leaked Secrets
+APKs (Android Package Kits) often leak secrets due to over-reliance on *security through obscurity*. Developers sometimes leave **sensitive information** such as **API keys**, **tokens**, and **credentials** hidden within the code, assuming that they won't be found easily since the code has been compiled and obfuscated. However, this approach is fundamentally flawed, and such secrets can be exposed, leading to potential **security vulnerabilities**.
+
+### Identify Sensitive Locations in Application Code
+APKscan can help quickly identify sensitive locations in the code, such as SSL pinning libraries, root detection functions, and other security mechanisms. Identifying these functions can speed up reverse engineering and app manipulation by **quickly revealing critical points where an app enforces its security policies, making it easier to bypass them with tools like Frida.** By pinpointing these areas, APKscan aids in understanding an app's security mechanisms and potential weaknesses.
+
+### Identify the Attack Surface of the Backend
+APKscan also helps identify the attack surface of the backend by uncovering **forgotten endpoints**, **test data payloads**, and other **traces of backend interfaces** that developers might have **unintentionally exposed**. These endpoints can provide attackers with access to sensitive data or functionalities that are not meant for public use. By scanning for such endpoints and test data, APKscan assists in ensuring that the backend is secure and that **no unnecessary exposure is left in the deployed applications**.
 
 
 ## Features
