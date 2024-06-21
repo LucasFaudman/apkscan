@@ -388,7 +388,7 @@ APKscan supports many popular APK and Java decompiler/disassemblers/deobfuscator
 `Fernflower` | Yes | [Link](https://github.com/fesh0r/fernflower) | @fernflower |
 
 ### Using Multiple Decompilers
-Multiple decompilers can be used at once by providing the following arguments below. Each optionally accepts a path to the binary of the tool. When no path is provided the binary on the standard path is used. (output of `which jadx`, `which apktool`, etc)
+Multiple decompilers can be used at once by providing the arguments below. Each optionally accepts a path to the binary of the tool. When no path is provided the binary on the standard path is used. (output of `which jadx`, `which apktool`, etc)
 
 ```bash
 Decompiler Choices:
@@ -410,6 +410,19 @@ Decompiler Choices:
   --enjarify-choice {auto,never,always}, -EC {auto,never,always}
                         When to use Enjarify. Default is 'auto' which means
                         use only when needed.
+
+Decompiler Advanced Options:
+  Options for Java decompiler.
+
+  -d, --deobfuscate, --no-deobfuscate
+                        Deobfuscate file before scanning.
+  -w DECOMPILER_WORKING_DIR, --decompiler-working-dir DECOMPILER_WORKING_DIR
+                        Working directory where files will be decompiled.
+  --decompiler-output-suffix DECOMPILER_OUTPUT_SUFFIX
+                        Suffix for decompiled output directory names. Default is '-decompiled'.
+  --decompiler-extra-args DECOMPILER_EXTRA_ARGS [DECOMPILER_EXTRA_ARGS ...]
+                        Additional arguments to pass to decompilers in form quoted whitespace separated '<DECOMPILER_NAME>
+                        <EXTRA_ARGS>...'. For example: --decompiler-extra-args 'jadx --no-debug-info,--no-inline'.
 ```
 
 **Examples:**
@@ -422,7 +435,7 @@ Decompile with `JADX` located at `"/non/standard/path/jadx"`, `Procyon` and `CFR
 ```bash
 apkscan --jadx "/non/standard/path/jadx" --cfr --procyon -o "combined-output.json" app-to-scan.apk
 ```
-Decompile multiple APKS with all decompilers and output `YAML`:
+Decompile multiple APKs with all decompilers and output `YAML`:
 ```bash
 apkscan -JACPKF -o "combined.yaml' -f yaml app-to-scan1.apk app-to-scan2.apk app-to-scan3.xapk
 ```
@@ -459,6 +472,37 @@ APKscan offers a comprehensive set of concurrency and performance options that a
 
 ### Concurrency Options
 Both the decompilation **AND** secret scanning processes can be configured using the following options:
+
+```bash
+Decompiler Advanced Options:
+  Options for Java decompiler.
+    <truncated>
+  -dct {thread,process,main}, --decompiler-concurrency-type {thread,process,main}
+                        Type of concurrency to use for decompilation. Default is 'thread'.
+  -dro {completed,submitted}, --decompiler-results-order {completed,submitted}
+                        Order to process results from decompiler. Default is 'completed'.
+  -dmw DECOMPILER_MAX_WORKERS, --decompiler-max-workers DECOMPILER_MAX_WORKERS
+                        Maximum number of workers to use for decompilation.
+  -dcs DECOMPILER_CHUNKSIZE, --decompiler-chunksize DECOMPILER_CHUNKSIZE
+                        Number of files to decompile per thread/process.
+  -dto DECOMPILER_TIMEOUT, --decompiler-timeout DECOMPILER_TIMEOUT
+                        Timeout for decompilation in seconds.
+
+Secret Scanner Advanced Options:
+  Options for secret scanner.
+
+  -sct {thread,process,main}, --scanner-concurrency-type {thread,process,main}
+                        Type of concurrency to use for scanning. Default is 'process'.
+  -sro {completed,submitted}, --scanner-results-order {completed,submitted}
+                        Order to process results from scanner. Default is 'completed'.
+  -smw SCANNER_MAX_WORKERS, --scanner-max-workers SCANNER_MAX_WORKERS
+                        Maximum number of workers to use for scanning.
+  -scs SCANNER_CHUNKSIZE, --scanner-chunksize SCANNER_CHUNKSIZE
+                        Number of files to scan per thread/process.
+  -sto SCANNER_TIMEOUT, --scanner-timeout SCANNER_TIMEOUT
+                        Timeout for scanning in seconds.
+
+```
 
 #### Concurrency Type:
 > Specify the type of concurrency to use with `{thread, process, main}`.
