@@ -6,21 +6,39 @@ from pathlib import Path
 
 from .apkscan import APKScanner, Decompiler
 
-def default_rule_path(rule_filename):
-    return Path(__file__).parent / f"secret_locators/{rule_filename}"
-
 DEFAULT_RULES = [
-    default_rule_path("default.json"),
+    Path(__file__).parent / "secret_locators/default.json"
 ]
 
+BANNER_ART = """\033[1;32m   ('-.      _ (`-. .-. .-')   .-')             ('-.         .-')
+  ( \033[0mOO\033[1;32m ).-. ( (\033[0mOO\033[1;32m  )\  ( \033[0mOO\033[1;32m ) ( \033[0mOO\033[1;32m ).          ( \033[0mOO\033[1;32m ).-.    ( \033[0mOO\033[1;32m )
+  / . --. /_.`     \,--. ,--.(_)---\_) .-----. / . --. /,--./ ,--,
+  | \-.  \(__...--''|  .'   //    _ | '  .--./ | \-.  \ |   \ |  |
+  | '  |  ||  /  | ||      / \  :` `. |  |('-. | '  |  ||    \|  |
+  | |_.'  ||  |_.' ||     '   '..`''. |  |\033[0mOO\033[1;32m  )| |_.'  ||  .     |
+  |  .-.  ||  .___.'|  .   \ .-._)   \|  |`-'| |  .-.  ||  |\    |
+  |  | |  ||  |     |  |\   \\\       /'  '--'\ |  | |  ||  | \   |
+  `--' `--'`--'     `--' '--' `-----'  `-----' `--' `--'`--'  `--'   """
+
+BANNER_TEXT = """
+  \033[1;92mAPKscan v0.1.2 - \033[3mScan for secrets, endpoints, and other sensitive data
+  after decompiling and deobfuscating Android files.\033[0m\033[0;92m
+  (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
+
+  \033[0m\033[2m(c) Lucas Faudman, 2024. License information in LICENSE file.
+  Credits to the original authors of all dependencies used in this project.
+\033[0m"""
+
 def main():
-    parser = ArgumentParser(description="Scan APK, JAR and other Java files for secrets after decompiling.")
+    parser = ArgumentParser(description=BANNER_TEXT.strip())
 
     input_options = parser.add_argument_group("Input Options")
     input_options.add_argument(dest='files', type=Path, nargs="*", metavar="FILES_TO_SCAN",
                                help="Path to Java files to decompile and scan.")
-    input_options.add_argument("-r", "--rules", type=Path, nargs="*", default=DEFAULT_RULES, metavar="SECRETS_RULES_FILES",
-                               help="Path to secret locator rules/patterns files. Rule files can in Gitleak TOML, secret-patterns-db YAML, or SecretLocator JSON formats.")
+    input_options.add_argument("-r", "--rules", type=Path, nargs="*", default=DEFAULT_RULES, metavar="SECRET_LOCATOR_FILES",
+                               help="Path to secret locator rules/patterns files. Files can in SecretLocator JSON, secret-patterns-db YAML, or Gitleak TOML formats. "
+                               + f"If not provided, default rules will be used. See: {DEFAULT_RULES[0]}"
+                               )
 
     output_options = parser.add_argument_group("Output Options")
     output_options.add_argument("-o", "--output", type=Path, metavar="SECRETS_OUTPUT_FILE", default="secrets_output.json", help="Output file for secrets found.")
@@ -59,6 +77,9 @@ def main():
     scanner_options.add_argument("-sto", "--scanner-timeout", type=int, help="Timeout for scanning in seconds.")
 
     args = parser.parse_args()
+    if not args.quiet:
+        print(BANNER_ART + BANNER_TEXT)
+        print('\033[1mStarting APKscan...\033[0m\n')
 
     decompiler_kwargs = {
         "binaries": {},
@@ -90,16 +111,16 @@ def main():
     try:
         apk_scanner.decompile_and_scan(args.files)
     except KeyboardInterrupt:
-        print("\nWriting output, cleaning up, and exiting...")
+        print("\n\033[1;34mWriting output, cleaning up, and exiting...\033[0m")
     finally:
         apk_scanner.write_output()
         apk_scanner.do_cleanup()
 
     if apk_scanner.secrets_results:
-        print(f"\nAPKscan done. Secrets saved to {apk_scanner.output_file}")
+        print(f"\033[1;32m\nAPKscan done. Secrets saved to {apk_scanner.output_file}\033[0m")
         exit(0)
     else:
-        print("\nAPKscan done. No secrets found.")
+        print("\033[1;32m\nAPKscan done. \033[1;31mNo secrets found.\033[0m")
         exit(1)
 
 if __name__ == "__main__":
