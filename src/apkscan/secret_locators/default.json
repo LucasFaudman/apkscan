@@ -916,14 +916,16 @@
     },
     {
         "id": "gcp-api-key",
-        "name": "Gcp Api Key",
+        "name": "GCP API Key",
         "pattern": "\\b(AIza[0-9A-Za-z\\\\-_]{35})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
         "secret_group": 1,
-        "description": "GCP API key",
-        "confidence": null,
+        "description": "Google Cloud Platform API key",
+        "confidence": "high",
         "severity": null,
         "tags": [
-            "aiza"
+            "Google",
+            "Cloud",
+            "API Key"
         ]
     },
     {
@@ -1603,6 +1605,21 @@
         "severity": null,
         "tags": [
             "okta"
+        ]
+    },
+    {
+        "id": "openai-api-key",
+        "name": "OpenAI API Key",
+        "pattern": "sk-\\w{20}T3BlbkFJ\\w{20}",
+        "secret_group": 0,
+        "description": "OpenAI API Key",
+        "confidence": "high",
+        "severity": "high",
+        "tags": [
+            "OpenAI",
+            "API Key",
+            "Secret Key",
+            "AI"
         ]
     },
     {
