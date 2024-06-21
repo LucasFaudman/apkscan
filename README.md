@@ -2,6 +2,8 @@
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+[![PyPI version](https://badge.fury.io/py/apkscan.svg)](https://badge.fury.io/py/apkscan)
+![GitHub issues](https://img.shields.io/github/issues/LucasFaudman/apkscan)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Scan for **secrets**, **endpoints**, and other **sensitive data** after **decompiling** and **deobfuscating** Android
