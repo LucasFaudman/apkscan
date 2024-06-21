@@ -27,10 +27,10 @@ class SecretLocator:
     id: str
     name: str
     pattern: Pattern
+    secret_group: int | str = 0
     description: str = "No description provided."
     confidence: str = "Unknown"
     severity: str = "Unknown"
-    secret_group: int | str = 0
     tags: list[str] = field(default_factory=list)
 
     def __hash__(self) -> int:
