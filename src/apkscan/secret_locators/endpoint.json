@@ -1,0 +1,487 @@
+[
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[0-9a-z.-_]+.s3-website[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[a-zA-Z0-9.-_]+.s3.[a-zA-Z0-9.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "azure_blob",
+        "name": "azure_blob",
+        "pattern": "(http(?:s)://.[^><'\" \n)]+.blob.core.windows.net/.[^><'\" \n/)]+./)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "carboninterface",
+        "name": "Carboninterface",
+        "pattern": "(?:carboninterface).{0,40}\\b([a-zA-Z0-9]{21})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "database_host",
+        "name": "database_host",
+        "pattern": "database[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "db_host",
+        "name": "db_host",
+        "pattern": "db[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "digitalocean_space",
+        "name": "digitalocean_space",
+        "pattern": "(http(?:s)://[^><.'\" \n)]+.[^><.'\" \n)]+.[^><.'\" \n)]+.digitaloceanspaces.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "discord-webhook-disclosure",
+        "name": "Discord Webhook Disclosure",
+        "pattern": "https://discordapp\\.com/api/webhooks/[0-9]+/[A-Za-z0-9\\-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "discordwebhook",
+        "name": "Discordwebhook",
+        "pattern": "(https:\\/\\/discord.com\\/api\\/webhooks\\/[0-9]{18}\\/[0-9a-zA-Z-]{68})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "domain",
+        "name": "domain",
+        "pattern": "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))[^><'\" \n)]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "freshbooks---2",
+        "name": "Freshbooks - 2",
+        "pattern": "(?:freshbooks).{0,40}\\b(https://www.[0-9A-Za-z_-]{1,}.com)\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ftp_host",
+        "name": "ftp_host",
+        "pattern": "ftp[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ghost_api_key",
+        "name": "ghost_api_key",
+        "pattern": "ghost[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-calendar-uri",
+        "name": "Google Calendar URI",
+        "pattern": "https://www\\.google\\.com/calendar/embed\\?src=[A-Za-z0-9%@&;=\\-_\\./]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "host",
+        "name": "Host",
+        "pattern": "(?:host).{0,40}\\b([a-z0-9]{14})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "jdbc_host",
+        "name": "jdbc_host",
+        "pattern": "jdbc[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "kafka_rest_url",
+        "name": "kafka_rest_url",
+        "pattern": "kafka[_-]?rest[_-]?url(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mac_address",
+        "name": "Mac_Address",
+        "pattern": "(([0-9A-Fa-f]{2}[:]){5}[0-9A-Fa-f]{2}|([0-9A-Fa-f]{2}[-]){5}[0-9A-Fa-f]{2}|([0-9A-Fa-f]{4}[\\.]){2}[0-9A-Fa-f]{4})$",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "macaddress",
+        "name": "Macaddress",
+        "pattern": "(?:macaddress).{0,40}\\b([a-zA-Z0-9_]{32})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoft-teams-webhook",
+        "name": "Microsoft Teams Webhook",
+        "pattern": "https://outlook\\.office\\.com/webhook/[A-Za-z0-9\\-@]+/IncomingWebhook/[A-Za-z0-9\\-]+/[A-Za-z0-9\\-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoftteamswebhook",
+        "name": "Microsoftteamswebhook",
+        "pattern": "(https:\\/\\/[a-zA-Z-0-9]+\\.webhook\\.office\\.com\\/webhookb2\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\/IncomingWebhook\\/[a-zA-Z-0-9]{32}\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mysql_hostname",
+        "name": "mysql_hostname",
+        "pattern": "mysql[_-]?hostname(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "newrelic-rest-api-key",
+        "name": "Newrelic REST API Key",
+        "pattern": "NRRA-[a-f0-9]{42}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "newrelic-rest-api-key",
+        "name": "Newrelic REST API Key",
+        "pattern": "NRRA-[a-f0-9]{42}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "outlook_team",
+        "name": "outlook_team",
+        "pattern": "(https://outlook.office.com/webhook/[0-9a-f-]{36}@)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "pg_host",
+        "name": "pg_host",
+        "pattern": "pg[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "planviewleankit---2",
+        "name": "Planviewleankit - 2",
+        "pattern": "(?:planviewleankit|planview).{0,40}(?:subdomain).\\b([a-zA-Z][a-zA-Z0-9.-]{1,23}[a-zA-Z0-9])\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "purestake",
+        "name": "Purestake",
+        "pattern": "(?:purestake).{0,40}\\b([a-zA-Z0-9]{40})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "rest_api_key",
+        "name": "rest_api_key",
+        "pattern": "rest[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "restpack",
+        "name": "Restpack",
+        "pattern": "(?:restpack).{0,40}\\b([a-zA-Z0-9]{48})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "restpackhtmltopdfapi",
+        "name": "Restpackhtmltopdfapi",
+        "pattern": "(?:restpack).{0,40}\\b([0-9A-Za-z]{48})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ringcentral---1",
+        "name": "Ringcentral - 1",
+        "pattern": "(?:ringcentral).{0,40}\\b(https://www.[0-9A-Za-z_-]{1,}.com)\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "selion_selenium_host",
+        "name": "selion_selenium_host",
+        "pattern": "selion[_-]?selenium[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sentry_endpoint",
+        "name": "sentry_endpoint",
+        "pattern": "sentry[_-]?endpoint(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sidekiq-sensitive-url",
+        "name": "Sidekiq Sensitive Url",
+        "pattern": "(?i)\\b(http(?:s??):\\/\\/)([a-f0-9]{8}:[a-f0-9]{8})@(?:gems.contribsys.com|enterprise.contribsys.com)(?:[\\/|\\#|\\?|:]|$)",
+        "secret_group": 2,
+        "description": "Sidekiq Sensitive URL",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "gems.contribsys.com",
+            "enterprise.contribsys.com"
+        ]
+    },
+    {
+        "id": "slack-web-hook",
+        "name": "Slack Web Hook",
+        "pattern": "(?i)https:\\/\\/hooks.slack.com\\/services\\/[A-Za-z0-9+\\/]{44,46}",
+        "secret_group": 0,
+        "description": "Slack Webhook",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "hooks.slack.com"
+        ]
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks\\.slack\\.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8,10}/B[a-zA-Z0-9_]{8,12}/[a-zA-Z0-9_]{23,24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks.slack.com/services/T[0-9A-Za-z\\-_]{10}/B[0-9A-Za-z\\-_]{10}/[0-9A-Za-z\\-_]{23}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack_webhook",
+        "name": "Slack_Webhook",
+        "pattern": "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slackwebhook",
+        "name": "Slackwebhook",
+        "pattern": "(https:\\/\\/hooks.slack.com\\/services\\/[A-Za-z0-9+\\/]{44,46})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe-restriced-key",
+        "name": "Stripe Restriced Key",
+        "pattern": "rk_(?:live|test)_[0-9a-zA-Z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe_restricted_api",
+        "name": "stripe_restricted_api",
+        "pattern": "(rk_live_[0-9a-zA-Z]{24,34})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe_restricted_api_key",
+        "name": "Stripe_Restricted_API_Key",
+        "pattern": "rk_live_[0-9a-zA-Z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "trello-url",
+        "name": "Trello URL",
+        "pattern": "https://trello.com/b/[0-9a-z]/[0-9a-z_-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zapier-webhook",
+        "name": "Zapier Webhook",
+        "pattern": "https://(?:www.)?hooks\\.zapier\\.com/hooks/catch/[A-Za-z0-9]+/[A-Za-z0-9]+/",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zapierwebhook",
+        "name": "Zapierwebhook",
+        "pattern": "(https:\\/\\/hooks.zapier.com\\/hooks\\/catch\\/[A-Za-z0-9\\/]{16})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zoho-webhook",
+        "name": "Zoho Webhook",
+        "pattern": "https://creator\\.zoho\\.com/api/[A-Za-z0-9/\\-_\\.]+\\?authtoken=[A-Za-z0-9]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    }
+]

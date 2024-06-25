@@ -1,0 +1,3186 @@
+[
+    {
+        "id": "access_key_secret",
+        "name": "access_key_secret",
+        "pattern": "access[_-]?key[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "access_secret",
+        "name": "access_secret",
+        "pattern": "access[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "adobe-client-secret",
+        "name": "Adobe Client Secret",
+        "pattern": "(?i)\\b((p8e-)[a-z0-9]{32})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 0,
+        "description": "Adobe Client Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "p8e-"
+        ]
+    },
+    {
+        "id": "age secret key",
+        "name": "Age Secret Key",
+        "pattern": "(?i)AGE-SECRET-KEY-1[QPZRY9X8GF2TVDW0S3JN54KHCE6MUA7L]{58}",
+        "secret_group": 0,
+        "description": "Age secret key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "age-secret-key-1"
+        ]
+    },
+    {
+        "id": "alibaba-secret-key",
+        "name": "Alibaba Secret Key",
+        "pattern": "(?i)(?:alibaba)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{30})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Alibaba Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "alibaba"
+        ]
+    },
+    {
+        "id": "alicloud_secret_key",
+        "name": "alicloud_secret_key",
+        "pattern": "alicloud[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon-sns-topic-disclosure",
+        "name": "Amazon SNS Topic Disclosure",
+        "pattern": "arn:aws:sns:[a-z0-9\\-]+:[0-9]+:[A-Za-z0-9\\-_]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_access_key_id",
+        "name": "Amazon_AWS_Access_Key_ID",
+        "pattern": "([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket",
+        "name": "Amazon_AWS_S3_Bucket",
+        "pattern": "//s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-1",
+        "name": "Amazon_AWS_S3_Bucket 1",
+        "pattern": "//s3\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-2",
+        "name": "Amazon_AWS_S3_Bucket 2",
+        "pattern": "[a-z0-9.-]+\\.s3-[a-z0-9-]\\.amazonaws\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-3",
+        "name": "Amazon_AWS_S3_Bucket 3",
+        "pattern": "[a-z0-9.-]+\\.s3-website[.-](eu|ap|us|ca|sa|cn)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-4",
+        "name": "Amazon_AWS_S3_Bucket 4",
+        "pattern": "[a-z0-9.-]+\\.s3\\.amazonaws\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-5",
+        "name": "Amazon_AWS_S3_Bucket 5",
+        "pattern": "amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_bucket_name",
+        "name": "amazon_bucket_name",
+        "pattern": "amazon[_-]?bucket[_-]?name(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_secret_access_key",
+        "name": "amazon_secret_access_key",
+        "pattern": "amazon[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "api_key_secret",
+        "name": "api_key_secret",
+        "pattern": "api[_-]?key[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "api_secret",
+        "name": "api_secret",
+        "pattern": "api[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "app_secrete",
+        "name": "app_secrete",
+        "pattern": "app[_-]?secrete(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "appclientsecret",
+        "name": "appclientsecret",
+        "pattern": "appclientsecret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "artifacts_aws_access_key_id",
+        "name": "artifacts_aws_access_key_id",
+        "pattern": "artifacts[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "artifacts_aws_secret_access_key",
+        "name": "artifacts_aws_secret_access_key",
+        "pattern": "artifacts[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "artifacts_secret",
+        "name": "artifacts_secret",
+        "pattern": "artifacts[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "asana-client-secret",
+        "name": "Asana Client Secret",
+        "pattern": "(?i)(?:asana)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{32})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Asana Client Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "asana"
+        ]
+    },
+    {
+        "id": "asymmetric-private-key",
+        "name": "Asymmetric Private Key",
+        "pattern": "-----BEGIN ((EC|PGP|DSA|RSA|OPENSSH) )?PRIVATE KEY( BLOCK)?-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "auth0_api_clientsecret",
+        "name": "auth0_api_clientsecret",
+        "pattern": "auth0[_-]?api[_-]?clientsecret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "auth0_client_secret",
+        "name": "auth0_client_secret",
+        "pattern": "auth0[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws---1",
+        "name": "Aws - 1",
+        "pattern": "\\b((?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-access-key-id",
+        "name": "AWS Access Key ID",
+        "pattern": "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-api-gateway",
+        "name": "AWS API Gateway",
+        "pattern": "[0-9a-z]+.execute-api.[0-9a-z._-]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-api-gateway",
+        "name": "AWS API Gateway",
+        "pattern": "[0-9a-z]+.execute-api.[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-appsync-graphql-key",
+        "name": "AWS AppSync GraphQL Key",
+        "pattern": "da2-[a-z0-9]{26}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-arn",
+        "name": "AWS ARN",
+        "pattern": "arn:aws:[a-z0-9-]+:[a-z]{2}-[a-z]+-[0-9]+:[0-9]+:.+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-client-id",
+        "name": "AWS Client ID",
+        "pattern": "(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cloudfront",
+        "name": "AWS CloudFront",
+        "pattern": "[0-9a-z.-_]+.cloudfront.net",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cognito-pool-id",
+        "name": "AWS Cognito Pool ID",
+        "pattern": ":[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cred-file-info",
+        "name": "AWS cred file info",
+        "pattern": "(aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-external",
+        "name": "AWS EC2 External",
+        "pattern": "ec2-[0-9a-z._-]+.compute(-1)?.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-external",
+        "name": "AWS EC2 External",
+        "pattern": "ec2-[0-9a-z.-_]+.compute(-1)?.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-internal",
+        "name": "AWS EC2 Internal",
+        "pattern": "[0-9a-z._-]+.compute(-1)?.internal",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-internal",
+        "name": "AWS EC2 Internal",
+        "pattern": "[0-9a-z.-_]+.compute(-1)?.internal",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elasticcache",
+        "name": "AWS ElasticCache",
+        "pattern": "[0-9a-z._-]+.cache.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elasticcache",
+        "name": "AWS ElasticCache",
+        "pattern": "[0-9a-z.-_]+.cache.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z._-]+.elb.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z.-_]+.elb.[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z.-_]+.elb.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-mws-id",
+        "name": "AWS MWS ID",
+        "pattern": "mzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-mws-key",
+        "name": "AWS MWS key",
+        "pattern": "amzn.mws.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-rds",
+        "name": "AWS RDS",
+        "pattern": "[0-9a-z._-]+.rds.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-rds",
+        "name": "AWS RDS",
+        "pattern": "[0-9a-z.-_]+.rds.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-bucket",
+        "name": "AWS S3 Bucket",
+        "pattern": "s3://[0-9a-z._/-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-bucket",
+        "name": "AWS S3 Bucket",
+        "pattern": "s3://[0-9a-z.-_/]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[0-9a-z.-_]+.s3-website[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[a-zA-Z0-9.-_]+.s3.[a-zA-Z0-9.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-secret-key",
+        "name": "AWS Secret Key",
+        "pattern": "aws(.{0,20})?['\"][0-9a-z/+]{40}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access",
+        "name": "aws_access",
+        "pattern": "aws[_-]?access(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key",
+        "name": "aws_access_key",
+        "pattern": "aws[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key_id",
+        "name": "aws_access_key_id",
+        "pattern": "aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key_id",
+        "name": "aws_access_key_id",
+        "pattern": "(?:A3T|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[a-zA-Z0-9-_]{12,}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_api_key",
+        "name": "AWS_API_Key",
+        "pattern": "AKIA[0-9A-Z]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_config_accesskeyid",
+        "name": "aws_config_accesskeyid",
+        "pattern": "aws[_-]?config[_-]?accesskeyid(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_config_secretaccesskey",
+        "name": "aws_config_secretaccesskey",
+        "pattern": "aws[_-]?config[_-]?secretaccesskey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_key",
+        "name": "aws_key",
+        "pattern": "aws[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_patterns",
+        "name": "aws_patterns",
+        "pattern": "(?:accesskeyid|secretaccesskey|aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_patterns",
+        "name": "aws_patterns",
+        "pattern": "(?:accesskeyid|secretaccesskey|aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_s3",
+        "name": "aws_s3",
+        "pattern": "([a-zA-Z0-9_-]+.s3.[a-z0-9_-]+.amazonaws.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret",
+        "name": "aws_secret",
+        "pattern": "aws[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret_access_key",
+        "name": "aws_secret_access_key",
+        "pattern": "aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret_key",
+        "name": "aws_secret_key",
+        "pattern": "aws[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secrets",
+        "name": "aws_secrets",
+        "pattern": "aws[_-]?secrets(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_ses_access_key_id",
+        "name": "aws_ses_access_key_id",
+        "pattern": "aws[_-]?ses[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_ses_secret_access_key",
+        "name": "aws_ses_secret_access_key",
+        "pattern": "aws[_-]?ses[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awsaccesskeyid",
+        "name": "awsaccesskeyid",
+        "pattern": "awsaccesskeyid(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awscn_access_key_id",
+        "name": "awscn_access_key_id",
+        "pattern": "awscn[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awscn_secret_access_key",
+        "name": "awscn_secret_access_key",
+        "pattern": "awscn[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awssecretkey",
+        "name": "awssecretkey",
+        "pattern": "awssecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "azure_blob",
+        "name": "azure_blob",
+        "pattern": "(http(?:s)://.[^><'\" \n)]+.blob.core.windows.net/.[^><'\" \n/)]+./)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "bitbucket-client-secret",
+        "name": "Bitbucket Client Secret",
+        "pattern": "(?i)(?:bitbucket)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9=_\\-]{64})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Bitbucket Client Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "bitbucket"
+        ]
+    },
+    {
+        "id": "bitly-secret-key-disclosure",
+        "name": "Bitly Secret Key Disclosure",
+        "pattern": "R_[0-9a-f]{32}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "bittrex-secret-key",
+        "name": "Bittrex Secret Key",
+        "pattern": "(?i)(?:bittrex)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{32})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Bittrex Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "bittrex"
+        ]
+    },
+    {
+        "id": "bucketeer_aws_access_key_id",
+        "name": "bucketeer_aws_access_key_id",
+        "pattern": "bucketeer[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "bucketeer_aws_secret_access_key",
+        "name": "bucketeer_aws_secret_access_key",
+        "pattern": "bucketeer[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "cache_s3_secret_key",
+        "name": "cache_s3_secret_key",
+        "pattern": "cache[_-]?s3[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "carboninterface",
+        "name": "Carboninterface",
+        "pattern": "(?:carboninterface).{0,40}\\b([a-zA-Z0-9]{21})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "cattle_secret_key",
+        "name": "cattle_secret_key",
+        "pattern": "cattle[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "censys_secret",
+        "name": "censys_secret",
+        "pattern": "censys[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "chrome_client_secret",
+        "name": "chrome_client_secret",
+        "pattern": "chrome[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "client_secret",
+        "name": "client_secret",
+        "pattern": "client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "clu_ssh_private_key_base64",
+        "name": "clu_ssh_private_key_base64",
+        "pattern": "clu[_-]?ssh[_-]?private[_-]?key[_-]?base64(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "cn_secret_access_key",
+        "name": "cn_secret_access_key",
+        "pattern": "cn[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "confluent-secret-key",
+        "name": "Confluent Secret Key",
+        "pattern": "(?i)(?:confluent)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{64})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Confluent Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "confluent"
+        ]
+    },
+    {
+        "id": "conversation_password",
+        "name": "conversation_password",
+        "pattern": "conversation[_-]?password(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "conversation_username",
+        "name": "conversation_username",
+        "pattern": "conversation[_-]?username(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "cos_secrets",
+        "name": "cos_secrets",
+        "pattern": "cos[_-]?secrets(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "database_host",
+        "name": "database_host",
+        "pattern": "database[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "db_host",
+        "name": "db_host",
+        "pattern": "db[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "digitalocean_space",
+        "name": "digitalocean_space",
+        "pattern": "(http(?:s)://[^><.'\" \n)]+.[^><.'\" \n)]+.[^><.'\" \n)]+.digitaloceanspaces.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "digitalocean_ssh_key_body",
+        "name": "digitalocean_ssh_key_body",
+        "pattern": "digitalocean[_-]?ssh[_-]?key[_-]?body(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "digitalocean_ssh_key_ids",
+        "name": "digitalocean_ssh_key_ids",
+        "pattern": "digitalocean[_-]?ssh[_-]?key[_-]?ids(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "discord-client-secret",
+        "name": "Discord Client Secret",
+        "pattern": "(?i)(?:discord)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9=_\\-]{32})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Discord client secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "discord"
+        ]
+    },
+    {
+        "id": "discord-webhook-disclosure",
+        "name": "Discord Webhook Disclosure",
+        "pattern": "https://discordapp\\.com/api/webhooks/[0-9]+/[A-Za-z0-9\\-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "discordwebhook",
+        "name": "Discordwebhook",
+        "pattern": "(https:\\/\\/discord.com\\/api\\/webhooks\\/[0-9]{18}\\/[0-9a-zA-Z-]{68})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "domain",
+        "name": "domain",
+        "pattern": "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))[^><'\" \n)]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "dropbox-api-token",
+        "name": "Dropbox Api Token",
+        "pattern": "(?i)(?:dropbox)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{15})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Dropbox API secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "dropbox"
+        ]
+    },
+    {
+        "id": "env_secret",
+        "name": "env_secret",
+        "pattern": "env[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "env_secret_access_key",
+        "name": "env_secret_access_key",
+        "pattern": "env[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "eureka_awssecretkey",
+        "name": "eureka_awssecretkey",
+        "pattern": "eureka[_-]?awssecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "facebook-secret-key",
+        "name": "Facebook Secret Key",
+        "pattern": "(facebook|fb)(.{0,20})?['\"][0-9a-f]{32}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "facebook-secret-key",
+        "name": "Facebook Secret Key",
+        "pattern": "(facebook|fb)(.{0,20})?['\"][0-9a-f]{32}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "facebook_secret_key",
+        "name": "facebook_secret_key",
+        "pattern": "(facebook|fb)(.{0,20})?['\"][0-9a-f]{32}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "facebook_secret_key",
+        "name": "Facebook_Secret_Key",
+        "pattern": "([f|F][a|A][c|C][e|E][b|B][o|O][o|O][k|K]|[f|F][b|B])(.{0,20})?['\"][0-9a-f]{32}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "finicity-client-secret",
+        "name": "Finicity Client Secret",
+        "pattern": "(?i)(?:finicity)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{20})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Finicity Client Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "finicity"
+        ]
+    },
+    {
+        "id": "firefox_secret",
+        "name": "firefox_secret",
+        "pattern": "firefox[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "flask_secret_key",
+        "name": "flask_secret_key",
+        "pattern": "flask[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "flickr_api_secret",
+        "name": "flickr_api_secret",
+        "pattern": "flickr[_-]?api[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "flutterwave-secret-key",
+        "name": "Flutterwave Secret Key",
+        "pattern": "(?i)FLWSECK_TEST-[a-h0-9]{32}-X",
+        "secret_group": 0,
+        "description": "Flutterwave Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "flwseck_test"
+        ]
+    },
+    {
+        "id": "freshbooks---2",
+        "name": "Freshbooks - 2",
+        "pattern": "(?:freshbooks).{0,40}\\b(https://www.[0-9A-Za-z_-]{1,}.com)\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ftp_host",
+        "name": "ftp_host",
+        "pattern": "ftp[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gcp",
+        "name": "Gcp",
+        "pattern": "\\{[^{]+auth_provider_x509_cert_url[^}]+\\}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gcp-api-key",
+        "name": "Gcp Api Key",
+        "pattern": "(?i)\\b(AIza[0-9A-Za-z\\\\-_]{35})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "GCP API key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "aiza"
+        ]
+    },
+    {
+        "id": "gcp_api_key",
+        "name": "gcp_api_key",
+        "pattern": "(AIza[0-9A-Za-z-_]{35})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1691",
+        "name": "Generic - 1691",
+        "pattern": "SECRET[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1700",
+        "name": "Generic - 1700",
+        "pattern": "BEGIN OPENSSH PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1702",
+        "name": "Generic - 1702",
+        "pattern": "BEGIN RSA PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1713",
+        "name": "Generic - 1713",
+        "pattern": "azure_tenant",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1715",
+        "name": "Generic - 1715",
+        "pattern": "branchio_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1720",
+        "name": "Generic - 1720",
+        "pattern": "deviantart_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1723",
+        "name": "Generic - 1723",
+        "pattern": "facebook_appsecret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1728",
+        "name": "Generic - 1728",
+        "pattern": "github_ssh_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1731",
+        "name": "Generic - 1731",
+        "pattern": "google_cm",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1732",
+        "name": "Generic - 1732",
+        "pattern": "google_maps_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1750",
+        "name": "Generic - 1750",
+        "pattern": "square_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1754",
+        "name": "Generic - 1754",
+        "pattern": "twitter_api_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1764",
+        "name": "Generic - 1764",
+        "pattern": "ssh-rsa",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1765",
+        "name": "Generic - 1765",
+        "pattern": "s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic-api-key",
+        "name": "Generic Api Key",
+        "pattern": "(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([0-9a-z\\-_.=]{10,150})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Generic API Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "key",
+            "api",
+            "token",
+            "secret",
+            "client",
+            "passwd",
+            "password",
+            "auth",
+            "access"
+        ]
+    },
+    {
+        "id": "generic-secret",
+        "name": "Generic Secret",
+        "pattern": "[sS][eE][cC][rR][eE][tT].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic-webhook-secret",
+        "name": "Generic webhook secret",
+        "pattern": "(webhook).+(secret|token|key).+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic_secret",
+        "name": "Generic_Secret",
+        "pattern": "[s|S][e|E][c|C][r|R][e|E][t|T].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gh_next_oauth_client_secret",
+        "name": "gh_next_oauth_client_secret",
+        "pattern": "gh[_-]?next[_-]?oauth[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gh_next_unstable_oauth_client_secret",
+        "name": "gh_next_unstable_oauth_client_secret",
+        "pattern": "gh[_-]?next[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gh_oauth_client_secret",
+        "name": "gh_oauth_client_secret",
+        "pattern": "gh[_-]?oauth[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gh_unstable_oauth_client_secret",
+        "name": "gh_unstable_oauth_client_secret",
+        "pattern": "gh[_-]?unstable[_-]?oauth[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ghost_api_key",
+        "name": "ghost_api_key",
+        "pattern": "ghost[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "github_client_secret",
+        "name": "github_client_secret",
+        "pattern": "github[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "githubapp---2",
+        "name": "Githubapp - 2",
+        "pattern": "(?:github).{0,40}(-----BEGIN RSA PRIVATE KEY-----\\s[A-Za-z0-9+\\/\\s]*\\s-----END RSA PRIVATE KEY-----)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-api-key",
+        "name": "Google API Key",
+        "pattern": "AIza[0-9a-z-_]{35}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-calendar-uri",
+        "name": "Google Calendar URI",
+        "pattern": "https://www\\.google\\.com/calendar/embed\\?src=[A-Za-z0-9%@&;=\\-_\\./]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-cloud-platform-api-key",
+        "name": "Google Cloud Platform API key",
+        "pattern": "(google|gcp|youtube|drive|yt)(.{0,20})?['\"][AIza[0-9a-z-_]{35}]['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-oauth-id",
+        "name": "Google Oauth ID",
+        "pattern": "[0-9]+-[0-9a-z_]{32}.apps.googleusercontent.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_account_type",
+        "name": "google_account_type",
+        "pattern": "google[_-]?account[_-]?type(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_api_key",
+        "name": "Google_API_Key",
+        "pattern": "AIza[0-9A-Za-z\\-_]{35}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_captcha",
+        "name": "google_captcha",
+        "pattern": "(6L[0-9A-Za-z-_]{38})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_email",
+        "name": "google_client_email",
+        "pattern": "google[_-]?client[_-]?email(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_id",
+        "name": "google_client_id",
+        "pattern": "google[_-]?client[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_secret",
+        "name": "google_client_secret",
+        "pattern": "google[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_cloud_platform_oauth",
+        "name": "Google_Cloud_Platform_OAuth",
+        "pattern": "[0-9]+-[0-9A-Za-z_]{32}\\.apps\\.googleusercontent\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_cloud_platform_service_account",
+        "name": "Google_Cloud_Platform_Service_Account",
+        "pattern": "\"type\": \"service_account\"",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_maps_api_key",
+        "name": "google_maps_api_key",
+        "pattern": "google[_-]?maps[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_oauth",
+        "name": "google_oauth",
+        "pattern": "(ya29.[0-9A-Za-z-_]+)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_oauth_access_token",
+        "name": "Google_OAuth_Access_Token",
+        "pattern": "ya29\\.[0-9A-Za-z\\-_]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_patterns",
+        "name": "google_patterns",
+        "pattern": "(?:google_client_id|google_client_secret|google_client_token)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_patterns",
+        "name": "google_patterns",
+        "pattern": "(?:google_client_id|google_client_secret|google_client_token)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_private_key",
+        "name": "google_private_key",
+        "pattern": "google[_-]?private[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_url",
+        "name": "google_url",
+        "pattern": "([0-9]{12}-[a-z0-9]{32}.apps.googleusercontent.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gpg_secret_keys",
+        "name": "gpg_secret_keys",
+        "pattern": "gpg[_-]?secret[_-]?keys(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gradle_publish_secret",
+        "name": "gradle_publish_secret",
+        "pattern": "gradle[_-]?publish[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "host",
+        "name": "Host",
+        "pattern": "(?:host).{0,40}\\b([a-z0-9]{14})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "internal_secrets",
+        "name": "internal_secrets",
+        "pattern": "internal[_-]?secrets(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "jdbc_host",
+        "name": "jdbc_host",
+        "pattern": "jdbc[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "jwt_secret",
+        "name": "jwt_secret",
+        "pattern": "jwt[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "kafka_rest_url",
+        "name": "kafka_rest_url",
+        "pattern": "kafka[_-]?rest[_-]?url(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "kucoin-secret-key",
+        "name": "Kucoin Secret Key",
+        "pattern": "(?i)(?:kucoin)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Kucoin Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "kucoin"
+        ]
+    },
+    {
+        "id": "linear-client-secret",
+        "name": "Linear Client Secret",
+        "pattern": "(?i)(?:linear)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-f0-9]{32})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Linear Client Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "linear"
+        ]
+    },
+    {
+        "id": "linkedin-client-secret",
+        "name": "Linkedin Client Secret",
+        "pattern": "(?i)(?:linkedin|linked-in)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{16})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "LinkedIn Client secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "linkedin",
+            "linked-in"
+        ]
+    },
+    {
+        "id": "linkedin-secret-key",
+        "name": "LinkedIn Secret Key",
+        "pattern": "linkedin(.{0,20})?['\"][0-9a-z]{16}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "linkedin_client_secretor-lottie_s3_api_key",
+        "name": "linkedin_client_secretor lottie_s3_api_key",
+        "pattern": "linkedin[_-]?client[_-]?secretor lottie[_-]?s3[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "linkedin_secret_key",
+        "name": "linkedin_secret_key",
+        "pattern": "(linkedin(.{0,20})?['\"][0-9a-z]{16}['\"])",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "looker_test_runner_client_secret",
+        "name": "looker_test_runner_client_secret",
+        "pattern": "looker[_-]?test[_-]?runner[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "lottie_happo_secret_key",
+        "name": "lottie_happo_secret_key",
+        "pattern": "lottie[_-]?happo[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "lottie_s3_secret_key",
+        "name": "lottie_s3_secret_key",
+        "pattern": "lottie[_-]?s3[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mac_address",
+        "name": "Mac_Address",
+        "pattern": "(([0-9A-Fa-f]{2}[:]){5}[0-9A-Fa-f]{2}|([0-9A-Fa-f]{2}[-]){5}[0-9A-Fa-f]{2}|([0-9A-Fa-f]{4}[\\.]){2}[0-9A-Fa-f]{4})$",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "macaddress",
+        "name": "Macaddress",
+        "pattern": "(?:macaddress).{0,40}\\b([a-zA-Z0-9_]{32})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mailgun_secret_api_key",
+        "name": "mailgun_secret_api_key",
+        "pattern": "mailgun[_-]?secret[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "manage_secret",
+        "name": "manage_secret",
+        "pattern": "manage[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mapbox_aws_access_key_id",
+        "name": "mapbox_aws_access_key_id",
+        "pattern": "mapbox[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mapbox_aws_secret_access_key",
+        "name": "mapbox_aws_secret_access_key",
+        "pattern": "mapbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoft-teams-webhook",
+        "name": "Microsoft Teams Webhook",
+        "pattern": "https://outlook\\.office\\.com/webhook/[A-Za-z0-9\\-@]+/IncomingWebhook/[A-Za-z0-9\\-]+/[A-Za-z0-9\\-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoftteamswebhook",
+        "name": "Microsoftteamswebhook",
+        "pattern": "(https:\\/\\/[a-zA-Z-0-9]+\\.webhook\\.office\\.com\\/webhookb2\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\/IncomingWebhook\\/[a-zA-Z-0-9]{32}\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "minio_secret_key",
+        "name": "minio_secret_key",
+        "pattern": "minio[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "my_secret_env",
+        "name": "my_secret_env",
+        "pattern": "my[_-]?secret[_-]?env(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mysql_hostname",
+        "name": "mysql_hostname",
+        "pattern": "mysql[_-]?hostname(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mysqlsecret",
+        "name": "mysqlsecret",
+        "pattern": "mysqlsecret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "newrelic-rest-api-key",
+        "name": "Newrelic REST API Key",
+        "pattern": "NRRA-[a-f0-9]{42}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "newrelic-rest-api-key",
+        "name": "Newrelic REST API Key",
+        "pattern": "NRRA-[a-f0-9]{42}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "node_pre_gyp_secretaccesskey",
+        "name": "node_pre_gyp_secretaccesskey",
+        "pattern": "node[_-]?pre[_-]?gyp[_-]?secretaccesskey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "notion",
+        "name": "Notion",
+        "pattern": "\\b(secret_[A-Za-z0-9]{43})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "npm_secret_key",
+        "name": "npm_secret_key",
+        "pattern": "npm[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ofta_secret",
+        "name": "ofta_secret",
+        "pattern": "ofta[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "okta_oauth2_client_secret",
+        "name": "okta_oauth2_client_secret",
+        "pattern": "okta[_-]?oauth2[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "okta_oauth2_clientsecret",
+        "name": "okta_oauth2_clientsecret",
+        "pattern": "okta[_-]?oauth2[_-]?clientsecret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "onelogin---2",
+        "name": "Onelogin - 2",
+        "pattern": "secret[a-zA-Z0-9_' \"=]{0,20}([a-z0-9]{64})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "openai-api-key",
+        "name": "OpenAI API Key",
+        "pattern": "sk-\\w{20}T3BlbkFJ\\w{20}",
+        "secret_group": 0,
+        "description": "OpenAI API Key",
+        "confidence": "high",
+        "severity": "high",
+        "tags": [
+            "OpenAI",
+            "API Key",
+            "Secret Key",
+            "AI"
+        ]
+    },
+    {
+        "id": "ossrh_secret",
+        "name": "ossrh_secret",
+        "pattern": "ossrh[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "outlook_team",
+        "name": "outlook_team",
+        "pattern": "(https://outlook.office.com/webhook/[0-9a-f-]{36}@)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "paypal_client_secret",
+        "name": "paypal_client_secret",
+        "pattern": "paypal[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "personal_secret",
+        "name": "personal_secret",
+        "pattern": "personal[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "pg_host",
+        "name": "pg_host",
+        "pattern": "pg[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "plaid-secret-key",
+        "name": "Plaid Secret Key",
+        "pattern": "(?i)(?:plaid)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{30})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Plaid Secret key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "plaid"
+        ]
+    },
+    {
+        "id": "planviewleankit---2",
+        "name": "Planviewleankit - 2",
+        "pattern": "(?:planviewleankit|planview).{0,40}(?:subdomain).\\b([a-zA-Z][a-zA-Z0-9.-]{1,23}[a-zA-Z0-9])\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "private_key",
+        "name": "private_key",
+        "pattern": "-----(?:(?:BEGIN|END) )(?:(?:EC|PGP|DSA|RSA|OPENSSH).)?PRIVATE.KEY(.BLOCK)?-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "private_key",
+        "name": "private_key",
+        "pattern": "-----(?:(?:BEGIN|END) )(?:(?:EC|PGP|DSA|RSA|OPENSSH).)?PRIVATE.KEY(.BLOCK)?-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "prod_secret_key",
+        "name": "prod_secret_key",
+        "pattern": "prod[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "publish_secret",
+        "name": "publish_secret",
+        "pattern": "publish[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "purestake",
+        "name": "Purestake",
+        "pattern": "(?:purestake).{0,40}\\b([a-zA-Z0-9]{40})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "rest_api_key",
+        "name": "rest_api_key",
+        "pattern": "rest[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "restpack",
+        "name": "Restpack",
+        "pattern": "(?:restpack).{0,40}\\b([a-zA-Z0-9]{48})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "restpackhtmltopdfapi",
+        "name": "Restpackhtmltopdfapi",
+        "pattern": "(?:restpack).{0,40}\\b([0-9A-Za-z]{48})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ringcentral---1",
+        "name": "Ringcentral - 1",
+        "pattern": "(?:ringcentral).{0,40}\\b(https://www.[0-9A-Za-z_-]{1,}.com)\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "rsa_private_key",
+        "name": "RSA_Private_Key",
+        "pattern": "-----BEGIN RSA PRIVATE KEY-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_external_3_amazonaws_com",
+        "name": "s3_external_3_amazonaws_com",
+        "pattern": "s3[_-]?external[_-]?3[_-]?amazonaws[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_secret_app_logs",
+        "name": "s3_secret_app_logs",
+        "pattern": "s3[_-]?secret[_-]?app[_-]?logs(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_secret_assets",
+        "name": "s3_secret_assets",
+        "pattern": "s3[_-]?secret[_-]?assets(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_secret_key",
+        "name": "s3_secret_key",
+        "pattern": "s3[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_user_secret",
+        "name": "s3_user_secret",
+        "pattern": "s3[_-]?user[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sacloud_access_token_secret",
+        "name": "sacloud_access_token_secret",
+        "pattern": "sacloud[_-]?access[_-]?token[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sandbox_aws_access_key_id",
+        "name": "sandbox_aws_access_key_id",
+        "pattern": "sandbox[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sandbox_aws_secret_access_key",
+        "name": "sandbox_aws_secret_access_key",
+        "pattern": "sandbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_0",
+        "name": "secret_0",
+        "pattern": "secret[_-]?0(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_1",
+        "name": "secret_1",
+        "pattern": "secret[_-]?1(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_10",
+        "name": "secret_10",
+        "pattern": "secret[_-]?10(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_11",
+        "name": "secret_11",
+        "pattern": "secret[_-]?11(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_2",
+        "name": "secret_2",
+        "pattern": "secret[_-]?2(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_3",
+        "name": "secret_3",
+        "pattern": "secret[_-]?3(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_4",
+        "name": "secret_4",
+        "pattern": "secret[_-]?4(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_5",
+        "name": "secret_5",
+        "pattern": "secret[_-]?5(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_6",
+        "name": "secret_6",
+        "pattern": "secret[_-]?6(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_7",
+        "name": "secret_7",
+        "pattern": "secret[_-]?7(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_8",
+        "name": "secret_8",
+        "pattern": "secret[_-]?8(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_9",
+        "name": "secret_9",
+        "pattern": "secret[_-]?9(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secret_key_base",
+        "name": "secret_key_base",
+        "pattern": "secret[_-]?key[_-]?base(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secretaccesskey",
+        "name": "secretaccesskey",
+        "pattern": "secretaccesskey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "secretkey",
+        "name": "secretkey",
+        "pattern": "secretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "selion_selenium_host",
+        "name": "selion_selenium_host",
+        "pattern": "selion[_-]?selenium[_-]?host(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sentry_endpoint",
+        "name": "sentry_endpoint",
+        "pattern": "sentry[_-]?endpoint(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "service_account_secret",
+        "name": "service_account_secret",
+        "pattern": "service[_-]?account[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ses_secret_key",
+        "name": "ses_secret_key",
+        "pattern": "ses[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "setdstsecretkey",
+        "name": "setdstsecretkey",
+        "pattern": "setdstsecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "setsecretkey",
+        "name": "setsecretkey",
+        "pattern": "setsecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "shopify-shared-secret",
+        "name": "Shopify Shared Secret",
+        "pattern": "shpss_[a-fA-F0-9]{32}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sidekiq-secret",
+        "name": "Sidekiq Secret",
+        "pattern": "(?i)(?:BUNDLE_ENTERPRISE__CONTRIBSYS__COM|BUNDLE_GEMS__CONTRIBSYS__COM)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-f0-9]{8}:[a-f0-9]{8})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Sidekiq Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "bundle_enterprise__contribsys__com",
+            "bundle_gems__contribsys__com"
+        ]
+    },
+    {
+        "id": "sidekiq-sensitive-url",
+        "name": "Sidekiq Sensitive Url",
+        "pattern": "(?i)\\b(http(?:s??):\\/\\/)([a-f0-9]{8}:[a-f0-9]{8})@(?:gems.contribsys.com|enterprise.contribsys.com)(?:[\\/|\\#|\\?|:]|$)",
+        "secret_group": 2,
+        "description": "Sidekiq Sensitive URL",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "gems.contribsys.com",
+            "enterprise.contribsys.com"
+        ]
+    },
+    {
+        "id": "signing_key_secret",
+        "name": "signing_key_secret",
+        "pattern": "signing[_-]?key[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-token",
+        "name": "Slack Token",
+        "pattern": "(xox[pborsa]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-web-hook",
+        "name": "Slack Web Hook",
+        "pattern": "(?i)https:\\/\\/hooks.slack.com\\/services\\/[A-Za-z0-9+\\/]{44,46}",
+        "secret_group": 0,
+        "description": "Slack Webhook",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "hooks.slack.com"
+        ]
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks\\.slack\\.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8,10}/B[a-zA-Z0-9_]{8,12}/[a-zA-Z0-9_]{23,24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack-webhook",
+        "name": "Slack Webhook",
+        "pattern": "https://hooks.slack.com/services/T[0-9A-Za-z\\-_]{10}/B[0-9A-Za-z\\-_]{10}/[0-9A-Za-z\\-_]{23}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slack_webhook",
+        "name": "Slack_Webhook",
+        "pattern": "https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "slackwebhook",
+        "name": "Slackwebhook",
+        "pattern": "(https:\\/\\/hooks.slack.com\\/services\\/[A-Za-z0-9+\\/]{44,46})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "snoowrap_client_secret",
+        "name": "snoowrap_client_secret",
+        "pattern": "snoowrap[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "soundcloud_client_secret",
+        "name": "soundcloud_client_secret",
+        "pattern": "soundcloud[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "spaces_secret_access_key",
+        "name": "spaces_secret_access_key",
+        "pattern": "spaces[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "spotify_api_client_secret",
+        "name": "spotify_api_client_secret",
+        "pattern": "spotify[_-]?api[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sqssecretkey",
+        "name": "sqssecretkey",
+        "pattern": "sqssecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "square_app_secret",
+        "name": "square_app_secret",
+        "pattern": "(sq0[a-z]{3}-[0-9A-Za-z-_]{20,50})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "square_oauth_secret",
+        "name": "Square_OAuth_Secret",
+        "pattern": "sq0csp-[0-9A-Za-z\\-_]{43}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ssh",
+        "name": "SSH",
+        "pattern": "-----BEGIN OPENSSH PRIVATE KEY-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ssh_dsa_private_key",
+        "name": "SSH_DSA_Private_Key",
+        "pattern": "-----BEGIN DSA PRIVATE KEY-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ssh_ec_private_key",
+        "name": "SSH_EC_Private_Key",
+        "pattern": "-----BEGIN EC PRIVATE KEY-----",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "ssh_password",
+        "name": "ssh_password",
+        "pattern": "(sshpass -p.*['|\"])",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sshpass",
+        "name": "sshpass",
+        "pattern": "sshpass(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "star_test_aws_access_key_id",
+        "name": "star_test_aws_access_key_id",
+        "pattern": "star[_-]?test[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "star_test_secret_access_key",
+        "name": "star_test_secret_access_key",
+        "pattern": "star[_-]?test[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stormpath_api_key_secret",
+        "name": "stormpath_api_key_secret",
+        "pattern": "stormpath[_-]?api[_-]?key[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "strip_secret_key",
+        "name": "strip_secret_key",
+        "pattern": "strip[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe-restriced-key",
+        "name": "Stripe Restriced Key",
+        "pattern": "rk_(?:live|test)_[0-9a-zA-Z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe-secret-key",
+        "name": "Stripe Secret Key",
+        "pattern": "sk_(?:live|test)_[0-9a-zA-Z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe-secret-live-key",
+        "name": "Stripe Secret Live Key",
+        "pattern": "(sk|rk)_live_[0-9a-z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe-secret-test-key",
+        "name": "Stripe Secret Test Key",
+        "pattern": "(sk|rk)_test_[0-9a-z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe_restricted_api",
+        "name": "stripe_restricted_api",
+        "pattern": "(rk_live_[0-9a-zA-Z]{24,34})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "stripe_restricted_api_key",
+        "name": "Stripe_Restricted_API_Key",
+        "pattern": "rk_live_[0-9a-zA-Z]{24}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "telegram-secret",
+        "name": "Telegram Secret",
+        "pattern": "d{5,}:A[0-9a-z_-]{34,34}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "trello-url",
+        "name": "Trello URL",
+        "pattern": "https://trello.com/b/[0-9a-z]/[0-9a-z_-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twilio_api_secret",
+        "name": "twilio_api_secret",
+        "pattern": "twilio[_-]?api[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitter-access-secret",
+        "name": "Twitter Access Secret",
+        "pattern": "(?i)(?:twitter)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{45})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Twitter Access Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "twitter"
+        ]
+    },
+    {
+        "id": "twitter-api-secret",
+        "name": "Twitter Api Secret",
+        "pattern": "(?i)(?:twitter)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{50})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Twitter API Secret",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "twitter"
+        ]
+    },
+    {
+        "id": "twitter-secret",
+        "name": "Twitter Secret",
+        "pattern": "twitter(.{0,20})?[0-9a-z]{35,44}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitter-secret-key",
+        "name": "Twitter Secret Key",
+        "pattern": "twitter[0-9a-z]{35,44}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitter_consumer_secret",
+        "name": "twitter_consumer_secret",
+        "pattern": "twitter[_-]?consumer[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitter_secret_key",
+        "name": "twitter_secret_key",
+        "pattern": "twitter(.{0,20})?['\"][0-9a-z]{35,44}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitter_secret_key",
+        "name": "Twitter_Secret_Key",
+        "pattern": "[t|T][w|W][i|I][t|T][t|T][e|E][r|R](.{0,20})?['\"][0-9a-z]{35,44}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "twitteroauthaccesssecret",
+        "name": "twitteroauthaccesssecret",
+        "pattern": "twitteroauthaccesssecret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "urban_master_secret",
+        "name": "urban_master_secret",
+        "pattern": "urban[_-]?master[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "urban_secret",
+        "name": "urban_secret",
+        "pattern": "urban[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "us_east_1_elb_amazonaws_com",
+        "name": "us_east_1_elb_amazonaws_com",
+        "pattern": "us[_-]?east[_-]?1[_-]?elb[_-]?amazonaws[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "use_ssh",
+        "name": "use_ssh",
+        "pattern": "use[_-]?ssh(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "user_assets_secret_access_key",
+        "name": "user_assets_secret_access_key",
+        "pattern": "user[_-]?assets[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "v_sfdc_client_secret",
+        "name": "v_sfdc_client_secret",
+        "pattern": "v[_-]?sfdc[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "watson_conversation_password",
+        "name": "watson_conversation_password",
+        "pattern": "watson[_-]?conversation[_-]?password(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "wpjm_phpunit_google_geocode_api_key",
+        "name": "wpjm_phpunit_google_geocode_api_key",
+        "pattern": "wpjm[_-]?phpunit[_-]?google[_-]?geocode[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "wpt_ssh_connect",
+        "name": "wpt_ssh_connect",
+        "pattern": "wpt[_-]?ssh[_-]?connect(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "wpt_ssh_private_key_base64",
+        "name": "wpt_ssh_private_key_base64",
+        "pattern": "wpt[_-]?ssh[_-]?private[_-]?key[_-]?base64(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "www_googleapis_com",
+        "name": "www_googleapis_com",
+        "pattern": "www[_-]?googleapis[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "yandex-aws-access-token",
+        "name": "Yandex Aws Access Token",
+        "pattern": "(?i)(?:yandex)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}(YC[a-zA-Z0-9_\\-]{38})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Yandex AWS Access Token",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "yandex"
+        ]
+    },
+    {
+        "id": "yt_account_client_secret",
+        "name": "yt_account_client_secret",
+        "pattern": "yt[_-]?account[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "yt_client_secret",
+        "name": "yt_client_secret",
+        "pattern": "yt[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "yt_partner_client_secret",
+        "name": "yt_partner_client_secret",
+        "pattern": "yt[_-]?partner[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zapier-webhook",
+        "name": "Zapier Webhook",
+        "pattern": "https://(?:www.)?hooks\\.zapier\\.com/hooks/catch/[A-Za-z0-9]+/[A-Za-z0-9]+/",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zapierwebhook",
+        "name": "Zapierwebhook",
+        "pattern": "(https:\\/\\/hooks.zapier.com\\/hooks\\/catch\\/[A-Za-z0-9\\/]{16})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "zendesk-secret-key",
+        "name": "Zendesk Secret Key",
+        "pattern": "(?i)(?:zendesk)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([a-z0-9]{40})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Zendesk Secret Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "zendesk"
+        ]
+    },
+    {
+        "id": "zoho-webhook",
+        "name": "Zoho Webhook",
+        "pattern": "https://creator\\.zoho\\.com/api/[A-Za-z0-9/\\-_\\.]+\\?authtoken=[A-Za-z0-9]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    }
+]

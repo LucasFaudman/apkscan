@@ -1,0 +1,734 @@
+[
+    {
+        "id": "amazon-sns-topic-disclosure",
+        "name": "Amazon SNS Topic Disclosure",
+        "pattern": "arn:aws:sns:[a-z0-9\\-]+:[0-9]+:[A-Za-z0-9\\-_]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_access_key_id",
+        "name": "Amazon_AWS_Access_Key_ID",
+        "pattern": "([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket",
+        "name": "Amazon_AWS_S3_Bucket",
+        "pattern": "//s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-1",
+        "name": "Amazon_AWS_S3_Bucket 1",
+        "pattern": "//s3\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-2",
+        "name": "Amazon_AWS_S3_Bucket 2",
+        "pattern": "[a-z0-9.-]+\\.s3-[a-z0-9-]\\.amazonaws\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-3",
+        "name": "Amazon_AWS_S3_Bucket 3",
+        "pattern": "[a-z0-9.-]+\\.s3-website[.-](eu|ap|us|ca|sa|cn)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-4",
+        "name": "Amazon_AWS_S3_Bucket 4",
+        "pattern": "[a-z0-9.-]+\\.s3\\.amazonaws\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_aws_s3_bucket-5",
+        "name": "Amazon_AWS_S3_Bucket 5",
+        "pattern": "amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_bucket_name",
+        "name": "amazon_bucket_name",
+        "pattern": "amazon[_-]?bucket[_-]?name(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "amazon_secret_access_key",
+        "name": "amazon_secret_access_key",
+        "pattern": "amazon[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "artifacts_aws_access_key_id",
+        "name": "artifacts_aws_access_key_id",
+        "pattern": "artifacts[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "artifacts_aws_secret_access_key",
+        "name": "artifacts_aws_secret_access_key",
+        "pattern": "artifacts[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws---1",
+        "name": "Aws - 1",
+        "pattern": "\\b((?:AKIA|ABIA|ACCA|ASIA)[0-9A-Z]{16})\\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-access-key-id",
+        "name": "AWS Access Key ID",
+        "pattern": "(A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-api-gateway",
+        "name": "AWS API Gateway",
+        "pattern": "[0-9a-z]+.execute-api.[0-9a-z._-]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-api-gateway",
+        "name": "AWS API Gateway",
+        "pattern": "[0-9a-z]+.execute-api.[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-appsync-graphql-key",
+        "name": "AWS AppSync GraphQL Key",
+        "pattern": "da2-[a-z0-9]{26}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-arn",
+        "name": "AWS ARN",
+        "pattern": "arn:aws:[a-z0-9-]+:[a-z]{2}-[a-z]+-[0-9]+:[0-9]+:.+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-client-id",
+        "name": "AWS Client ID",
+        "pattern": "(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cloudfront",
+        "name": "AWS CloudFront",
+        "pattern": "[0-9a-z.-_]+.cloudfront.net",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cognito-pool-id",
+        "name": "AWS Cognito Pool ID",
+        "pattern": ":[0-9A-Za-z]{8}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{4}-[0-9A-Za-z]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-cred-file-info",
+        "name": "AWS cred file info",
+        "pattern": "(aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-external",
+        "name": "AWS EC2 External",
+        "pattern": "ec2-[0-9a-z._-]+.compute(-1)?.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-external",
+        "name": "AWS EC2 External",
+        "pattern": "ec2-[0-9a-z.-_]+.compute(-1)?.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-internal",
+        "name": "AWS EC2 Internal",
+        "pattern": "[0-9a-z._-]+.compute(-1)?.internal",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-ec2-internal",
+        "name": "AWS EC2 Internal",
+        "pattern": "[0-9a-z.-_]+.compute(-1)?.internal",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elasticcache",
+        "name": "AWS ElasticCache",
+        "pattern": "[0-9a-z._-]+.cache.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elasticcache",
+        "name": "AWS ElasticCache",
+        "pattern": "[0-9a-z.-_]+.cache.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z._-]+.elb.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z.-_]+.elb.[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-elb",
+        "name": "AWS ELB",
+        "pattern": "[0-9a-z.-_]+.elb.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-mws-id",
+        "name": "AWS MWS ID",
+        "pattern": "mzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-mws-key",
+        "name": "AWS MWS key",
+        "pattern": "amzn.mws.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-rds",
+        "name": "AWS RDS",
+        "pattern": "[0-9a-z._-]+.rds.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-rds",
+        "name": "AWS RDS",
+        "pattern": "[0-9a-z.-_]+.rds.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-bucket",
+        "name": "AWS S3 Bucket",
+        "pattern": "s3://[0-9a-z._/-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-bucket",
+        "name": "AWS S3 Bucket",
+        "pattern": "s3://[0-9a-z.-_/]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[0-9a-z.-_]+.s3-website[0-9a-z.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-s3-endpoint",
+        "name": "AWS S3 Endpoint",
+        "pattern": "[a-zA-Z0-9.-_]+.s3.[a-zA-Z0-9.-_]+.amazonaws.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws-secret-key",
+        "name": "AWS Secret Key",
+        "pattern": "aws(.{0,20})?['\"][0-9a-z/+]{40}['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access",
+        "name": "aws_access",
+        "pattern": "aws[_-]?access(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key",
+        "name": "aws_access_key",
+        "pattern": "aws[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key_id",
+        "name": "aws_access_key_id",
+        "pattern": "aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_access_key_id",
+        "name": "aws_access_key_id",
+        "pattern": "(?:A3T|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[a-zA-Z0-9-_]{12,}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_api_key",
+        "name": "AWS_API_Key",
+        "pattern": "AKIA[0-9A-Z]{16}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_config_accesskeyid",
+        "name": "aws_config_accesskeyid",
+        "pattern": "aws[_-]?config[_-]?accesskeyid(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_config_secretaccesskey",
+        "name": "aws_config_secretaccesskey",
+        "pattern": "aws[_-]?config[_-]?secretaccesskey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_key",
+        "name": "aws_key",
+        "pattern": "aws[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_patterns",
+        "name": "aws_patterns",
+        "pattern": "(?:accesskeyid|secretaccesskey|aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_patterns",
+        "name": "aws_patterns",
+        "pattern": "(?:accesskeyid|secretaccesskey|aws_access_key_id|aws_secret_access_key)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_s3",
+        "name": "aws_s3",
+        "pattern": "([a-zA-Z0-9_-]+.s3.[a-z0-9_-]+.amazonaws.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret",
+        "name": "aws_secret",
+        "pattern": "aws[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret_access_key",
+        "name": "aws_secret_access_key",
+        "pattern": "aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secret_key",
+        "name": "aws_secret_key",
+        "pattern": "aws[_-]?secret[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_secrets",
+        "name": "aws_secrets",
+        "pattern": "aws[_-]?secrets(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_ses_access_key_id",
+        "name": "aws_ses_access_key_id",
+        "pattern": "aws[_-]?ses[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "aws_ses_secret_access_key",
+        "name": "aws_ses_secret_access_key",
+        "pattern": "aws[_-]?ses[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awsaccesskeyid",
+        "name": "awsaccesskeyid",
+        "pattern": "awsaccesskeyid(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awscn_access_key_id",
+        "name": "awscn_access_key_id",
+        "pattern": "awscn[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awscn_secret_access_key",
+        "name": "awscn_secret_access_key",
+        "pattern": "awscn[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "awssecretkey",
+        "name": "awssecretkey",
+        "pattern": "awssecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "bucketeer_aws_access_key_id",
+        "name": "bucketeer_aws_access_key_id",
+        "pattern": "bucketeer[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "bucketeer_aws_secret_access_key",
+        "name": "bucketeer_aws_secret_access_key",
+        "pattern": "bucketeer[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "eureka_awssecretkey",
+        "name": "eureka_awssecretkey",
+        "pattern": "eureka[_-]?awssecretkey(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1765",
+        "name": "Generic - 1765",
+        "pattern": "s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mapbox_aws_access_key_id",
+        "name": "mapbox_aws_access_key_id",
+        "pattern": "mapbox[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "mapbox_aws_secret_access_key",
+        "name": "mapbox_aws_secret_access_key",
+        "pattern": "mapbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "s3_external_3_amazonaws_com",
+        "name": "s3_external_3_amazonaws_com",
+        "pattern": "s3[_-]?external[_-]?3[_-]?amazonaws[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sandbox_aws_access_key_id",
+        "name": "sandbox_aws_access_key_id",
+        "pattern": "sandbox[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "sandbox_aws_secret_access_key",
+        "name": "sandbox_aws_secret_access_key",
+        "pattern": "sandbox[_-]?aws[_-]?secret[_-]?access[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "star_test_aws_access_key_id",
+        "name": "star_test_aws_access_key_id",
+        "pattern": "star[_-]?test[_-]?aws[_-]?access[_-]?key[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "us_east_1_elb_amazonaws_com",
+        "name": "us_east_1_elb_amazonaws_com",
+        "pattern": "us[_-]?east[_-]?1[_-]?elb[_-]?amazonaws[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "yandex-aws-access-token",
+        "name": "Yandex Aws Access Token",
+        "pattern": "(?i)(?:yandex)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}(YC[a-zA-Z0-9_\\-]{38})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Yandex AWS Access Token",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "yandex"
+        ]
+    }
+]

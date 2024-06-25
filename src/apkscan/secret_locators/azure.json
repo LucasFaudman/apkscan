@@ -1,0 +1,42 @@
+[
+    {
+        "id": "azure_blob",
+        "name": "azure_blob",
+        "pattern": "(http(?:s)://.[^><'\" \n)]+.blob.core.windows.net/.[^><'\" \n/)]+./)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1713",
+        "name": "Generic - 1713",
+        "pattern": "azure_tenant",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoft-teams-webhook",
+        "name": "Microsoft Teams Webhook",
+        "pattern": "https://outlook\\.office\\.com/webhook/[A-Za-z0-9\\-@]+/IncomingWebhook/[A-Za-z0-9\\-]+/[A-Za-z0-9\\-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "microsoftteamswebhook",
+        "name": "Microsoftteamswebhook",
+        "pattern": "(https:\\/\\/[a-zA-Z-0-9]+\\.webhook\\.office\\.com\\/webhookb2\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\@[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12}\\/IncomingWebhook\\/[a-zA-Z-0-9]{32}\\/[a-zA-Z-0-9]{8}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{4}-[a-zA-Z-0-9]{12})",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    }
+]

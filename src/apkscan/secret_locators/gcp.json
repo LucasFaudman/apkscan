@@ -1,0 +1,204 @@
+[
+    {
+        "id": "gcp",
+        "name": "Gcp",
+        "pattern": "\\{[^{]+auth_provider_x509_cert_url[^}]+\\}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "gcp-api-key",
+        "name": "Gcp Api Key",
+        "pattern": "(?i)\\b(AIza[0-9A-Za-z\\\\-_]{35})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "GCP API key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "aiza"
+        ]
+    },
+    {
+        "id": "google-calendar-uri",
+        "name": "Google Calendar URI",
+        "pattern": "https://www\\.google\\.com/calendar/embed\\?src=[A-Za-z0-9%@&;=\\-_\\./]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-cloud-platform-api-key",
+        "name": "Google Cloud Platform API key",
+        "pattern": "(google|gcp|youtube|drive|yt)(.{0,20})?['\"][AIza[0-9a-z-_]{35}]['\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google-oauth-id",
+        "name": "Google Oauth ID",
+        "pattern": "[0-9]+-[0-9a-z_]{32}.apps.googleusercontent.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_account_type",
+        "name": "google_account_type",
+        "pattern": "google[_-]?account[_-]?type(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_captcha",
+        "name": "google_captcha",
+        "pattern": "\b(6L[0-9A-Za-z-_]{38})\b",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_email",
+        "name": "google_client_email",
+        "pattern": "google[_-]?client[_-]?email(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_id",
+        "name": "google_client_id",
+        "pattern": "google[_-]?client[_-]?id(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_client_secret",
+        "name": "google_client_secret",
+        "pattern": "google[_-]?client[_-]?secret(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_cloud_platform_oauth",
+        "name": "Google_Cloud_Platform_OAuth",
+        "pattern": "[0-9]+-[0-9A-Za-z_]{32}\\.apps\\.googleusercontent\\.com",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_cloud_platform_service_account",
+        "name": "Google_Cloud_Platform_Service_Account",
+        "pattern": "\"type\": \"service_account\"",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_maps_api_key",
+        "name": "google_maps_api_key",
+        "pattern": "google[_-]?maps[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_oauth",
+        "name": "google_oauth",
+        "pattern": "(ya29.[0-9A-Za-z-_]+)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_oauth_access_token",
+        "name": "Google_OAuth_Access_Token",
+        "pattern": "ya29\\.[0-9A-Za-z\\-_]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_patterns",
+        "name": "google_patterns",
+        "pattern": "(?:google_client_id|google_client_secret|google_client_token)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_private_key",
+        "name": "google_private_key",
+        "pattern": "google[_-]?private[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "google_url",
+        "name": "google_url",
+        "pattern": "([0-9]{12}-[a-z0-9]{32}.apps.googleusercontent.com)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "wpjm_phpunit_google_geocode_api_key",
+        "name": "wpjm_phpunit_google_geocode_api_key",
+        "pattern": "wpjm[_-]?phpunit[_-]?google[_-]?geocode[_-]?api[_-]?key(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "www_googleapis_com",
+        "name": "www_googleapis_com",
+        "pattern": "www[_-]?googleapis[_-]?com(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    }
+]

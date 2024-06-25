@@ -1,0 +1,742 @@
+[
+    {
+        "id": "generic---1376",
+        "name": "Generic - 1376",
+        "pattern": "jdbc:mysql(=| =|:| :)",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1688",
+        "name": "Generic - 1688",
+        "pattern": "TOKEN[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1689",
+        "name": "Generic - 1689",
+        "pattern": "API[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1691",
+        "name": "Generic - 1691",
+        "pattern": "SECRET[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1692",
+        "name": "Generic - 1692",
+        "pattern": "AUTHORIZATION[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1693",
+        "name": "Generic - 1693",
+        "pattern": "PASSWORD[\\\\-|_|A-Z0-9]*(\\'|\\\")?(:|=)(\\'|\\\")?[\\\\-|_|A-Z0-9]{10}",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1695",
+        "name": "Generic - 1695",
+        "pattern": "(A|a)(P|p)(Ii)[\\-|_|A-Za-z0-9]*(\\''|\")?( )*(:|=)( )*(\\''|\")?[0-9A-Za-z\\-_]+(\\''|\")?",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1700",
+        "name": "Generic - 1700",
+        "pattern": "BEGIN OPENSSH PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1701",
+        "name": "Generic - 1701",
+        "pattern": "BEGIN PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1702",
+        "name": "Generic - 1702",
+        "pattern": "BEGIN RSA PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1703",
+        "name": "Generic - 1703",
+        "pattern": "BEGIN DSA PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1704",
+        "name": "Generic - 1704",
+        "pattern": "BEGIN EC PRIVATE KEY",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1705",
+        "name": "Generic - 1705",
+        "pattern": "BEGIN PGP PRIVATE KEY BLOCK",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1710",
+        "name": "Generic - 1710",
+        "pattern": "algolia_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1711",
+        "name": "Generic - 1711",
+        "pattern": "asana_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1713",
+        "name": "Generic - 1713",
+        "pattern": "azure_tenant",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1714",
+        "name": "Generic - 1714",
+        "pattern": "bitly_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1715",
+        "name": "Generic - 1715",
+        "pattern": "branchio_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1716",
+        "name": "Generic - 1716",
+        "pattern": "browserstack_access_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1717",
+        "name": "Generic - 1717",
+        "pattern": "buildkite_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1718",
+        "name": "Generic - 1718",
+        "pattern": "comcast_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1719",
+        "name": "Generic - 1719",
+        "pattern": "datadog_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1720",
+        "name": "Generic - 1720",
+        "pattern": "deviantart_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1721",
+        "name": "Generic - 1721",
+        "pattern": "deviantart_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1722",
+        "name": "Generic - 1722",
+        "pattern": "dropbox_api_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1723",
+        "name": "Generic - 1723",
+        "pattern": "facebook_appsecret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1724",
+        "name": "Generic - 1724",
+        "pattern": "facebook_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1725",
+        "name": "Generic - 1725",
+        "pattern": "firebase_custom_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1726",
+        "name": "Generic - 1726",
+        "pattern": "firebase_id_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1727",
+        "name": "Generic - 1727",
+        "pattern": "github_client",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1728",
+        "name": "Generic - 1728",
+        "pattern": "github_ssh_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1730",
+        "name": "Generic - 1730",
+        "pattern": "gitlab_private_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1731",
+        "name": "Generic - 1731",
+        "pattern": "google_cm",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1732",
+        "name": "Generic - 1732",
+        "pattern": "google_maps_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1733",
+        "name": "Generic - 1733",
+        "pattern": "heroku_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1734",
+        "name": "Generic - 1734",
+        "pattern": "instagram_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1735",
+        "name": "Generic - 1735",
+        "pattern": "mailchimp_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1736",
+        "name": "Generic - 1736",
+        "pattern": "mailgun_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1737",
+        "name": "Generic - 1737",
+        "pattern": "mailjet",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1738",
+        "name": "Generic - 1738",
+        "pattern": "mapbox_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1739",
+        "name": "Generic - 1739",
+        "pattern": "pagerduty_api_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1740",
+        "name": "Generic - 1740",
+        "pattern": "paypal_key_sb",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1741",
+        "name": "Generic - 1741",
+        "pattern": "paypal_key_live",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1742",
+        "name": "Generic - 1742",
+        "pattern": "paypal_token_sb",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1743",
+        "name": "Generic - 1743",
+        "pattern": "paypal_token_live",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1744",
+        "name": "Generic - 1744",
+        "pattern": "pendo_integration_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1745",
+        "name": "Generic - 1745",
+        "pattern": "salesforce_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1746",
+        "name": "Generic - 1746",
+        "pattern": "saucelabs_ukey",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1747",
+        "name": "Generic - 1747",
+        "pattern": "sendgrid_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1748",
+        "name": "Generic - 1748",
+        "pattern": "slack_api_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1749",
+        "name": "Generic - 1749",
+        "pattern": "slack_webhook",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1750",
+        "name": "Generic - 1750",
+        "pattern": "square_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1751",
+        "name": "Generic - 1751",
+        "pattern": "square_auth_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1752",
+        "name": "Generic - 1752",
+        "pattern": "travisci_api_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1753",
+        "name": "Generic - 1753",
+        "pattern": "twilio_sid_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1754",
+        "name": "Generic - 1754",
+        "pattern": "twitter_api_secret",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1755",
+        "name": "Generic - 1755",
+        "pattern": "twitter_bearer_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1756",
+        "name": "Generic - 1756",
+        "pattern": "spotify_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1757",
+        "name": "Generic - 1757",
+        "pattern": "stripe_key_live",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1758",
+        "name": "Generic - 1758",
+        "pattern": "wakatime_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1759",
+        "name": "Generic - 1759",
+        "pattern": "wompi_auth_bearer_sb",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1760",
+        "name": "Generic - 1760",
+        "pattern": "wompi_auth_bearer_live",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1761",
+        "name": "Generic - 1761",
+        "pattern": "wpengine_api_key",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1762",
+        "name": "Generic - 1762",
+        "pattern": "zapier_webhook",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1763",
+        "name": "Generic - 1763",
+        "pattern": "zendesk_access_token",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1764",
+        "name": "Generic - 1764",
+        "pattern": "ssh-rsa",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic---1765",
+        "name": "Generic - 1765",
+        "pattern": "s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic-api-key",
+        "name": "Generic API Key",
+        "pattern": "[aA][pP][iI]_?[kK][eE][yY].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "high",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic-api-key",
+        "name": "Generic Api Key",
+        "pattern": "(?i)(?:key|api|token|secret|client|passwd|password|auth|access)(?:[0-9a-z\\-_\\t .]{0,20})(?:[\\s|']|[\\s|\"]){0,3}(?:=|>|:=|\\|\\|:|<=|=>|:)(?:'|\\\"|\\s|=|\\x60){0,5}([0-9a-z\\-_.=]{10,150})(?:['|\\\"|\\n|\\r|\\s|\\x60|;]|$)",
+        "secret_group": 1,
+        "description": "Generic API Key",
+        "confidence": null,
+        "severity": null,
+        "tags": [
+            "key",
+            "api",
+            "token",
+            "secret",
+            "client",
+            "passwd",
+            "password",
+            "auth",
+            "access"
+        ]
+    },
+    {
+        "id": "generic-secret",
+        "name": "Generic Secret",
+        "pattern": "[sS][eE][cC][rR][eE][tT].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic-webhook-secret",
+        "name": "Generic webhook secret",
+        "pattern": "(webhook).+(secret|token|key).+",
+        "secret_group": 0,
+        "description": null,
+        "confidence": "low",
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic_api_key",
+        "name": "Generic_API_Key",
+        "pattern": "[a|A][p|P][i|I][_]?[k|K][e|E][y|Y].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    },
+    {
+        "id": "generic_secret",
+        "name": "Generic_Secret",
+        "pattern": "[s|S][e|E][c|C][r|R][e|E][t|T].*['|\"][0-9a-zA-Z]{32,45}['|\"]",
+        "secret_group": 0,
+        "description": null,
+        "confidence": null,
+        "severity": null,
+        "tags": []
+    }
+]
