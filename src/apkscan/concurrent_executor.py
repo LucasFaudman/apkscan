@@ -45,10 +45,10 @@ def execute_concurrently(
     if not concurrency_type or concurrency_type == "main":
         for args in zip(*iterables):
             yield func(*args)
-        return
+        return None
 
     # Multi-threaded or multi-process execution (concurrency_type = "thread"|"process")
-    if not executor:
+    if executor is None:
         executor_cls = ProcessPoolExecutor if "proc" in concurrency_type else ThreadPoolExecutor
         executor = executor_cls(max_workers=max_workers, **executor_init_kwargs)
 

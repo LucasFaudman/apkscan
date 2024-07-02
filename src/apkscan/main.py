@@ -4,8 +4,9 @@
 from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 
-from .apkscan import APKScanner, Decompiler
+from .apkscan import APKScanner
 from .secret_scanner import INCLUDED_SECRET_LOCATOR_FILES
+from .decompiler import DEFAULT_CONFIG
 
 DEFAULT_RULES = [
     INCLUDED_SECRET_LOCATOR_FILES['default']
@@ -97,12 +98,13 @@ def main():
     scanner_kwargs = {
         "secret_locator_files": args.rules,
     }
+
     for k, v in vars(args).items():
         if k.startswith("scanner_"):
             scanner_kwargs[k[8:]] = v
         elif k.startswith("decompiler_"):
             decompiler_kwargs[k[11:]] = v
-        elif k in Decompiler.CONFIG and v is not False:
+        elif k in DEFAULT_CONFIG and v is not False:
             decompiler_kwargs['binaries'][k] = v
 
     apk_scanner = APKScanner(

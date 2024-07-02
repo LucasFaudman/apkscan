@@ -1,12 +1,12 @@
 [build-system]
-requires = ["setuptools>=42", "setuptools_scm>=8", "wheel"]
+requires = ["setuptools>=42", "setuptools_scm>=8", "wheel", "mypy[mypyc]", "mypy_extensions"]
 build-backend = "setuptools.build_meta"
 
 [project]
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["classifiers"]
 name = "apkscan"
-version = "0.3.0"
+version = "0.3.2"
 requires-python = ">=3.11"
 readme = "README.md"
 license = { file = "LICENSE" }

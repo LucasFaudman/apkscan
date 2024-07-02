@@ -2,19 +2,32 @@
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from setuptools import setup, find_namespace_packages
+from mypyc.build import mypycify
 import setuptools_scm
 
 setup(
     name='apkscan',
-    version='0.3.0',
+    version='0.3.2',
     use_scm_version=True,
-    setup_requires=['setuptools_scm>=8'],
+    setup_requires=[
+        'setuptools>=42',
+        'setuptools_scm>=8',
+        'wheel',
+        'mypy[mypyc]',
+        'mypy_extensions',
+    ],
     description='Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     author='Lucas Faudman',
     author_email='lucasfaudman@gmail.com',
     url='https://github.com/LucasFaudman/apkscan.git',
+    ext_modules=mypycify([
+        'src/apkscan/apkscan.py',
+        'src/apkscan/concurrent_executor.py',
+        'src/apkscan/decompiler.py',
+        'src/apkscan/secret_scanner.py',
+        ]),
     packages=find_namespace_packages(where='src', exclude=['tests*']),
     package_dir={'': 'src'},
     package_data={

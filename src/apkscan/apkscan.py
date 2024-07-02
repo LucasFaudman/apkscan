@@ -3,8 +3,8 @@
 # For commercial use, see LICENSE for additional terms.
 from pathlib import Path
 from typing import Optional, Generator, Iterable, Literal
-from datetime import datetime
-from yaml import dump as yaml_dump
+from datetime import datetime, timedelta
+from yaml import dump as yaml_dump # type: ignore
 from json import dump as json_dump
 
 from .decompiler import Decompiler
@@ -21,7 +21,9 @@ class APKScanner:
                  ):
         # workers
         self.decompiler = Decompiler(**decompiler_kwargs)
+        locator_files = scanner_kwargs.pop("secret_locator_files", [])
         self.secret_scanner = SecretScanner(**scanner_kwargs)
+        self.secret_scanner.load_secret_locators(locator_files)
         # output
         self.output_file = output_file or Path(f"./secrets_output.{output_format}")
         self.output_format = output_format
@@ -30,15 +32,15 @@ class APKScanner:
         self.output_written = False
         self.cleaned_up = False
         # state tracking
-        self.decompiling = {}
-        self.decompilers_count_by_ext = {}
-        self.decompile_start_time = None
-        self.decompile_elapsed_time = None
-        self.scanning = set()
-        self.scan_start_time = None
-        self.scan_elapsed_time = None
-        self.last_scanned = None
-        self.last_secret = None
+        self.decompiling: dict[str, int] = {}
+        self.decompilers_count_by_ext: dict[str, int] = {}
+        self.decompile_start_time: Optional[datetime] = None
+        self.decompile_elapsed_time: Optional[timedelta] = None
+        self.scanning: set[Path] = set()
+        self.scan_start_time: Optional[datetime] = None
+        self.scan_elapsed_time: Optional[timedelta] = None
+        self.last_scanned: Optional[Path] = None
+        self.last_secret: Optional[bytes] = None
         # counters
         self.num_files = 0
         self.num_decompiled = 0
@@ -49,9 +51,9 @@ class APKScanner:
         self.num_secrets = 0
         self.num_unique_secrets = 0
         # results
-        self.decompile_results = {}
-        self.secrets_results = []
-        self.unique_secrets = set()
+        self.decompile_results: dict[Path, tuple[Path, Optional[set[Path]], bool]] = {}
+        self.secrets_results: list[SecretResult] = []
+        self.unique_secrets: set[bytes] = set()
 
         print(f"\nInitialized Decompiler:\n- {self.decompiler}")
         print(f"\nInitialized Secret Scanner:\n- {self.secret_scanner}")
@@ -78,7 +80,7 @@ class APKScanner:
         print(status_message, end=end, flush=True)
 
     def print_secret_found(self, secret_result: SecretResult) -> None:
-        print(f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]}\033[0m in {secret_result.file_path}:{secret_result.line_number} (line {secret_result.line_number})\n")
+        print(f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]!r}\033[0m in {secret_result.file_path}:{secret_result.line_number} (line {secret_result.line_number})\n")
 
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path in file_paths:
@@ -129,7 +131,6 @@ class APKScanner:
 
 
     def scan_secret_results_generator(self, file_paths: Generator[Path, None, None]) -> Generator[SecretResult, None, None]:
-        self.scan_start_time = None
         for file_path, file_secret_results in self.secret_scanner.scan_concurrently(file_paths):
             if file_path in self.scanning:
                 self.scanning.remove(file_path)
@@ -168,33 +169,32 @@ class APKScanner:
 
         return self.secrets_results
 
-    def make_secret_result_serializable(self, secret_result: SecretResult) -> dict:
-        secret_result_dict = {
-            "secret": secret_result.secret,
+    def make_secret_result_serializable(self, secret_result: SecretResult) -> dict[str, str|int]:
+        try:
+            secret_str = secret_result.secret.decode()
+        except Exception as e:
+            print(f"Error decoding secret: {e}")
+            secret_str = f'{secret_result.secret!r}'
+        return {
+            "secret": secret_str,
             "file_path": str(secret_result.file_path),
             "line_number": secret_result.line_number,
             "locator": secret_result.locator.name,
         }
-        try:
-            secret_result_dict["secret"] = secret_result_dict["secret"].decode()
-        except Exception as e:
-            print(f"Error decoding secret: {e}")
-            secret_result_dict["secret"] = f'{secret_result_dict["secret"]}'
-        return secret_result_dict
 
-    def group_results_by_locator(self) -> dict[str, list[SecretResult]]:
-        results_by_locator = {}
+    def group_results_by_locator(self) -> dict[str, list[dict[str, str|int]]]:
+        results_by_locator: dict[str, list[dict[str, str|int]]] = {}
         for secret_result in self.secrets_results:
             serializable_secret_result = self.make_secret_result_serializable(secret_result)
             results_by_locator.setdefault(secret_result.locator.id, []).append(serializable_secret_result)
         return results_by_locator
 
-    def group_results_by_input_file(self) -> dict[str, list[SecretResult]]:
-        results_by_input_file = {}
+    def group_results_by_input_file(self) -> dict[str, list[dict[str, str|int]]]:
+        results_by_input_file: dict[str, list[dict[str, str|int]]] = {}
         for secret_result in self.secrets_results:
             for output_dir, (file_path, decompiled_files, success) in self.decompile_results.items():
                 # TODO maybe group by output_dir (decompilier) ?
-                if secret_result.file_path in decompiled_files:
+                if decompiled_files is not None and secret_result.file_path in decompiled_files:
                     serializable_secret_result = self.make_secret_result_serializable(secret_result)
                     results_by_input_file.setdefault(str(file_path), []).append(serializable_secret_result)
                     break
