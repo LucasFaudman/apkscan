@@ -100,9 +100,16 @@ pip3 install -e .
 ### Basic Usage
 The most basic way to use APKscan is to decompile an APK using the default decompiler `JADX` and scan using the default Secret locator rules in [`default.json`](https://github.com/LucasFaudman/apkscan/blob/main/src/apkscan/secret_locators/default.json).
 ```bash
-apkscan apk-file-to-scan.apk
+apkscan file-to-scan.apk
 ```
 ---
+Multiple sets of Secret Locators are included and can be refrenced by name. For example, to scan for only AWS credentials and endpoints:
+```bash
+apkscan file-to-scan.apk -r aws endpoints
+```
+---
+
+
 A slighly more complex example. This time 3 APKs will be decompiled then scanned using the custom rules at `/path/to/custom/rules.json`. The output written to `output_file.yaml` in `YAML` format, and the results will be grouped by which secret locator was matched. Files generated during decompilation will be removed after scanning.
 ```bash
 apkscan -r /path/to/custom/rules.json -o output_file.yaml -f yaml -g locator -c
@@ -139,20 +146,27 @@ usage: apkscan [-h] [-r [SECRET_LOCATOR_FILES ...]] [-o SECRETS_OUTPUT_FILE]
                [-scs SCANNER_CHUNKSIZE] [-sto SCANNER_TIMEOUT]
                [FILES_TO_SCAN ...]
 
-APKscan v0.2.2 - Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts) (c) Lucas Faudman, 2024. License information in LICENSE file. Credits to the original authors of all dependencies used in this project.
+APKscan v0.3.0 - Scan for secrets, endpoints, and other sensitive
+data after decompiling and deobfuscating Android files. (.apk,
+.xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
+(c) Lucas Faudman, 2024. License information in LICENSE file. Credits
+to the original authors of all dependencies used in this project.
 
 options:
   -h, --help            show this help message and exit
 
 Input Options:
-  FILES_TO_SCAN         Path to Java files to decompile and scan.
+  FILES_TO_SCAN         Path(s) to Java files to decompile and scan.
   -r [SECRET_LOCATOR_FILES ...], --rules [SECRET_LOCATOR_FILES ...]
-                        Path to secret locator rules/patterns files. Files can
-                        in SecretLocator JSON, secret-patterns-db YAML, or
-                        Gitleak TOML formats. If not provided, default rules
-                        will be used. See: /Users/lucasfaudman/Documents/SANS/
-                        SEC575/disa/apkscan/src/apkscan/secret_locators/defaul
-                        t.json
+                        Path(s) to secret locator rules/patterns files OR
+                        names of included locator sets. Files can be in
+                        SecretLocator JSON, secret-patterns-db YAML, or
+                        Gitleak TOML formats. Included locator sets:
+                        all_secret_locators, aws, azure, cloud, curated,
+                        default, endpoints, gcp, generic, gitleaks, high-
+                        confidence, key_locators, leakin-regexes,
+                        locator_sort, nuclei-regexes, secret. If not provided,
+                        default rules will be used. See: default.json
 
 Output Options:
   -o SECRETS_OUTPUT_FILE, --output SECRETS_OUTPUT_FILE
@@ -229,6 +243,7 @@ Secret Scanner Advanced Options:
                         Number of files to scan per thread/process.
   -sto SCANNER_TIMEOUT, --scanner-timeout SCANNER_TIMEOUT
                         Timeout for scanning in seconds.
+
 
 ```
 </details>
