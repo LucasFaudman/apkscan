@@ -5,9 +5,10 @@ from argparse import ArgumentParser, BooleanOptionalAction
 from pathlib import Path
 
 from .apkscan import APKScanner, Decompiler
+from .secret_scanner import INCLUDED_SECRET_LOCATOR_FILES
 
 DEFAULT_RULES = [
-    Path(__file__).parent / "secret_locators/default.json"
+    INCLUDED_SECRET_LOCATOR_FILES['default']
 ]
 
 BANNER_ART = """\033[1;32m   ('-.      _ (`-. .-. .-')   .-')             ('-.         .-')
@@ -21,7 +22,7 @@ BANNER_ART = """\033[1;32m   ('-.      _ (`-. .-. .-')   .-')             ('-.  
   `--' `--'`--'     `--' '--' `-----'  `-----' `--' `--'`--'  `--'   """
 
 BANNER_TEXT = """
-  \033[1;92mAPKscan v0.2.2 - \033[3mScan for secrets, endpoints, and other sensitive data
+  \033[1;92mAPKscan v0.3.0 - \033[3mScan for secrets, endpoints, and other sensitive data
   after decompiling and deobfuscating Android files.\033[0m\033[0;92m
   (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
 
@@ -34,9 +35,11 @@ def main():
 
     input_options = parser.add_argument_group("Input Options")
     input_options.add_argument(dest='files', type=Path, nargs="*", metavar="FILES_TO_SCAN",
-                               help="Path to Java files to decompile and scan.")
+                               help="Path(s) to Java files to decompile and scan.")
     input_options.add_argument("-r", "--rules", type=Path, nargs="*", default=DEFAULT_RULES, metavar="SECRET_LOCATOR_FILES",
-                               help="Path to secret locator rules/patterns files. Files can in SecretLocator JSON, secret-patterns-db YAML, or Gitleak TOML formats. "
+                               help="Path(s) to secret locator rules/patterns files OR names of included locator sets. "
+                               "\nFiles can be in SecretLocator JSON, secret-patterns-db YAML, or Gitleak TOML formats. "
+                               "\nIncluded locator sets: " + ", ".join(sorted(INCLUDED_SECRET_LOCATOR_FILES.keys())) + ". "
                                + f"If not provided, default rules will be used. See: {DEFAULT_RULES[0]}"
                                )
 

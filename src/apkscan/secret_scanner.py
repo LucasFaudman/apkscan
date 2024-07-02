@@ -22,6 +22,8 @@ from re import (
 
 from .concurrent_executor import ConcurrentExecutor
 
+INCLUDED_SECRET_LOCATOR_FILES = {path.stem: path for path in (Path(__file__).parent / "secret_locators").rglob("*")}
+
 @dataclass
 class SecretLocator:
     id: str
@@ -159,6 +161,14 @@ def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLo
     print(f"\nLoaded {len(secret_locators)} secret locators.")
     return secret_locators
 
+def find_secret_locator_files_by_name(secret_locator_files: list[Path]):
+    existing = []
+    for secret_locator_file in secret_locator_files:
+        if secret_locator_file.exists():
+            existing.append(secret_locator_file)
+        elif secret_locator_file.stem in INCLUDED_SECRET_LOCATOR_FILES:
+            existing.append(INCLUDED_SECRET_LOCATOR_FILES[secret_locator_file.stem])
+    return existing
 
 class SecretScanner:
     def __init__(
@@ -177,6 +187,7 @@ class SecretScanner:
             self.load_secret_locators(secret_locator_files)
 
     def load_secret_locators(self, secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
+        secret_locator_files = find_secret_locator_files_by_name(secret_locator_files)
         self.secret_locator_files.extend(secret_locator_files)
         self.secret_locators.update(load_secret_locators(secret_locator_files))
         return self.secret_locators
