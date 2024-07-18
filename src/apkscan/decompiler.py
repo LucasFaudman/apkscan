@@ -9,6 +9,9 @@ from shlex import split as shlex_split
 from zipfile import ZipFile
 from typing import Optional, Iterator, Iterable, Literal
 
+# Handles Dalvik bytecode (.apk/.dex) -> Java bytecode (.jar) translation
+# to allow for decompilation with Java decompilers that don't support Dalvik.
+# See: https://github.com/LucasFaudman/enjarify-adapter for more information.
 from enjarify import enjarify  # type: ignore
 from .concurrent_executor import ConcurrentExecutor
 
