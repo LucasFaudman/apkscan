@@ -1,9 +1,6 @@
 # © 2023 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
-from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
-from json import loads as json_loads, JSONDecodeError
-from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
 from typing import Optional, Iterator, Tuple
 from pathlib import Path
@@ -19,6 +16,16 @@ from re import (
     VERBOSE,
     TEMPLATE,
 )
+
+from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
+from json import loads as json_loads, JSONDecodeError
+
+try:
+    # Use built-in tomllib if python 3.11+ otherwise use toml package
+    from tomllib import loads as toml_loads, TOMLDecodeError
+except ImportError:
+    from toml import loads as toml_loads
+    from toml import TomlDecodeError as TOMLDecodeError
 
 from .concurrent_executor import ConcurrentExecutor
 from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES  # type: ignore

@@ -23,7 +23,7 @@ except Exception as e:
 
 setup(
     name="apkscan",
-    version="0.3.9",
+    version="0.4.0",
     use_scm_version=True,
     setup_requires=["setuptools>=42", "setuptools_scm>=8", "wheel"],
     description="Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)",
@@ -40,10 +40,7 @@ setup(
     },
     include_package_data=True,
     exclude_package_data={"": [".gitignore", ".pre-commit-config.yaml"]},
-    install_requires=[
-        "enjarify-adapter",
-        "pyyaml",
-    ],
+    install_requires=["enjarify-adapter", "pyyaml", "toml"],
     ext_modules=EXT_MODULES,
     cmdclass={"build_ext": build_ext},
     extras_require={
@@ -57,13 +54,14 @@ setup(
             "apkscan = apkscan.main:main",
         ],
     },
-    python_requires=">=3.11",
+    python_requires=">=3.10",
     license="LICENSE",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Operating System :: OS Independent",

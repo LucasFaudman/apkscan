@@ -6,8 +6,8 @@ build-backend = "setuptools.build_meta"
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["classifiers"]
 name = "apkscan"
-version = "0.3.9"
-requires-python = ">=3.11"
+version = "0.4.0"
+requires-python = ">=3.10"
 readme = "README.md"
 license = { file = "LICENSE" }
 description = "Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)"
@@ -20,6 +20,7 @@ keywords = [
 dependencies = [
     "enjarify-adapter",
     "pyyaml",
+    "toml",
 ]
 
 [project.urls]
