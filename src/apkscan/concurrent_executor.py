@@ -6,6 +6,18 @@ from typing import Callable, Iterable, Iterator, Generator, Literal, Optional, T
 
 T = TypeVar("T")
 
+def submit_and_yield_futures(func: Callable[..., T],
+                   *iterables: Iterable,
+                   executor: ThreadPoolExecutor | ProcessPoolExecutor,
+                   ) -> Generator[Future[T], None, None]:
+    """
+    Submit futures for function execution with arguments from iterables.
+    Function is an explicit Generator to prevent mypyc build warning.
+    warning: Treating generator comprehension as list
+    """
+    for args in zip(*iterables):
+        yield executor.submit(func, *args)
+
 # Defined outside of class to allow for standalone use
 def execute_concurrently(
     func: Callable[..., T],
@@ -57,7 +69,7 @@ def execute_concurrently(
         yield from executor.map(func, *iterables, timeout=timeout, chunksize=chunksize)
     else:
         # Yield results in order of completion
-        futures_generator = (executor.submit(func, *args) for args in zip(*iterables))
+        futures_generator = submit_and_yield_futures(func, *iterables, executor=executor)
         yield from map(Future.result, as_completed(futures_generator, timeout=timeout))
 
     # Shutdown executor or return it on StopIteration to be reused

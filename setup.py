@@ -3,23 +3,22 @@
 # For commercial use, see LICENSE for additional terms.
 from setuptools import setup, find_namespace_packages
 from setuptools.command.build_ext import build_ext
-from sys import argv
 
-class BuildExt(build_ext):
-    def run(self):
-        if 'mypyc' in argv:
-            from mypyc.build import mypycify
-            self.distribution.ext_modules = mypycify([
-            'src/apkscan/apkscan.py',
-            'src/apkscan/concurrent_executor.py',
-            'src/apkscan/decompiler.py',
-            'src/apkscan/secret_scanner.py',
-        ])
-        build_ext.run(self)
+EXT_MODULES = []
+try:
+    from mypyc.build import mypycify
+    EXT_MODULES.extend(mypycify([
+    'src/apkscan/apkscan.py',
+    'src/apkscan/concurrent_executor.py',
+    'src/apkscan/decompiler.py',
+    'src/apkscan/secret_scanner.py',
+    ]))
+except Exception as e:
+    print(f"Failed to compile with mypyc: {e}")
 
 setup(
     name='apkscan',
-    version='0.3.3',
+    version='0.3.9',
     use_scm_version=True,
     setup_requires=[
         'setuptools>=42',
@@ -44,6 +43,8 @@ setup(
         'enjarify-adapter',
         'pyyaml',
     ],
+    ext_modules=EXT_MODULES,
+    cmdclass = {'build_ext': build_ext},
     extras_require={
         'mypyc': [
             'mypy[mypyc]',
