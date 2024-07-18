@@ -6,14 +6,17 @@ build-backend = "setuptools.build_meta"
 authors = [{name = "Lucas Faudman", email = "lucasfaudman@gmail.com"}]
 dynamic = ["classifiers"]
 name = "apkscan"
-version = "0.3.2"
+version = "0.3.3"
 requires-python = ">=3.11"
 readme = "README.md"
 license = { file = "LICENSE" }
 description = "Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)"
-keywords = [ "secret scanner", "jadx", "decompile", "android", "java", "security", "mobile", "decompiler", "concurrency", "penetration-testing", "apktool", "security-tools", "fernflower", "cfr", "procyon",
-"enjarify", "krakatau", "secret-scanning", "decompiler-java", "secret-scanner",
-"apk", "xapk", "dex", "jar", "class", "smali", "zip", "aar", "arsc", "aab", "jadx.kts" ]
+keywords = [
+    "secret scanner", "jadx", "decompile", "android", "java", "security", "mobile", "decompiler",
+    "concurrency", "penetration-testing", "apktool", "security-tools", "fernflower", "cfr",
+    "procyon", "enjarify", "krakatau", "secret-scanning", "decompiler-java", "secret-scanner",
+    "apk", "xapk", "dex", "jar", "class", "smali", "zip", "aar", "arsc", "aab", "jadx.kts"
+]
 dependencies = [
     "enjarify-adapter",
     "pyyaml",
