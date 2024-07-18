@@ -9,6 +9,11 @@
 Scan for **secrets**, **endpoints**, and other **sensitive data** after **decompiling** and **deobfuscating** Android
 files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts).
 
+https://github.com/user-attachments/assets/6aaedf8c-5a84-4541-ae08-53df2f16d7c6
+
+---
+
+
 - [Why use APKscan?](#why-use-apkscan)
 - [Features](#features)
 - [Installation](#installation)
@@ -36,6 +41,8 @@ files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.
 - [Contributing](#contributing)
 - [License](#license)
 
+
+
 ---
 
 ## Why use APKscan?
@@ -43,11 +50,34 @@ files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.
 ### Find Leaked Secrets
 APKs (Android Package Kits) often leak secrets due to over-reliance on *security through obscurity*. Developers sometimes leave **sensitive information** such as **API keys**, **tokens**, and **credentials** hidden within the code, assuming that they won't be found easily since the code has been compiled and obfuscated. However, this approach is fundamentally flawed, and such secrets can be exposed, leading to potential **security vulnerabilities**.
 
-### Identify Sensitive Locations in Application Code
-APKscan can help quickly identify sensitive locations in the code, such as SSL pinning libraries, root detection functions, and other security mechanisms. Identifying these functions can speed up reverse engineering and app manipulation by **quickly revealing critical points where an app enforces its security policies, making it easier to bypass them with tools like Frida.** By pinpointing these areas, APKscan aids in understanding an app's security mechanisms and potential weaknesses.
+<details>
+<summary>
+<h4>Demo: Finding Cloud Credentials</h4>
+</summary>
+
+https://github.com/user-attachments/assets/9c33aad1-6683-4ae6-a6dd-ccb49d6e0bd1
+
+</details>
+
+---
 
 ### Identify the Attack Surface of the Backend
 APKscan also helps identify the attack surface of the backend by uncovering **forgotten endpoints**, **test data payloads**, and other **traces of backend interfaces** that developers might have **unintentionally exposed**. These endpoints can provide attackers with access to sensitive data or functionalities that are not meant for public use. By scanning for such endpoints and test data, APKscan assists in ensuring that the backend is secure and that **no unnecessary exposure is left in the deployed applications**.
+
+<details>
+<summary>
+<h4>Demo: Finding Endpoints</h4>
+</summary>
+
+https://github.com/user-attachments/assets/de03f3fa-0d7a-46b1-b68e-0beb6c4962f8
+
+</details>
+
+---
+
+### Identify Sensitive Locations in Application Code
+APKscan can help quickly identify sensitive locations in the code, such as SSL pinning libraries, root detection functions, and other security mechanisms. Identifying these functions can speed up reverse engineering and app manipulation by **quickly revealing critical points where an app enforces its security policies, making it easier to bypass them with tools like Frida.** By pinpointing these areas, APKscan aids in understanding an app's security mechanisms and potential weaknesses.
+
 
 
 ## Features
