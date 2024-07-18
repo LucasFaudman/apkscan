@@ -20,7 +20,8 @@ def test_load_all_formats(tmp_locator_files, locator_file):
     "locator_file", ["secret_patterns_db.yml", "gitleaks.toml", "secret_locators.json", "simple_key_value.json"]
 )
 def test_scan_files(tmp_locator_files, tmp_files_to_scan, locator_file):
-    scanner = SecretScanner([tmp_locator_files[locator_file]])
+    scanner = SecretScanner()
+    scanner.load_secret_locators([tmp_locator_files[locator_file]])
     results = list(scanner.scan_concurrently(tmp_files_to_scan.values()))
     assert isinstance(results, list)
     for file_path, file_secret_results in results:

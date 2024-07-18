@@ -40,7 +40,7 @@ setup(
     },
     include_package_data=True,
     exclude_package_data={"": [".gitignore", ".pre-commit-config.yaml"]},
-    install_requires=["enjarify-adapter", "pyyaml", "toml"],
+    install_requires=["enjarify-adapter", "pyyaml"],
     ext_modules=EXT_MODULES,
     cmdclass={"build_ext": build_ext},
     extras_require={

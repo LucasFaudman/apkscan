@@ -21,11 +21,13 @@ from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
 from json import loads as json_loads, JSONDecodeError
 
 try:
-    # Use built-in tomllib if python 3.11+ otherwise use toml package
+    # Use built-in tomllib if python 3.11+ otherwise ignore TOML files
     from tomllib import loads as toml_loads, TOMLDecodeError
+
+    TOML_SUPPORTED = True
 except ImportError:
-    from toml import loads as toml_loads
-    from toml import TomlDecodeError as TOMLDecodeError
+    print("tomllib not found. TOML files will be ignored. Use Python 3.11+ to enable TOML support.")
+    TOML_SUPPORTED = False
 
 from .concurrent_executor import ConcurrentExecutor
 from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES  # type: ignore
@@ -80,10 +82,11 @@ def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
     except JSONDecodeError:
         print(f"Error loading {file_path} as JSON. Trying TOML.")
 
-    try:
-        return toml_loads(contents)
-    except TOMLDecodeError:
-        print(f"Error loading {file_path} as TOML. Trying YAML.")
+    if TOML_SUPPORTED:
+        try:
+            return toml_loads(contents)
+        except TOMLDecodeError:
+            print(f"Error loading {file_path} as TOML. Trying YAML.")
 
     try:
         return yaml_safe_load(contents)
