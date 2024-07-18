@@ -1,4 +1,4 @@
-# © 2023 Lucas Faudman.
+# © 2024 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from pathlib import Path
@@ -64,14 +64,18 @@ class APKScanner:
         print(f"\nOutput File:\n- {self.output_file.absolute()}\n")
 
     def print_status(self, end="\r"):
-        if self.decompiling and not self.scanning:
+        is_decompiling = any(val > 0 for val in self.decompiling.values())
+        is_scanning = bool(self.scanning)
+
+        if is_decompiling and not is_scanning:
             status = "Decompiling"
-        elif self.decompiling and self.scanning:
+        elif is_decompiling and is_scanning:
             status = "Decompiling and Scanning"
-        elif not self.decompiling and self.scanning:
+        elif not is_decompiling and is_scanning:
             status = "Scanning"
         else:
             status = "COMPLETE"
+
         status_message = f"Status: {status} | "
         if self.num_files:
             status_message += (
@@ -91,7 +95,7 @@ class APKScanner:
         )
 
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
-        for file_path in file_paths:
+        for file_path in self.decompiler.unpack_files(file_paths):
             self.num_files += 1
             ext = file_path.suffix
             if not (num_decompilers := self.decompilers_count_by_ext.get(ext)):
@@ -129,7 +133,6 @@ class APKScanner:
 
             if self.decompiling[file_path.stem] == 0:
                 self.num_decompiled += 1
-                del self.decompiling[file_path.stem]
                 self.print_status("\n")
 
         self.decompiler.concurrent_executor.shutdown()

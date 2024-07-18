@@ -1,4 +1,4 @@
-# © 2023 Lucas Faudman.
+# © 2024 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from subprocess import run, DEVNULL, SubprocessError
@@ -6,7 +6,8 @@ from pathlib import Path
 from shutil import which, rmtree
 from os import access, X_OK
 from shlex import split as shlex_split
-from typing import Optional, Iterator, Iterable, Literal, Collection
+from zipfile import ZipFile
+from typing import Optional, Iterator, Iterable, Literal
 
 from enjarify import enjarify  # type: ignore
 from .concurrent_executor import ConcurrentExecutor
@@ -15,7 +16,7 @@ DEFAULT_CONFIG: dict = {
     "jadx": {
         "binary": which("jadx") or "/usr/local/bin/jadx",
         "output_arg": "--output-dir",
-        "deobf_arg": "--deobf",
+        "deobf_args": ["--deobf"],
         "extra_args": [],
         "file_exts": {
             ".apk",
@@ -34,35 +35,35 @@ DEFAULT_CONFIG: dict = {
     "apktool": {
         "binary": which("apktool") or "/usr/local/bin/apktool",
         "output_arg": "--output",
-        "deobf_arg": "--force-manifest",
+        "deobf_args": ["--force-manifest"],
         "extra_args": ["d", "--force", "--keep-broken-res"],
         "file_exts": {".apk", ".xapk"},
     },
     "procyon": {
         "binary": which("procyon-decompiler") or "/usr/local/bin/procyon-decompiler",
         "output_arg": "-o",
-        "deobf_arg": "-renames",
+        "deobf_args": ["-renames"],
         "extra_args": [],
         "file_exts": {".jar", ".dex", ".class"},
     },
     "cfr": {
         "binary": which("cfr-decompiler") or "/usr/local/bin/cfr-decompiler",
         "output_arg": "--outputdir",
-        "deobf_arg": "--antiobf",
+        "deobf_args": ["--antiobf", "true"],
         "extra_args": [],
-        "file_exts": {".jar", "dex", "class"},
+        "file_exts": {".jar", ".dex", ".class"},
     },
     "krakatau": {
         "binary": which("krakatau") or "/usr/local/bin/krakatau",
         "output_arg": "--out",
-        "deobf_arg": "",
+        "deobf_args": [],
         "extra_args": ["dis"],
         "file_exts": {".jar", ".zip", ".class"},
     },
     "fernflower": {
         "binary": which("fernflower") or "/usr/local/bin/fernflower",
         "output_arg": "",
-        "deobf_arg": "",
+        "deobf_args": [],
         "extra_args": [],
         "file_exts": {".jar", ".class"},
     },
@@ -76,9 +77,11 @@ class Decompiler:
         self,
         binaries: Optional[dict[str, Optional[Path | str]] | Iterable[str]] = None,
         enjarify_choice: Literal["auto", "never", "always"] = "auto",
+        unpack_xapks: bool = True,
         deobfuscate: bool = False,
         extra_args: Optional[list[str]] = None,
         output_suffix: str = "-decompiled",
+        output_stem_separator: str = "__",
         working_dir: Path = Path("/tmp/apk-secret-scanner"),
         overwrite: bool = False,
         remove_failed_output_dirs: bool = True,
@@ -87,9 +90,11 @@ class Decompiler:
     ):
         self.binary_paths = self.validate_binary_paths(binaries)
         self.enjarify = self.validate_enjarify_choice(enjarify_choice)
+        self.unpack_xapks = unpack_xapks
         self.deobfuscate = deobfuscate
         self.extra_args = self.validate_extra_args(extra_args)
         self.output_suffix = output_suffix
+        self.output_stem_separator = output_stem_separator
         self.working_dir = working_dir
         self.overwrite = overwrite
         self.remove_failed_output_dirs = remove_failed_output_dirs
@@ -166,8 +171,9 @@ class Decompiler:
             self.CONFIG[binary_name]["output_arg"],
             output_path,
         ]
-        if self.deobfuscate and (deobf_arg := self.CONFIG[binary_name].get("deobf_arg")) and deobf_arg not in args:
-            args.append(deobf_arg)
+        if self.deobfuscate:
+            args.extend(self.CONFIG[binary_name].get("deobf_args", ()))
+
         args.append(file_path)
         return list(map(str, args))
 
@@ -184,27 +190,43 @@ class Decompiler:
             return False
 
     def get_output_dir(self, file_path: Path) -> Path:
-        output_dir = self.working_dir / (file_path.stem + self.output_suffix)
+        output_dir = self.working_dir
+        split_stem = file_path.stem.split(self.output_stem_separator)
+        while split_stem:
+            output_dir /= f"{split_stem.pop(0)}{self.output_suffix}"
+
         self.output_dirs[file_path.stem] = output_dir
         if not output_dir.exists():
             print(f"Creating output directory: {output_dir}")
             output_dir.mkdir(parents=True, exist_ok=True)
             print(f"Output directory created: {output_dir}")
-        return output_dir
+
+        return output_dir.resolve()
+
+    def unpack_xapk(self, file_path: Path) -> Iterator[Path]:
+        with ZipFile(file_path, "r") as z:
+            for name in z.namelist():
+                if not name.endswith(".apk"):
+                    continue
+                with z.open(name) as apk_file:
+                    apk_path = self.get_output_dir(file_path) / f"{file_path.stem}{self.output_stem_separator}{name}"
+                    with apk_path.open("wb") as f:
+                        f.write(apk_file.read())
+                    yield apk_path
 
     def enjarify_file(self, file_path: Path) -> Path:
         if file_path.suffix not in {".apk", ".dex"}:
             print(f"Skipping {file_path.name}. Enjarify only works on .apk and .dex files.")
             return file_path
 
-        jar_file = (self.get_output_dir(file_path) / file_path.stem).with_suffix(".jar")
+        jar_file = (self.get_output_dir(file_path) / file_path.name).with_suffix(".jar")
         if jar_file.exists() and not self.overwrite:
             return jar_file
 
         try:
             print(f"\nEnjarifying {file_path.name} to {jar_file.name}")
             enjarify(file_path, jar_file, overwrite=True, quiet=self.suppress_output)
-            print(f"Successfully enjarified {file_path.name} to {jar_file}")
+            print(f"Successfully enjarified {file_path.name} to {jar_file.name}")
         except Exception as e:
             print(f"Error enjarifying {file_path.name}: {e}")
             jar_file.unlink(missing_ok=True)
@@ -235,12 +257,19 @@ class Decompiler:
 
         return file_path, output_dir, decompiled_files, success
 
+    def unpack_files(self, file_paths: Iterable[Path]) -> Iterator[Path]:
+        for file_path in file_paths:
+            if self.unpack_xapks and file_path.suffix == ".xapk":
+                yield from self.unpack_xapk(file_path)
+            else:
+                yield file_path
+
     def enjarify_concurrently(self, file_paths: Iterable[Path]) -> Iterator[Path]:
         yield from self.concurrent_executor.map(self.enjarify_file, file_paths)
 
     def binary_name_file_path_generator(self, file_paths: Iterable[Path]) -> Iterator[tuple[str, Path]]:
-        file_paths_generator = self.enjarify_concurrently(file_paths) if self.enjarify else file_paths
-        for file_path in file_paths_generator:
+        decompile_ready_file_paths = self.enjarify_concurrently(file_paths) if self.enjarify else file_paths
+        for file_path in decompile_ready_file_paths:
             for binary_name in self.binary_paths:
                 if file_path.suffix in self.CONFIG[binary_name]["file_exts"]:
                     yield binary_name, file_path
@@ -252,8 +281,11 @@ class Decompiler:
 
     def remove_output_dir(self, output_dir: Path) -> Path:
         if output_dir.exists() and output_dir.is_dir():
-            print(f"Removing: {output_dir}")
-            rmtree(output_dir)
+            try:
+                print(f"Removing: {output_dir}")
+                rmtree(output_dir)
+            except FileNotFoundError:
+                print(f"Error removing: {output_dir}")
         return output_dir
 
     def cleanup(self, **concurrency_kwargs):
@@ -262,10 +294,6 @@ class Decompiler:
         for output_dir in self.concurrent_executor.map(self.remove_output_dir, output_dirs, **concurrency_kwargs):
             print(f"Removed: {output_dir}")
         print(f"Done removing {len(output_dirs)} decompiled output directories.")
-
-    # def unpack_xapk(self, file_path: Path) -> Iterator[Path]:
-    # TODO: Implement unpacking xapk files and place in front of decompilation when file is xapk
-    # pass
 
     def __repr__(self) -> str:
         return f"Decompiler:(binary_paths={self.binary_paths}, extra_args={self.extra_args}, deobfuscate={self.deobfuscate}, output_suffix={self.output_suffix}, working_dir={self.working_dir}, remove_failed_output_dirs={self.remove_failed_output_dirs}, concurrent_executor={self.concurrent_executor})"
