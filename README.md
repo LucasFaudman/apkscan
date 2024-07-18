@@ -442,6 +442,9 @@ Decompiler Choices:
   --enjarify-choice {auto,never,always}, -EC {auto,never,always}
                         When to use Enjarify. Default is 'auto' which means
                         use only when needed.
+  --unpack-xapks, --no-unpack-xapks
+                        Unpack XAPK files into APKs before decompiling.
+                        Default is True.
 
 Decompiler Advanced Options:
   Options for Java decompiler.
@@ -469,7 +472,7 @@ apkscan --jadx "/non/standard/path/jadx" --cfr --procyon -o "combined-output.jso
 ```
 Decompile multiple APKs with all decompilers and output `YAML`:
 ```bash
-apkscan -JACPKF -o "combined.yaml' -f yaml app-to-scan1.apk app-to-scan2.apk app-to-scan3.xapk
+apkscan -J -A -C -P -K -F -o "combined.yaml' -f yaml app-to-scan1.apk app-to-scan2.apk app-to-scan3.xapk
 ```
 Provide extra args to `JADX` and `CFR`:
 ```bash
