@@ -1,11 +1,11 @@
 # © 2023 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
-from yaml import safe_load as yaml_safe_load, YAMLError
+from yaml import safe_load as yaml_safe_load, YAMLError # type: ignore
 from json import loads as json_loads, JSONDecodeError
 from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
-from typing import Optional, Iterator
+from typing import Optional, Iterator, Tuple
 from pathlib import Path
 from re import (
     compile as re_compile,
@@ -21,8 +21,7 @@ from re import (
 )
 
 from .concurrent_executor import ConcurrentExecutor
-
-INCLUDED_SECRET_LOCATOR_FILES = {path.stem: path for path in (Path(__file__).parent / "secret_locators").rglob("*")}
+from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES # type: ignore
 
 @dataclass
 class SecretLocator:
@@ -30,13 +29,18 @@ class SecretLocator:
     name: str
     pattern: Pattern
     secret_group: int | str = 0
-    description: str = "No description provided."
-    confidence: str = "Unknown"
-    severity: str = "Unknown"
+    description: Optional[str] = "No description provided."
+    confidence: Optional[str] = "Unknown"
+    severity: Optional[str] = "Unknown"
     tags: list[str] = field(default_factory=list)
 
     def __hash__(self) -> int:
         return hash(self.pattern)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SecretLocator):
+            return NotImplemented
+        return self.pattern == other.pattern
 
 @dataclass
 class SecretResult:
@@ -48,11 +52,15 @@ class SecretResult:
     def __hash__(self) -> int:
         return hash(self.secret)
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SecretResult):
+            return NotImplemented
+        return self.secret == other.secret
 
-def try_load_json_toml_yaml(file_path: Path) -> Optional[dict]:
+def try_load_json_toml_yaml(file_path: Path) -> Optional[dict|list]:
     if not file_path.exists():
         print(f"File not found: {file_path}. Skipping.")
-        return
+        return None
 
     with file_path.open("r") as f:
         contents = f.read()
@@ -71,6 +79,8 @@ def try_load_json_toml_yaml(file_path: Path) -> Optional[dict]:
         return yaml_safe_load(contents)
     except YAMLError:
         print(f"Error loading {file_path} as YAML. Skipping.")
+
+    return None
 
 
 def compile_str_to_bytes_pattern(pattern_str: str) -> Pattern:
@@ -96,7 +106,7 @@ def compile_str_to_bytes_pattern(pattern_str: str) -> Pattern:
     return re_compile(pattern_str.encode(), flags)
 
 def load_secrets_patterns_db_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
-    secret_locators = {}
+    secret_locators: dict[str, SecretLocator] = {}
     for locator_dict in locator_dicts:
         locator_dict = locator_dict["pattern"]
         pattern_str = locator_dict.pop("regex")
@@ -107,7 +117,7 @@ def load_secrets_patterns_db_format(locator_dicts: list[dict]) -> dict[str, Secr
     return secret_locators
 
 def load_gitleaks_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
-    secret_locators = {}
+    secret_locators: dict[str, SecretLocator] = {}
     for locator_dict in locator_dicts:
         pattern_str = locator_dict.pop("regex")
         locator_dict["pattern"] = compile_str_to_bytes_pattern(pattern_str)
@@ -121,15 +131,19 @@ def load_gitleaks_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
     return secret_locators
 
 def load_secret_locators_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
-    secret_locators = {}
+    secret_locators: dict[str, SecretLocator] = {}
     for locator_dict in locator_dicts:
-        pattern_str = locator_dict.pop("pattern")
-        locator_dict["pattern"] = compile_str_to_bytes_pattern(pattern_str)
-        secret_locators[pattern_str] = SecretLocator(**locator_dict)
+        try:
+            pattern_str = locator_dict.pop("pattern")
+            locator_dict["pattern"] = compile_str_to_bytes_pattern(pattern_str)
+            secret_locators[pattern_str] = SecretLocator(**locator_dict)
+        except Exception as e:
+            print(f"Error loading locator: {locator_dict}. Skipping. {e}")
+
     return secret_locators
 
 def load_simple_key_value_format(simple_locator_dict: dict) -> dict[str, SecretLocator]:
-    secret_locators = {}
+    secret_locators: dict[str, SecretLocator] = {}
     for name, pattern_strs in simple_locator_dict.items():
         if isinstance(pattern_strs, str):
             pattern_strs = [pattern_strs]
@@ -173,24 +187,18 @@ def find_secret_locator_files_by_name(secret_locator_files: list[Path]):
 class SecretScanner:
     def __init__(
         self,
-        secret_locator_files: list[Path],
-        load_locators_on_init: bool = True,
         **concurrent_executor_kwargs,
-    ):
+    ) -> None:
+        self.secret_locator_files: list[Path] = []
         self.secret_locators: dict[str, SecretLocator] = {}
-        self.load_locators_on_init = load_locators_on_init
         self.results: dict[SecretLocator, list[SecretResult]] = {}
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "process", **concurrent_executor_kwargs})
 
-        self.secret_locator_files = []
-        if load_locators_on_init:
-            self.load_secret_locators(secret_locator_files)
-
-    def load_secret_locators(self, secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
+    def load_secret_locators(self, secret_locator_files: list[Path]) -> Tuple[dict[str, SecretLocator], list[Path]]:
         secret_locator_files = find_secret_locator_files_by_name(secret_locator_files)
         self.secret_locator_files.extend(secret_locator_files)
         self.secret_locators.update(load_secret_locators(secret_locator_files))
-        return self.secret_locators
+        return self.secret_locators, self.secret_locator_files
 
     def iterscan_file(self, file_path: Path) -> Iterator[SecretResult]:
         with file_path.open("rb") as f:

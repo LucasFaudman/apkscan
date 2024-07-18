@@ -6,56 +6,58 @@ from pathlib import Path
 from shutil import which, rmtree
 from os import access, X_OK
 from shlex import split as shlex_split
-from typing import Optional, Iterator, Iterable, Literal
+from typing import Optional, Iterator, Iterable, Literal, Collection
 
-from enjarify import enjarify
+from enjarify import enjarify # type: ignore
 from .concurrent_executor import ConcurrentExecutor
 
-class Decompiler:
-    CONFIG = {
-        "jadx": {
-            "binary": which("jadx") or "/usr/local/bin/jadx",
-            "output_arg": "--output-dir",
-            "deobf_arg": "--deobf",
-            "extra_args": [],
-            "file_exts": {".apk", ".xapk", ".jar", ".dex", ".class", ".smali", ".zip", ".aar", ".arsc", ".aab", ".jadx.kts"}
-        },
-        "apktool": {
-            "binary": which("apktool") or "/usr/local/bin/apktool",
-            "output_arg": "--output",
-            "deobf_arg": "--force-manifest",
-            "extra_args": ["d", "--force", "--keep-broken-res"],
-            "file_exts": {".apk", ".xapk"}
-        },
-        "procyon": {
-            "binary": which("procyon-decompiler") or "/usr/local/bin/procyon-decompiler",
-            "output_arg": "-o",
-            "deobf_arg": "-renames",
-            "extra_args": [],
-            "file_exts": {".jar", ".dex", ".class"}
-        },
-        "cfr": {
-            "binary": which("cfr-decompiler") or "/usr/local/bin/cfr-decompiler",
-            "output_arg": "--outputdir",
-            "deobf_arg": "--antiobf",
-            "extra_args": [],
-            "file_exts": {".jar", "dex", "class"}
-        },
-        "krakatau": {
-            "binary": which("krakatau") or "/usr/local/bin/krakatau",
-            "output_arg": "--out",
-            "deobf_arg": "",
-            "extra_args": ["dis"],
-            "file_exts": {".jar", ".zip", ".class"}
-        },
-        "fernflower": {
-            "binary": which("fernflower") or "/usr/local/bin/fernflower",
-            "output_arg": "",
-            "deobf_arg": "",
-            "extra_args": [],
-            "file_exts": {".jar", ".class"}
-        }
+DEFAULT_CONFIG: dict = {
+    "jadx": {
+        "binary": which("jadx") or "/usr/local/bin/jadx",
+        "output_arg": "--output-dir",
+        "deobf_arg": "--deobf",
+        "extra_args": [],
+        "file_exts": {".apk", ".xapk", ".jar", ".dex", ".class", ".smali", ".zip", ".aar", ".arsc", ".aab", ".jadx.kts"}
+    },
+    "apktool": {
+        "binary": which("apktool") or "/usr/local/bin/apktool",
+        "output_arg": "--output",
+        "deobf_arg": "--force-manifest",
+        "extra_args": ["d", "--force", "--keep-broken-res"],
+        "file_exts": {".apk", ".xapk"}
+    },
+    "procyon": {
+        "binary": which("procyon-decompiler") or "/usr/local/bin/procyon-decompiler",
+        "output_arg": "-o",
+        "deobf_arg": "-renames",
+        "extra_args": [],
+        "file_exts": {".jar", ".dex", ".class"}
+    },
+    "cfr": {
+        "binary": which("cfr-decompiler") or "/usr/local/bin/cfr-decompiler",
+        "output_arg": "--outputdir",
+        "deobf_arg": "--antiobf",
+        "extra_args": [],
+        "file_exts": {".jar", "dex", "class"}
+    },
+    "krakatau": {
+        "binary": which("krakatau") or "/usr/local/bin/krakatau",
+        "output_arg": "--out",
+        "deobf_arg": "",
+        "extra_args": ["dis"],
+        "file_exts": {".jar", ".zip", ".class"}
+    },
+    "fernflower": {
+        "binary": which("fernflower") or "/usr/local/bin/fernflower",
+        "output_arg": "",
+        "deobf_arg": "",
+        "extra_args": [],
+        "file_exts": {".jar", ".class"}
     }
+}
+
+class Decompiler:
+    CONFIG: dict = DEFAULT_CONFIG.copy()
 
     def __init__(
         self,
@@ -80,7 +82,7 @@ class Decompiler:
         self.remove_failed_output_dirs = remove_failed_output_dirs
         self.suppress_output = suppress_output
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "thread", **concurrent_executor_kwargs})
-        self.output_dirs = {}
+        self.output_dirs: dict[str, Path] = {}
 
     def validate_binary_paths(self, binaries: Optional[dict[str, Optional[Path|str]]|Iterable[str]]) -> dict[str, Path]:
         if not binaries:
@@ -95,7 +97,7 @@ class Decompiler:
 
         binary_paths = {}
         for binary_name, binary_path in binaries.items():
-            binary_path =  Path(binary_path or self.CONFIG[binary_name]["binary"])
+            binary_path =  Path(str(binary_path or self.CONFIG[binary_name]["binary"]))
             if not binary_path.exists():
                 print(f"Skipping {binary_name}. Binary not found: {binary_path}")
                 print(f"Use --{binary_name} <PATH> to specify the path to the binary.")
@@ -129,7 +131,7 @@ class Decompiler:
         return enjarify
 
     def validate_extra_args(self, extra_args: Optional[list[str]]) -> dict[str, list[str]]:
-        extra_args_dict = {binary_name: self.CONFIG[binary_name]["extra_args"] for binary_name in self.binary_paths}
+        extra_args_dict = {binary_name: list(self.CONFIG[binary_name]["extra_args"]) for binary_name in self.binary_paths}
         if not extra_args:
             return extra_args_dict
         for extra_arg in extra_args:

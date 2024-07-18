@@ -2,13 +2,29 @@
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from setuptools import setup, find_namespace_packages
-import setuptools_scm
+from setuptools.command.build_ext import build_ext
+
+EXT_MODULES = []
+try:
+    from mypyc.build import mypycify
+    EXT_MODULES.extend(mypycify([
+    'src/apkscan/apkscan.py',
+    'src/apkscan/concurrent_executor.py',
+    'src/apkscan/decompiler.py',
+    'src/apkscan/secret_scanner.py',
+    ]))
+except Exception as e:
+    print(f"Failed to compile with mypyc: {e}")
 
 setup(
     name='apkscan',
-    version='0.3.0',
+    version='0.3.9',
     use_scm_version=True,
-    setup_requires=['setuptools_scm>=8'],
+    setup_requires=[
+        'setuptools>=42',
+        'setuptools_scm>=8',
+        'wheel'
+    ],
     description='Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
@@ -27,6 +43,14 @@ setup(
         'enjarify-adapter',
         'pyyaml',
     ],
+    ext_modules=EXT_MODULES,
+    cmdclass = {'build_ext': build_ext},
+    extras_require={
+        'mypyc': [
+            'mypy[mypyc]',
+            'mypy_extensions',
+        ]
+    },
     entry_points={
         'console_scripts': [
             'apkscan = apkscan.main:main',
