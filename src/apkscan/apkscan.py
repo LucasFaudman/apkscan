@@ -64,14 +64,18 @@ class APKScanner:
         print(f"\nOutput File:\n- {self.output_file.absolute()}\n")
 
     def print_status(self, end="\r"):
-        if self.decompiling and not self.scanning:
+        is_decompiling = any(val > 0 for val in self.decompiling.values())
+        is_scanning = bool(self.scanning)
+
+        if is_decompiling and not is_scanning:
             status = "Decompiling"
-        elif self.decompiling and self.scanning:
+        elif is_decompiling and is_scanning:
             status = "Decompiling and Scanning"
-        elif not self.decompiling and self.scanning:
+        elif not is_decompiling and is_scanning:
             status = "Scanning"
         else:
             status = "COMPLETE"
+
         status_message = f"Status: {status} | "
         if self.num_files:
             status_message += (
@@ -129,7 +133,6 @@ class APKScanner:
 
             if self.decompiling[file_path.stem] == 0:
                 self.num_decompiled += 1
-                del self.decompiling[file_path.stem]
                 self.print_status("\n")
 
         self.decompiler.concurrent_executor.shutdown()
