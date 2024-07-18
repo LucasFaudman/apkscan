@@ -1,9 +1,6 @@
 # © 2023 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
-from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
-from json import loads as json_loads, JSONDecodeError
-from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
 from typing import Optional, Iterator, Tuple
 from pathlib import Path
@@ -19,6 +16,18 @@ from re import (
     VERBOSE,
     TEMPLATE,
 )
+
+from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
+from json import loads as json_loads, JSONDecodeError
+
+try:
+    # Use built-in tomllib if python 3.11+ otherwise ignore TOML files
+    from tomllib import loads as toml_loads, TOMLDecodeError
+
+    TOML_SUPPORTED = True
+except ImportError:
+    print("tomllib not found. TOML files will be ignored. Use Python 3.11+ to enable TOML support.")
+    TOML_SUPPORTED = False
 
 from .concurrent_executor import ConcurrentExecutor
 from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES  # type: ignore
@@ -60,7 +69,7 @@ class SecretResult:
         return self.secret == other.secret
 
 
-def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
+def try_load_json_yaml_toml(file_path: Path) -> Optional[dict | list]:
     if not file_path.exists():
         print(f"File not found: {file_path}. Skipping.")
         return None
@@ -69,19 +78,23 @@ def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
         contents = f.read()
 
     try:
-        return json_loads(contents)
+        if (loaded_json := json_loads(contents)) and not isinstance(loaded_json, str):
+            return loaded_json
     except JSONDecodeError:
-        print(f"Error loading {file_path} as JSON. Trying TOML.")
+        print(f"Error loading {file_path} as JSON. Trying YAML.")
 
     try:
-        return toml_loads(contents)
-    except TOMLDecodeError:
-        print(f"Error loading {file_path} as TOML. Trying YAML.")
-
-    try:
-        return yaml_safe_load(contents)
+        if (loaded_yaml := yaml_safe_load(contents)) and not isinstance(loaded_yaml, str):
+            return loaded_yaml
     except YAMLError:
-        print(f"Error loading {file_path} as YAML. Skipping.")
+        print(f"Error loading {file_path} as YAML. Trying TOML.")
+
+    if TOML_SUPPORTED:
+        try:
+            if (loaded_toml := toml_loads(contents)) and not isinstance(loaded_toml, str):
+                return loaded_toml
+        except TOMLDecodeError:
+            print(f"Error loading {file_path} as TOML. Skipping.")
 
     return None
 
@@ -169,7 +182,7 @@ def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLo
     print(f"\nLoading secret locators from {len(secret_locator_files)} files.")
     secret_locators: dict[str, SecretLocator] = {}
     for secret_locator_file in secret_locator_files:
-        if not (secret_locator_file_data := try_load_json_toml_yaml(secret_locator_file)):
+        if not (secret_locator_file_data := try_load_json_yaml_toml(secret_locator_file)):
             continue
         if isinstance(secret_locator_file_data, list):
             secret_locators.update(load_secret_locators_format(secret_locator_file_data))

@@ -23,7 +23,7 @@ BANNER_ART = """\033[1;32m   ('-.      _ (`-. .-. .-')   .-')             ('-.  
   `--' `--'`--'     `--' '--' `-----'  `-----' `--' `--'`--'  `--'   """
 
 BANNER_TEXT = """
-  \033[1;92mAPKscan v0.3.9 - \033[3mScan for secrets, endpoints, and other sensitive data
+  \033[1;92mAPKscan v0.4.0 - \033[3mScan for secrets, endpoints, and other sensitive data
   after decompiling and deobfuscating Android files.\033[0m\033[0;92m
   (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
 
