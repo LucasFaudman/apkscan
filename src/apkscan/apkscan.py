@@ -91,7 +91,7 @@ class APKScanner:
         )
 
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
-        for file_path in file_paths:
+        for file_path in self.decompiler.unpack_files(file_paths):
             self.num_files += 1
             ext = file_path.suffix
             if not (num_decompilers := self.decompilers_count_by_ext.get(ext)):
