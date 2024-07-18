@@ -1,6 +1,7 @@
 import pytest
 from pathlib import Path
 
+
 @pytest.fixture
 def tmp_locator_files(tmpdir) -> dict[str, Path]:
     secret_patterns_db_yaml = r"""patterns:
@@ -92,7 +93,7 @@ stopwords= [
         "secret_patterns_db.yml": secret_patterns_db_yaml,
         "gitleaks.toml": gitleaks_toml,
         "secret_locators.json": secret_locators_json,
-        "simple_key_value.json": simple_key_value_json
+        "simple_key_value.json": simple_key_value_json,
     }
     temp_paths = {}
     for file_name, content in temp_file_names.items():
@@ -101,6 +102,7 @@ stopwords= [
         temp_paths[file_name] = temp_path
     # temp_paths["tmpdir_path"] = tmpdir_path
     return temp_paths
+
 
 @pytest.fixture
 def tmp_files_to_scan(tmpdir):
@@ -126,7 +128,7 @@ Line 4 API_KEY=1234567890
         "aws_key_file.java": aws_key_file,
         "gcp_key_file.java": gcp_key_file,
         "generic_key_file.java": generic_key_file,
-        "nested_mix_file.java": nested_mix_file
+        "nested_mix_file.java": nested_mix_file,
     }
     temp_paths = {}
     for file_name, content in temp_file_names.items():

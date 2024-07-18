@@ -47,8 +47,5 @@ version_file = "src/apkscan/_version.py"
 
 [tool.black]
 line-length = 120
-exclude = '''
-/(
-    src/apkscan/main\.py  # Specific file to exclude
-)/
-'''
+exclude = "src/apkscan/main.py"
+force-exclude = "src/apkscan/main.py"

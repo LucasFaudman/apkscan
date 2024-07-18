@@ -1,7 +1,7 @@
 # © 2023 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
-from yaml import safe_load as yaml_safe_load, YAMLError # type: ignore
+from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
 from json import loads as json_loads, JSONDecodeError
 from tomllib import loads as toml_loads, TOMLDecodeError
 from dataclasses import dataclass, field
@@ -21,7 +21,8 @@ from re import (
 )
 
 from .concurrent_executor import ConcurrentExecutor
-from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES # type: ignore
+from .included_secret_locators import INCLUDED_SECRET_LOCATOR_FILES  # type: ignore
+
 
 @dataclass
 class SecretLocator:
@@ -42,6 +43,7 @@ class SecretLocator:
             return NotImplemented
         return self.pattern == other.pattern
 
+
 @dataclass
 class SecretResult:
     secret: bytes
@@ -57,7 +59,8 @@ class SecretResult:
             return NotImplemented
         return self.secret == other.secret
 
-def try_load_json_toml_yaml(file_path: Path) -> Optional[dict|list]:
+
+def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
     if not file_path.exists():
         print(f"File not found: {file_path}. Skipping.")
         return None
@@ -105,6 +108,7 @@ def compile_str_to_bytes_pattern(pattern_str: str) -> Pattern:
             ).replace(f"(?-{flag_char})", "")
     return re_compile(pattern_str.encode(), flags)
 
+
 def load_secrets_patterns_db_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
     secret_locators: dict[str, SecretLocator] = {}
     for locator_dict in locator_dicts:
@@ -115,6 +119,7 @@ def load_secrets_patterns_db_format(locator_dicts: list[dict]) -> dict[str, Secr
         secret_locators[pattern_str] = SecretLocator(**locator_dict)
 
     return secret_locators
+
 
 def load_gitleaks_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
     secret_locators: dict[str, SecretLocator] = {}
@@ -130,6 +135,7 @@ def load_gitleaks_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
 
     return secret_locators
 
+
 def load_secret_locators_format(locator_dicts: list[dict]) -> dict[str, SecretLocator]:
     secret_locators: dict[str, SecretLocator] = {}
     for locator_dict in locator_dicts:
@@ -141,6 +147,7 @@ def load_secret_locators_format(locator_dicts: list[dict]) -> dict[str, SecretLo
             print(f"Error loading locator: {locator_dict}. Skipping. {e}")
 
     return secret_locators
+
 
 def load_simple_key_value_format(simple_locator_dict: dict) -> dict[str, SecretLocator]:
     secret_locators: dict[str, SecretLocator] = {}
@@ -156,6 +163,7 @@ def load_simple_key_value_format(simple_locator_dict: dict) -> dict[str, SecretL
             }
             secret_locators[pattern_str] = SecretLocator(**locator_dict)
     return secret_locators
+
 
 def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLocator]:
     print(f"\nLoading secret locators from {len(secret_locator_files)} files.")
@@ -175,6 +183,7 @@ def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLo
     print(f"\nLoaded {len(secret_locators)} secret locators.")
     return secret_locators
 
+
 def find_secret_locator_files_by_name(secret_locator_files: list[Path]):
     existing = []
     for secret_locator_file in secret_locator_files:
@@ -183,6 +192,7 @@ def find_secret_locator_files_by_name(secret_locator_files: list[Path]):
         elif secret_locator_file.stem in INCLUDED_SECRET_LOCATOR_FILES:
             existing.append(INCLUDED_SECRET_LOCATOR_FILES[secret_locator_file.stem])
     return existing
+
 
 class SecretScanner:
     def __init__(
@@ -209,7 +219,8 @@ class SecretScanner:
                             secret=match.group(locator.secret_group),
                             file_path=file_path,
                             line_number=line_number,
-                            locator=locator)
+                            locator=locator,
+                        )
 
     def scan_file(self, file_path: Path) -> tuple[Path, list[SecretResult]]:
         return file_path, list(self.iterscan_file(file_path))
