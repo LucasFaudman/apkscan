@@ -90,6 +90,7 @@ cd apkscan
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -e .
+cd ../
 ```
 
 ---
@@ -112,11 +113,11 @@ apkscan file-to-scan.apk -r aws endpoints
 
 A slighly more complex example. This time 3 APKs will be decompiled then scanned using the custom rules at `/path/to/custom/rules.json`. The output written to `output_file.yaml` in `YAML` format, and the results will be grouped by which secret locator was matched. Files generated during decompilation will be removed after scanning.
 ```bash
-apkscan -r /path/to/custom/rules.json -o output_file.yaml -f yaml -g locator -c
+apkscan -r /path/to/custom/rules.json -o output_file.yaml -f yaml -g locator -c file1.apk file2.apk file3.apk
 ```
 Or in long form:
 ```bash
-apkscan --rules /path/to/custom/rules.json --output output_file.yaml --format yaml --groupby locator --cleanup
+apkscan --rules /path/to/custom/rules.json --output output_file.yaml --format yaml --groupby locator --cleanup file1.apk file2.apk file3.apk
 ```
 ---
 
