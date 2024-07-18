@@ -3,7 +3,7 @@
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 [![PyPI version](https://badge.fury.io/py/apkscan.svg)](https://badge.fury.io/py/apkscan)
-![GitHub issues](https://img.shields.io/github/issues/LucasFaudman/apkscan)
+[![GitHub issues](https://img.shields.io/github/issues/LucasFaudman/apkscan)](https://github.com/LucasFaudman/apkscan/issues)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Scan for **secrets**, **endpoints**, and other **sensitive data** after **decompiling** and **deobfuscating** Android
@@ -69,6 +69,7 @@ APKscan also helps identify the attack surface of the backend by uncovering **fo
 
 ### Comprehensive File Support:
 > Decompile and scan a wide range of Android-related files, including `.apk,` `.xapk,` `.dex,` `.jar,` `.class,` `.smali,` `.zip,` `.aar,` `.arsc,` `.aab,` and `.jadx.kts` files.
+- **NEW**: `.xapk` -> `.apk`(s) unpacking/extraction support added in v0.4.0.
 
 ### Advanced Configuration and Concurrency Options:
 > APKscan offers advanced options for concurrency, decompilation, and scanning, enabling you to optimize the performance and behavior of the tool to suit your environment and requirements.
@@ -136,6 +137,7 @@ usage: apkscan [-h] [-r [SECRET_LOCATOR_FILES ...]] [-o SECRETS_OUTPUT_FILE]
                [--apktool [APKTOOL]] [--cfr [CFR]] [--procyon [PROCYON]]
                [--krakatau [KRAKATAU]] [--fernflower [FERNFLOWER]]
                [--enjarify-choice {auto,never,always}]
+               [--unpack-xapks | --no-unpack-xapks]
                [-d | --deobfuscate | --no-deobfuscate]
                [-w DECOMPILER_WORKING_DIR]
                [--decompiler-output-suffix DECOMPILER_OUTPUT_SUFFIX]
@@ -147,7 +149,7 @@ usage: apkscan [-h] [-r [SECRET_LOCATOR_FILES ...]] [-o SECRETS_OUTPUT_FILE]
                [-scs SCANNER_CHUNKSIZE] [-sto SCANNER_TIMEOUT]
                [FILES_TO_SCAN ...]
 
-APKscan v0.3.9 - Scan for secrets, endpoints, and other sensitive
+APKscan v0.4.0 - Scan for secrets, endpoints, and other sensitive
 data after decompiling and deobfuscating Android files. (.apk,
 .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)
 (c) Lucas Faudman, 2024. License information in LICENSE file. Credits
@@ -167,7 +169,8 @@ Input Options:
                         default, endpoints, gcp, generic, gitleaks, high-
                         confidence, key_locators, leakin-regexes,
                         locator_sort, nuclei-regexes, secret. If not provided,
-                        default rules will be used. See: default.json
+                        default rules will be used. See: apkscan/src/apkscan/secret_l
+                        ocators/default.json
 
 Output Options:
   -o SECRETS_OUTPUT_FILE, --output SECRETS_OUTPUT_FILE
@@ -200,6 +203,9 @@ Decompiler Choices:
   --enjarify-choice {auto,never,always}, -EC {auto,never,always}
                         When to use Enjarify. Default is 'auto' which means
                         use only when needed.
+  --unpack-xapks, --no-unpack-xapks
+                        Unpack XAPK files into APKs before decompiling.
+                        Default is True.
 
 Decompiler Advanced Options:
   Options for Java decompiler.
