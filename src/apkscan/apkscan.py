@@ -4,21 +4,23 @@
 from pathlib import Path
 from typing import Optional, Generator, Iterable, Literal
 from datetime import datetime, timedelta
-from yaml import dump as yaml_dump # type: ignore
+from yaml import dump as yaml_dump  # type: ignore
 from json import dump as json_dump
 
 from .decompiler import Decompiler
 from .secret_scanner import SecretScanner, SecretResult
 
+
 class APKScanner:
-    def __init__(self,
-                 decompiler_kwargs: dict,
-                 scanner_kwargs: dict,
-                 output_file: Optional[Path] = None,
-                 output_format: str = "json",
-                 groupby: Literal["file", "locator", "both"] = "both",
-                 cleanup: bool = True,
-                 ):
+    def __init__(
+        self,
+        decompiler_kwargs: dict,
+        scanner_kwargs: dict,
+        output_file: Optional[Path] = None,
+        output_format: str = "json",
+        groupby: Literal["file", "locator", "both"] = "both",
+        cleanup: bool = True,
+    ):
         # workers
         self.decompiler = Decompiler(**decompiler_kwargs)
         locator_files = scanner_kwargs.pop("secret_locator_files", [])
@@ -61,7 +63,7 @@ class APKScanner:
         print(f"\nSecret Locator Files:\n- " + "\n- ".join(map(str, self.secret_scanner.secret_locator_files)))
         print(f"\nOutput File:\n- {self.output_file.absolute()}\n")
 
-    def print_status(self, end='\r'):
+    def print_status(self, end="\r"):
         if self.decompiling and not self.scanning:
             status = "Decompiling"
         elif self.decompiling and self.scanning:
@@ -72,15 +74,21 @@ class APKScanner:
             status = "COMPLETE"
         status_message = f"Status: {status} | "
         if self.num_files:
-            status_message += f"Decompiled: {self.num_decompiled}/{self.num_files} ({self.num_decompiled/self.num_files*100:3f}%) | "
+            status_message += (
+                f"Decompiled: {self.num_decompiled}/{self.num_files} ({self.num_decompiled/self.num_files*100:3f}%) | "
+            )
         if self.num_scanning:
-            status_message += f"Scanned: {self.num_scanned}/{self.num_scanning} ({self.num_scanned/self.num_scanning*100:3f}%) | "
+            status_message += (
+                f"Scanned: {self.num_scanned}/{self.num_scanning} ({self.num_scanned/self.num_scanning*100:3f}%) | "
+            )
         if self.num_secrets:
             status_message += f"Secrets: {self.num_secrets} ({self.num_unique_secrets} unique) | "
         print(status_message, end=end, flush=True)
 
     def print_secret_found(self, secret_result: SecretResult) -> None:
-        print(f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]!r}\033[0m in {secret_result.file_path}:{secret_result.line_number} (line {secret_result.line_number})\n")
+        print(
+            f"Found {secret_result.locator.name}: \033[92m{secret_result.secret[:100]!r}\033[0m in {secret_result.file_path}:{secret_result.line_number} (line {secret_result.line_number})\n"
+        )
 
     def files_to_decompile_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path in file_paths:
@@ -122,15 +130,18 @@ class APKScanner:
             if self.decompiling[file_path.stem] == 0:
                 self.num_decompiled += 1
                 del self.decompiling[file_path.stem]
-                self.print_status('\n')
+                self.print_status("\n")
 
         self.decompiler.concurrent_executor.shutdown()
         if self.decompile_start_time:
             self.decompile_elapsed_time = datetime.now() - self.decompile_start_time
-            print(f"\nDecompiling COMPLETE. Decompiled {self.num_decompiled} files with {self.num_decompile_errors} errors. Elapsed time: {self.decompile_elapsed_time}\n")
+            print(
+                f"\nDecompiling COMPLETE. Decompiled {self.num_decompiled} files with {self.num_decompile_errors} errors. Elapsed time: {self.decompile_elapsed_time}\n"
+            )
 
-
-    def scan_secret_results_generator(self, file_paths: Generator[Path, None, None]) -> Generator[SecretResult, None, None]:
+    def scan_secret_results_generator(
+        self, file_paths: Generator[Path, None, None]
+    ) -> Generator[SecretResult, None, None]:
         for file_path, file_secret_results in self.secret_scanner.scan_concurrently(file_paths):
             if file_path in self.scanning:
                 self.scanning.remove(file_path)
@@ -140,10 +151,12 @@ class APKScanner:
             self.print_status()
             yield from file_secret_results
 
-        self.print_status('\n')
+        self.print_status("\n")
         if self.scan_start_time:
             self.scan_elapsed_time = datetime.now() - self.scan_start_time
-            print(f"\nScanning COMPLETE. Scanned {self.num_scanned} files with {self.num_secrets} secrets found. Elapsed time: {self.scan_elapsed_time}\n")
+            print(
+                f"\nScanning COMPLETE. Scanned {self.num_scanned} files with {self.num_secrets} secrets found. Elapsed time: {self.scan_elapsed_time}\n"
+            )
 
     def decompile_and_scan(self, file_paths: Iterable[Path]) -> list[SecretResult]:
         self.decompile_and_scan_start_time = datetime.now()
@@ -162,19 +175,23 @@ class APKScanner:
             self.print_status()
 
         self.total_elapsed_time = datetime.now() - self.decompile_and_scan_start_time
-        print(f"Found \033[92m{self.num_secrets - num_secrets_before} new secrets\033[0m ({self.num_unique_secrets - num_unique_secrets_before} unique).")
-        print(f"Decompiled {self.num_decompiled} files with {self.num_decompile_errors} errors in {self.decompile_elapsed_time}.")
+        print(
+            f"Found \033[92m{self.num_secrets - num_secrets_before} new secrets\033[0m ({self.num_unique_secrets - num_unique_secrets_before} unique)."
+        )
+        print(
+            f"Decompiled {self.num_decompiled} files with {self.num_decompile_errors} errors in {self.decompile_elapsed_time}."
+        )
         print(f"Scanned {self.num_scanned} files and found {self.num_secrets} secrets in {self.scan_elapsed_time}.")
         print(f"Total Elapsed time: {datetime.now() - self.decompile_and_scan_start_time}")
 
         return self.secrets_results
 
-    def make_secret_result_serializable(self, secret_result: SecretResult) -> dict[str, str|int]:
+    def make_secret_result_serializable(self, secret_result: SecretResult) -> dict[str, str | int]:
         try:
             secret_str = secret_result.secret.decode()
         except Exception as e:
             print(f"Error decoding secret: {e}")
-            secret_str = f'{secret_result.secret!r}'
+            secret_str = f"{secret_result.secret!r}"
         return {
             "secret": secret_str,
             "file_path": str(secret_result.file_path),
@@ -182,15 +199,15 @@ class APKScanner:
             "locator": secret_result.locator.name,
         }
 
-    def group_results_by_locator(self) -> dict[str, list[dict[str, str|int]]]:
-        results_by_locator: dict[str, list[dict[str, str|int]]] = {}
+    def group_results_by_locator(self) -> dict[str, list[dict[str, str | int]]]:
+        results_by_locator: dict[str, list[dict[str, str | int]]] = {}
         for secret_result in self.secrets_results:
             serializable_secret_result = self.make_secret_result_serializable(secret_result)
             results_by_locator.setdefault(secret_result.locator.id, []).append(serializable_secret_result)
         return results_by_locator
 
-    def group_results_by_input_file(self) -> dict[str, list[dict[str, str|int]]]:
-        results_by_input_file: dict[str, list[dict[str, str|int]]] = {}
+    def group_results_by_input_file(self) -> dict[str, list[dict[str, str | int]]]:
+        results_by_input_file: dict[str, list[dict[str, str | int]]] = {}
         for secret_result in self.secrets_results:
             for output_dir, (file_path, decompiled_files, success) in self.decompile_results.items():
                 # TODO maybe group by output_dir (decompilier) ?
@@ -207,10 +224,7 @@ class APKScanner:
         elif self.groupby == "locator":
             results = self.group_results_by_locator()
         elif self.groupby == "both":
-            results = {
-                "by_file": self.group_results_by_input_file(),
-                "by_locator": self.group_results_by_locator()
-            }
+            results = {"by_file": self.group_results_by_input_file(), "by_locator": self.group_results_by_locator()}
 
         with self.output_file.open("w") as f:
             if self.output_format == "json":
@@ -223,14 +237,12 @@ class APKScanner:
         self.output_written = True
         print(f"Output written to {self.output_file}")
 
-
     def do_cleanup(self, **cleanup_concurrency_kwargs):
         if self.cleanup and not self.cleaned_up:
             self.decompiler.cleanup(**cleanup_concurrency_kwargs)
             self.decompiler.concurrent_executor.shutdown(wait=False, cancel_pending=True)
             self.secret_scanner.concurrent_executor.shutdown(wait=False, cancel_pending=True)
         self.cleaned_up = True
-
 
     def __del__(self):
         if getattr(self, "secrets_results", False) and not getattr(self, "output_written", False):

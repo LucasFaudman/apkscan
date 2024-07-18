@@ -8,7 +8,7 @@ from os import access, X_OK
 from shlex import split as shlex_split
 from typing import Optional, Iterator, Iterable, Literal, Collection
 
-from enjarify import enjarify # type: ignore
+from enjarify import enjarify  # type: ignore
 from .concurrent_executor import ConcurrentExecutor
 
 DEFAULT_CONFIG: dict = {
@@ -17,51 +17,64 @@ DEFAULT_CONFIG: dict = {
         "output_arg": "--output-dir",
         "deobf_arg": "--deobf",
         "extra_args": [],
-        "file_exts": {".apk", ".xapk", ".jar", ".dex", ".class", ".smali", ".zip", ".aar", ".arsc", ".aab", ".jadx.kts"}
+        "file_exts": {
+            ".apk",
+            ".xapk",
+            ".jar",
+            ".dex",
+            ".class",
+            ".smali",
+            ".zip",
+            ".aar",
+            ".arsc",
+            ".aab",
+            ".jadx.kts",
+        },
     },
     "apktool": {
         "binary": which("apktool") or "/usr/local/bin/apktool",
         "output_arg": "--output",
         "deobf_arg": "--force-manifest",
         "extra_args": ["d", "--force", "--keep-broken-res"],
-        "file_exts": {".apk", ".xapk"}
+        "file_exts": {".apk", ".xapk"},
     },
     "procyon": {
         "binary": which("procyon-decompiler") or "/usr/local/bin/procyon-decompiler",
         "output_arg": "-o",
         "deobf_arg": "-renames",
         "extra_args": [],
-        "file_exts": {".jar", ".dex", ".class"}
+        "file_exts": {".jar", ".dex", ".class"},
     },
     "cfr": {
         "binary": which("cfr-decompiler") or "/usr/local/bin/cfr-decompiler",
         "output_arg": "--outputdir",
         "deobf_arg": "--antiobf",
         "extra_args": [],
-        "file_exts": {".jar", "dex", "class"}
+        "file_exts": {".jar", "dex", "class"},
     },
     "krakatau": {
         "binary": which("krakatau") or "/usr/local/bin/krakatau",
         "output_arg": "--out",
         "deobf_arg": "",
         "extra_args": ["dis"],
-        "file_exts": {".jar", ".zip", ".class"}
+        "file_exts": {".jar", ".zip", ".class"},
     },
     "fernflower": {
         "binary": which("fernflower") or "/usr/local/bin/fernflower",
         "output_arg": "",
         "deobf_arg": "",
         "extra_args": [],
-        "file_exts": {".jar", ".class"}
-    }
+        "file_exts": {".jar", ".class"},
+    },
 }
+
 
 class Decompiler:
     CONFIG: dict = DEFAULT_CONFIG.copy()
 
     def __init__(
         self,
-        binaries: Optional[dict[str, Optional[Path|str]]|Iterable[str]] = None,
+        binaries: Optional[dict[str, Optional[Path | str]] | Iterable[str]] = None,
         enjarify_choice: Literal["auto", "never", "always"] = "auto",
         deobfuscate: bool = False,
         extra_args: Optional[list[str]] = None,
@@ -84,7 +97,9 @@ class Decompiler:
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "thread", **concurrent_executor_kwargs})
         self.output_dirs: dict[str, Path] = {}
 
-    def validate_binary_paths(self, binaries: Optional[dict[str, Optional[Path|str]]|Iterable[str]]) -> dict[str, Path]:
+    def validate_binary_paths(
+        self, binaries: Optional[dict[str, Optional[Path | str]] | Iterable[str]]
+    ) -> dict[str, Path]:
         if not binaries:
             # Use JADX binary by default if no binaries specified
             jadx_path = self.CONFIG["jadx"]["binary"]
@@ -97,7 +112,7 @@ class Decompiler:
 
         binary_paths = {}
         for binary_name, binary_path in binaries.items():
-            binary_path =  Path(str(binary_path or self.CONFIG[binary_name]["binary"]))
+            binary_path = Path(str(binary_path or self.CONFIG[binary_name]["binary"]))
             if not binary_path.exists():
                 print(f"Skipping {binary_name}. Binary not found: {binary_path}")
                 print(f"Use --{binary_name} <PATH> to specify the path to the binary.")
@@ -131,7 +146,9 @@ class Decompiler:
         return enjarify
 
     def validate_extra_args(self, extra_args: Optional[list[str]]) -> dict[str, list[str]]:
-        extra_args_dict = {binary_name: list(self.CONFIG[binary_name]["extra_args"]) for binary_name in self.binary_paths}
+        extra_args_dict = {
+            binary_name: list(self.CONFIG[binary_name]["extra_args"]) for binary_name in self.binary_paths
+        }
         if not extra_args:
             return extra_args_dict
         for extra_arg in extra_args:
@@ -142,14 +159,17 @@ class Decompiler:
             extra_args_dict[binary_name] = args
         return extra_args_dict
 
-
     def make_args(self, binary_name: str, file_path: Path, output_path: Path) -> list[str]:
-        args = [self.binary_paths[binary_name], *self.extra_args.get(binary_name, ()), self.CONFIG[binary_name]["output_arg"], output_path]
+        args = [
+            self.binary_paths[binary_name],
+            *self.extra_args.get(binary_name, ()),
+            self.CONFIG[binary_name]["output_arg"],
+            output_path,
+        ]
         if self.deobfuscate and (deobf_arg := self.CONFIG[binary_name].get("deobf_arg")) and deobf_arg not in args:
             args.append(deobf_arg)
         args.append(file_path)
         return list(map(str, args))
-
 
     def try_run_binary(self, binary_name: str, file_path: Path, output_path: Path) -> bool:
         args = self.make_args(binary_name, file_path, output_path)
@@ -157,7 +177,7 @@ class Decompiler:
         kwargs["check"] = False
         try:
             print(f"Running {binary_name} on {file_path.name}")
-            result = run(args, **kwargs) # type: ignore
+            result = run(args, **kwargs)  # type: ignore
             return True
         except SubprocessError as e:
             print(f"Error Running {binary_name} on {file_path.name}: {e}")
@@ -225,7 +245,9 @@ class Decompiler:
                 if file_path.suffix in self.CONFIG[binary_name]["file_exts"]:
                     yield binary_name, file_path
 
-    def decompile_concurrently(self, file_paths: Iterable[Path]) -> Iterator[tuple[Path, Path, Optional[set[Path]], bool]]:
+    def decompile_concurrently(
+        self, file_paths: Iterable[Path]
+    ) -> Iterator[tuple[Path, Path, Optional[set[Path]], bool]]:
         yield from self.concurrent_executor.map(self.decompile, self.binary_name_file_path_generator(file_paths))
 
     def remove_output_dir(self, output_dir: Path) -> Path:
@@ -237,14 +259,13 @@ class Decompiler:
     def cleanup(self, **concurrency_kwargs):
         output_dirs = list(self.output_dirs.values())
         print(f"\nRemoving {len(output_dirs)} decompiled output directories...")
-        for output_dir in self.concurrent_executor.map(
-            self.remove_output_dir, output_dirs, **concurrency_kwargs):
+        for output_dir in self.concurrent_executor.map(self.remove_output_dir, output_dirs, **concurrency_kwargs):
             print(f"Removed: {output_dir}")
         print(f"Done removing {len(output_dirs)} decompiled output directories.")
 
     # def unpack_xapk(self, file_path: Path) -> Iterator[Path]:
-        # TODO: Implement unpacking xapk files and place in front of decompilation when file is xapk
-        # pass
+    # TODO: Implement unpacking xapk files and place in front of decompilation when file is xapk
+    # pass
 
     def __repr__(self) -> str:
         return f"Decompiler:(binary_paths={self.binary_paths}, extra_args={self.extra_args}, deobfuscate={self.deobfuscate}, output_suffix={self.output_suffix}, working_dir={self.working_dir}, remove_failed_output_dirs={self.remove_failed_output_dirs}, concurrent_executor={self.concurrent_executor})"

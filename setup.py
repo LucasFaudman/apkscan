@@ -7,73 +7,74 @@ from setuptools.command.build_ext import build_ext
 EXT_MODULES = []
 try:
     from mypyc.build import mypycify
-    EXT_MODULES.extend(mypycify([
-    'src/apkscan/apkscan.py',
-    'src/apkscan/concurrent_executor.py',
-    'src/apkscan/decompiler.py',
-    'src/apkscan/secret_scanner.py',
-    ]))
+
+    EXT_MODULES.extend(
+        mypycify(
+            [
+                "src/apkscan/apkscan.py",
+                "src/apkscan/concurrent_executor.py",
+                "src/apkscan/decompiler.py",
+                "src/apkscan/secret_scanner.py",
+            ]
+        )
+    )
 except Exception as e:
     print(f"Failed to compile with mypyc: {e}")
 
 setup(
-    name='apkscan',
-    version='0.3.9',
+    name="apkscan",
+    version="0.3.9",
     use_scm_version=True,
-    setup_requires=[
-        'setuptools>=42',
-        'setuptools_scm>=8',
-        'wheel'
-    ],
-    description='Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)',
-    long_description=open('README.md').read(),
-    long_description_content_type='text/markdown',
-    author='Lucas Faudman',
-    author_email='lucasfaudman@gmail.com',
-    url='https://github.com/LucasFaudman/apkscan.git',
-    packages=find_namespace_packages(where='src', exclude=['tests*']),
-    package_dir={'': 'src'},
+    setup_requires=["setuptools>=42", "setuptools_scm>=8", "wheel"],
+    description="Scan for secrets, endpoints, and other sensitive data after decompiling and deobfuscating Android files. (.apk, .xapk, .dex, .jar, .class, .smali, .zip, .aar, .arsc, .aab, .jadx.kts)",
+    long_description=open("README.md").read(),
+    long_description_content_type="text/markdown",
+    author="Lucas Faudman",
+    author_email="lucasfaudman@gmail.com",
+    url="https://github.com/LucasFaudman/apkscan.git",
+    packages=find_namespace_packages(where="src", exclude=["tests*"]),
+    package_dir={"": "src"},
     package_data={
-        '': ['LICENSE'],
-        'apkscan.secret_locators': ['*.json', '*.yaml', '*.yml', '*.toml'],
+        "": ["LICENSE"],
+        "apkscan.secret_locators": ["*.json", "*.yaml", "*.yml", "*.toml"],
     },
     include_package_data=True,
-    exclude_package_data={'': ['.gitignore', '.pre-commit-config.yaml']},
+    exclude_package_data={"": [".gitignore", ".pre-commit-config.yaml"]},
     install_requires=[
-        'enjarify-adapter',
-        'pyyaml',
+        "enjarify-adapter",
+        "pyyaml",
     ],
     ext_modules=EXT_MODULES,
-    cmdclass = {'build_ext': build_ext},
+    cmdclass={"build_ext": build_ext},
     extras_require={
-        'mypyc': [
-            'mypy[mypyc]',
-            'mypy_extensions',
+        "mypyc": [
+            "mypy[mypyc]",
+            "mypy_extensions",
         ]
     },
     entry_points={
-        'console_scripts': [
-            'apkscan = apkscan.main:main',
+        "console_scripts": [
+            "apkscan = apkscan.main:main",
         ],
     },
-    python_requires='>=3.11',
-    license='LICENSE',
+    python_requires=">=3.11",
+    license="LICENSE",
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: 3.12',
-        'Operating System :: OS Independent',
-        'Topic :: Software Development :: Libraries',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Security',
-        'Topic :: Utilities',
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Libraries",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Security",
+        "Topic :: Utilities",
     ],
-    keywords='secret scanner jadx decompile android java security mobile decompiler concurrency penetration-testing apktool security-tools fernflower cfr jadx procyon enjarify krakatau secret-scanning decompiler-java secret-scanner apk dex jar class smali zip aar arsc aab xapk jadx.kts ',
+    keywords="secret scanner jadx decompile android java security mobile decompiler concurrency penetration-testing apktool security-tools fernflower cfr jadx procyon enjarify krakatau secret-scanning decompiler-java secret-scanner apk dex jar class smali zip aar arsc aab xapk jadx.kts ",
     project_urls={
-        'Homepage': 'https://github.com/LucasFaudman/apkscan.git',
-        'Repository': 'https://github.com/LucasFaudman/apkscan.git',
+        "Homepage": "https://github.com/LucasFaudman/apkscan.git",
+        "Repository": "https://github.com/LucasFaudman/apkscan.git",
     },
 )
