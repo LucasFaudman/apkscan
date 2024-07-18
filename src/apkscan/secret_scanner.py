@@ -69,7 +69,7 @@ class SecretResult:
         return self.secret == other.secret
 
 
-def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
+def try_load_json_yaml_toml(file_path: Path) -> Optional[dict | list]:
     if not file_path.exists():
         print(f"File not found: {file_path}. Skipping.")
         return None
@@ -78,20 +78,23 @@ def try_load_json_toml_yaml(file_path: Path) -> Optional[dict | list]:
         contents = f.read()
 
     try:
-        return json_loads(contents)
+        if (loaded_json := json_loads(contents)) and not isinstance(loaded_json, str):
+            return loaded_json
     except JSONDecodeError:
-        print(f"Error loading {file_path} as JSON. Trying TOML.")
+        print(f"Error loading {file_path} as JSON. Trying YAML.")
+
+    try:
+        if (loaded_yaml := yaml_safe_load(contents)) and not isinstance(loaded_yaml, str):
+            return loaded_yaml
+    except YAMLError:
+        print(f"Error loading {file_path} as YAML. Trying TOML.")
 
     if TOML_SUPPORTED:
         try:
-            return toml_loads(contents)
+            if (loaded_toml := toml_loads(contents)) and not isinstance(loaded_toml, str):
+                return loaded_toml
         except TOMLDecodeError:
-            print(f"Error loading {file_path} as TOML. Trying YAML.")
-
-    try:
-        return yaml_safe_load(contents)
-    except YAMLError:
-        print(f"Error loading {file_path} as YAML. Skipping.")
+            print(f"Error loading {file_path} as TOML. Skipping.")
 
     return None
 
@@ -179,7 +182,7 @@ def load_secret_locators(secret_locator_files: list[Path]) -> dict[str, SecretLo
     print(f"\nLoading secret locators from {len(secret_locator_files)} files.")
     secret_locators: dict[str, SecretLocator] = {}
     for secret_locator_file in secret_locator_files:
-        if not (secret_locator_file_data := try_load_json_toml_yaml(secret_locator_file)):
+        if not (secret_locator_file_data := try_load_json_yaml_toml(secret_locator_file)):
             continue
         if isinstance(secret_locator_file_data, list):
             secret_locators.update(load_secret_locators_format(secret_locator_file_data))
