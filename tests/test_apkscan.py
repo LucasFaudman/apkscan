@@ -1,3 +1,6 @@
+# © 2024 Lucas Faudman.
+# Licensed under the MIT License (see LICENSE for details).
+# For commercial use, see LICENSE for additional terms.
 import pytest
 from fixtures import tmp_locator_files, tmp_files_to_scan
 from apkscan import APKScanner, SecretLocator, SecretResult, load_secret_locators

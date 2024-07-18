@@ -1,4 +1,4 @@
-# © 2023 Lucas Faudman.
+# © 2024 Lucas Faudman.
 # Licensed under the MIT License (see LICENSE for details).
 # For commercial use, see LICENSE for additional terms.
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed, Future
