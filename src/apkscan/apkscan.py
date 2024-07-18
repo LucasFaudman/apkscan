@@ -94,7 +94,7 @@ class APKScanner:
                 print(f"\nDecompiling started at {self.decompile_start_time.strftime('%H:%M:%S:%SS')}\n")
 
             self.print_status()
-            yield file_path
+            yield file_path.resolve()
 
     def decompiled_files_generator(self, file_paths: Iterable[Path]) -> Generator[Path, None, None]:
         for file_path, output_dir, decompiled_files, success in self.decompiler.decompile_concurrently(file_paths):
