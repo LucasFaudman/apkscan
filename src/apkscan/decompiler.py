@@ -11,7 +11,7 @@ from typing import Optional, Iterator, Iterable, Literal, Collection
 from enjarify import enjarify # type: ignore
 from .concurrent_executor import ConcurrentExecutor
 
-DEFAULT_CONFIG: dict[str, dict] = {
+DEFAULT_CONFIG: dict = {
     "jadx": {
         "binary": which("jadx") or "/usr/local/bin/jadx",
         "output_arg": "--output-dir",
@@ -57,7 +57,7 @@ DEFAULT_CONFIG: dict[str, dict] = {
 }
 
 class Decompiler:
-    CONFIG = DEFAULT_CONFIG
+    CONFIG: dict = DEFAULT_CONFIG.copy()
 
     def __init__(
         self,
