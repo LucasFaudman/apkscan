@@ -187,18 +187,12 @@ def find_secret_locator_files_by_name(secret_locator_files: list[Path]):
 class SecretScanner:
     def __init__(
         self,
-        # secret_locator_files: Optional[list[Path]],
-        # load_locators_on_init: bool = False,
         **concurrent_executor_kwargs,
     ) -> None:
         self.secret_locator_files: list[Path] = []
         self.secret_locators: dict[str, SecretLocator] = {}
-        # self.load_locators_on_init = load_locators_on_init
         self.results: dict[SecretLocator, list[SecretResult]] = {}
         self.concurrent_executor = ConcurrentExecutor(**{"concurrency_type": "process", **concurrent_executor_kwargs})
-
-        # if load_locators_on_init and secret_locator_files is not None:
-        #     self.load_secret_locators(secret_locator_files)
 
     def load_secret_locators(self, secret_locator_files: list[Path]) -> Tuple[dict[str, SecretLocator], list[Path]]:
         secret_locator_files = find_secret_locator_files_by_name(secret_locator_files)
