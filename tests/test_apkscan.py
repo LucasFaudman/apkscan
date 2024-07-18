@@ -8,9 +8,8 @@ if __name__ == "__main__":
     decompiler_kwargs = {
         "binaries": [
             "jadx",
-            # "procyon",
-            # "cfr",
-            # "apktool",
+            "cfr",
+            "apktool",
         ],
         "working_dir": tmpdir,
         "overwrite": False,
@@ -18,7 +17,10 @@ if __name__ == "__main__":
     }
     scanner_kwargs = {
         "secret_locator_files": [
-            Path("/Users/lucasfaudman/Documents/SANS/SEC575/disa/apkscan/src/apkscan/secret_locators/default.json")
+            Path("gcp"),
+            Path("aws"),
+            Path("azure"),
+            Path("endpoints"),
         ],
     }
 
@@ -27,7 +29,7 @@ if __name__ == "__main__":
         Path(__file__).parent / "test_apks" / test_apk
         for test_apk in [
             "test-apk-1.apk",
-            # "test-xapk-1.xapk",
+            "test-xapk-1.xapk",
         ]
     ]
     apk_scanner = APKScanner(decompiler_kwargs, scanner_kwargs, output_file=test_output, cleanup=False)
