@@ -60,6 +60,7 @@ def main():
     decompiler_choices.add_argument('--krakatau', "-K", nargs='?', const=None, default=False, help="Use Krakatau Java decompiler. Requires Enjarify.")
     decompiler_choices.add_argument('--fernflower', "-F", nargs='?', const=None, default=False, help="Use Fernflower Java decompiler. Requires Enjarify.")
     decompiler_choices.add_argument('--enjarify-choice', "-EC", type=str, choices=["auto", "never", "always"], default="auto", help="When to use Enjarify. Default is 'auto' which means use only when needed.")
+    decompiler_choices.add_argument('--unpack-xapks', action=BooleanOptionalAction, default=True, help="Unpack XAPK files into APKs before decompiling. Default is True.")
 
 
     decompiler_options = parser.add_argument_group("Decompiler Advanced Options", description="Options for Java decompiler.")
@@ -91,6 +92,7 @@ def main():
     decompiler_kwargs = {
         "binaries": {},
         "enjarify_choice": args.enjarify_choice,
+        "unpack_xapks": args.unpack_xapks,
         "deobfuscate": args.deobfuscate,
         "remove_failed_output_dirs": args.cleanup,
         "suppress_output": args.quiet,
