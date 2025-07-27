@@ -14,7 +14,6 @@ from re import (
     LOCALE,
     UNICODE,
     VERBOSE,
-    TEMPLATE,
 )
 
 from yaml import safe_load as yaml_safe_load, YAMLError  # type: ignore
